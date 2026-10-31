@@ -11,7 +11,7 @@
 
 Este documento foi incorporado a partir de `COMPONENTS_WEB_REACT.md`, fornecido pelo utilizador. É uma referência partilhada para colaboradores e agentes ao criar, alterar ou reutilizar componentes React Web. A sua inclusão não implementa componentes nem aprova automaticamente todas as propostas técnicas que contém.
 
-- **Ler em conjunto:** [AGENTS.md](../AGENTS.md), [README.md](../README.md) e [CONTRIBUTING.md](../CONTRIBUTING.md). As instruções explícitas do utilizador e as decisões aprovadas do projeto prevalecem sobre exemplos ou sugestões deste guia. Novas decisões transversais seguem o processo de proposta e aprovação do projeto.
+- **Ler em conjunto:** [AGENTS.md](../AGENTS.md), [README.md](../README.md), [CONTRIBUTING.md](../CONTRIBUTING.md) e [architecture.md](architecture.md). As instruções explícitas do utilizador e as decisões aprovadas do projeto prevalecem sobre exemplos ou sugestões deste guia. Novas decisões transversais seguem o processo de proposta e aprovação do projeto.
 - **Estado atual:** nesta inclusão, a aplicação é uma base React, TypeScript e Vite; o catálogo não é um inventário de componentes já disponíveis em código. Inspeciona sempre a implementação existente antes de reutilizar ou criar uma API.
 - **Âmbito:** consulta a ficha `MDS/<Nome>` da secção 9, os componentes de que depende e as secções transversais aplicáveis. Implementa apenas o âmbito da tarefa. Este guia não autoriza alterações ao repositório Mobile.
 - **Propostas:** props, tipos de domínio, organização de pastas, CSS Modules, `ThemeProvider`, modos de tema e dependências são referências a avaliar no contexto da tarefa, não escolhas globais aprovadas pela importação. Os caminhos dos exemplos devem ser adaptados à arquitetura aprovada; não criam uma estrutura paralela.
@@ -57,12 +57,12 @@ Percurso de leitura: contexto e responsabilidades (secções 1–3), tema e cont
 
 ## 3. Arquitetura mínima e reutilização
 
-As quatro responsabilidades lógicas abaixo são uma referência; os nomes e caminhos são exemplificativos e devem ser adaptados à arquitetura aprovada do projeto, sem criar abstrações que não tenham necessidade concreta:
+As responsabilidades abaixo seguem [architecture.md](architecture.md). Cria apenas as pastas necessárias à tarefa:
 
-- `theme`/`tokens`: cores semânticas, tipografia, espaçamento, raios, sombras, densidades, modos claro/escuro; `ThemeProvider` / hook.
-- `components/primitives`: elementos independentes do domínio (`Button`, `TextField`, `StatusBadge`, etc.).
-- `components/composites`: elementos com composição (`Card`, `FormGroup`, `DataTable`, `Dialog`, etc.).
-- `features/<domain>`: especializações (`ServiceOrderCard`, `Checklist`, `AssignmentPanel`, etc.), sem copiar a implementação visual do `Card`.
+- `shared/ui`: elementos visuais realmente partilhados, primitivos ou compostos (`Button`, `TextField`, `Card`, `DataTable`, etc.). Tokens e tema partilhados podem ficar junto desta apresentação; a solução concreta depende da tarefa.
+- `features/<funcionalidade>/presentation`: especializações (`ServiceOrderCard`, `Checklist`, `AssignmentPanel`, etc.), sem copiar a implementação visual do `Card`.
+- `features/<funcionalidade>/domain` e `application`: regras de negócio e coordenação dos casos de uso, quando necessárias, independentes dos componentes React.
+- `features/<funcionalidade>/infrastructure`: integrações concretas; `app` faz a composição e ligação das dependências. Não criar estas camadas quando não houver responsabilidades que as justifiquem.
 
 Modelo de propriedade: **dados → visualização → eventos → camada de aplicação**. Os componentes não importam clientes HTTP nem fazem chamadas à rede diretamente, salvo adaptadores especializados explicitamente documentados.
 
@@ -199,28 +199,30 @@ Um componente não é considerado pronto porque corresponde visualmente a uma ú
 - O uso de um design system existente ou Radix/React Aria **não é obrigatório**; só introduzir dependência com aprovação e motivo objetivo.
 - `className` e `style` devem combinar com os tokens: **não** espalhar styles inline arbitrários como comportamento padrão.
 
-Proposta de estrutura (ajustar à realidade do repositório):
+Exemplo de localização dos componentes segundo [architecture.md](architecture.md); os nomes de funcionalidades são ilustrativos e não representam pastas existentes. As restantes camadas seguem a arquitetura geral e só são criadas quando necessárias:
 
 ```text
 src/
-  theme/{tokens.css,theme.css,ThemeProvider.tsx,useTheme.ts}
-  components/
-    primitives/{Button,StatusBadge,TextField,...}/
-    composites/{Card,FormGroup,DataTable,Tabs,Dialog,...}/
-    layout/{AppShell,PageLayout,ContentPanel}/
+  app/                    # Composição da aplicação
   features/
-    service-orders/components/ServiceOrderCard/
-    equipment/components/EquipmentCard/
-    clients/components/ClientSummary/
-    field-service/components/{Checklist,ChecklistItem,TaskProgress}/
-    planning/components/{UserSelector,TeamSelector,AssignmentPanel}/
-  shared/{types,utils,adapters}/
+    service-orders/presentation/components/ServiceOrderCard/
+    equipment/presentation/components/EquipmentCard/
+    clients/presentation/components/ClientSummary/
+    field-service/presentation/components/{Checklist,ChecklistItem,TaskProgress}/
+    planning/presentation/components/{UserSelector,TeamSelector,AssignmentPanel}/
+  shared/
+    ui/
+      theme/              # Tokens/tema, se necessários e partilhados
+      Button/
+      Card/
+      FormField/
+      # Outros componentes com utilização transversal demonstrada
 ```
 
 ### 6.2 Tokens CSS e tema
 
 ```css
-/* src/theme/tokens.css — valores EXEMPLIFICATIVOS; ajustar aos tokens reais do Figma */
+/* src/shared/ui/theme/tokens.css — exemplo de localização e valores; ajustar ao projeto e ao Figma */
 :root, [data-theme='light'] {
   --mds-bg-page: #f7f9fc;
   --mds-bg-surface: #ffffff;
