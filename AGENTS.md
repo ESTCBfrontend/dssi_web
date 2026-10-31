@@ -2,6 +2,8 @@
 
 Lê este ficheiro, o README e o CONTRIBUTING antes de alterar o projeto. Instruções explícitas do utilizador têm prioridade sobre estas orientações.
 
+Para criar, alterar ou reutilizar componentes da interface, consulta também [docs/COMPONENTS_WEB_REACT.md](docs/COMPONENTS_WEB_REACT.md), incluindo a ficha `MDS/<Nome>` e as dependências relevantes. O guia descreve comportamento, composição, utilização e validação; as propostas técnicas e os exemplos não substituem as decisões aprovadas do projeto nem alargam o âmbito da tarefa.
+
 ## Projeto
 
 - Aplicação React + TypeScript + Vite, com npm e `package-lock.json`.
