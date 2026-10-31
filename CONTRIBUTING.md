@@ -36,6 +36,10 @@ git switch -c feature/12-login
 
 Uma aprovação deve ser exigida quando houver outra pessoa com permissões para rever. Enquanto só houver uma pessoa, a exigência impede-a de aprovar os seus próprios PRs; um administrador terá de ativá-la quando a equipa estiver disponível.
 
+## Componentes da interface
+
+Ao criar, alterar ou reutilizar componentes, consulta o [guia React Web](docs/COMPONENTS_WEB_REACT.md) e a ficha `MDS/<Nome>` relevante. Confirma o código existente, o contexto da tarefa e as variantes do Figma a implementar. As props e soluções técnicas propostas no guia devem ser ajustadas às decisões aprovadas do projeto; documenta no PR as verificações e eventuais limitações de comparação visual.
+
 ## Entregas
 
 Quando o estado de `develop` estiver pronto para entrega, abre um PR de `develop` para `main`, com CI e revisão. O merge para `main` representa uma versão estável. Não se assume qualquer publicação automática.
