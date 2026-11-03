@@ -6,7 +6,7 @@ Este documento contém princípios aprovados para orientar o crescimento do proj
 
 A aplicação ainda é uma base React com Vite, com o ponto de entrada em `src/main.tsx` e o componente inicial em `src/App.tsx`. Ainda não existem funcionalidades de negócio organizadas em `src/features`.
 
-A direção acordada é organizar o código por funcionalidade e separar responsabilidades conforme a complexidade real. A estrutura abaixo é uma referência para as próximas funcionalidades; não representa pastas já existentes nem exige criar todas as camadas de uma vez.
+A direção acordada é organizar o código por funcionalidade e separar responsabilidades conforme a complexidade real. A estrutura abaixo é uma referência para as próximas funcionalidades; algumas pastas, como `shared/ui`, já existem. Não é necessário criar todas as camadas de uma vez.
 
 ```text
 src/
@@ -42,15 +42,19 @@ Os componentes visuais partilhados usam tokens semânticos CSS configuráveis; a
 
 Os componentes existentes estão em `src/shared/ui`. A implementação atual usa CSS Modules e propriedades `--mds-*` com valores de reserva consultados no Figma, substituíveis por um antepassado. Não existe ainda um provider de tema global; os recursos SVG originais têm cores fixas e as opções de substituição são descritas nas fichas individuais. A fonte Inter é usada quando disponível, com alternativa do sistema.
 
-Contratos, exemplos, tokens e limitações: [Button](components/Button.md), [StatusBadge](components/StatusBadge.md), [TextField](components/TextField.md), [Textarea](components/Textarea.md), [FormField](components/FormField.md), [Checkbox](components/Checkbox.md), [Radio](components/Radio.md), [Switch](components/Switch.md), [CheckboxGroup](components/CheckboxGroup.md), [RadioGroup](components/RadioGroup.md), [ProgressBar](components/ProgressBar.md), [LoadingIndicator](components/LoadingIndicator.md), [AlertIcon](components/AlertIcon.md) e [Alert](components/Alert.md). Os componentes de seleção e os grupos reutilizam estruturas internas em `selection`; alguns SVGs têm cores fixas do Figma e exigem atenção na personalização visual.
+O [catálogo por grupo](COMPONENTS_WEB_REACT.md#9-catálogo-de-implementação--53-famílias-do-figma) liga às 53 fichas individuais, que descrevem contratos, exemplos, tokens e limitações. Os componentes de seleção e os grupos reutilizam estruturas internas em `selection`.
 
 A [comparação com os componentes mobile](components/comparacao-mobile-web.md) regista capacidades, diferenças de plataforma e limitações conhecidas.
+
+### Composição e navegação
 
 Os contentores [Card](components/Card.md), [ContentPanel](components/ContentPanel.md) e [FormGroup](components/FormGroup.md) recebem conteúdo e ações da aplicação; os layouts responsivos dos dois últimos usam container queries.
 
 [Tab](components/Tab.md), [Tabs](components/Tabs.md) e [TabPanel](components/TabPanel.md) compõem separadores e painéis controlados, com navegação e associações acessíveis próprias da web.
 
 [PageButton](components/PageButton.md) e [Pagination](components/Pagination.md) compõem navegação por páginas controlada pela aplicação, sem carregar dados; o seletor de tamanho web é nativo.
+
+### Dados e componentes de domínio
 
 [ActivityItem](components/ActivityItem.md) e [Timeline](components/Timeline.md) apresentam acontecimentos e histórico fornecidos pela aplicação; a ordenação é visual e a carga incremental continua sob controlo do consumidor.
 
@@ -62,11 +66,15 @@ Os contentores [Card](components/Card.md), [ContentPanel](components/ContentPane
 
 [ClientSummary](components/ClientSummary.md), [EquipmentCard](components/EquipmentCard.md) e [ServiceOrderCard](components/ServiceOrderCard.md) compõem Card, StatusBadge e Button para apresentar dados fornecidos pela aplicação; partilham a disposição interna de pares etiqueta/valor em `BusinessCard`.
 
+### Formulários e seletores
+
 [Select](components/Select.md) usa seleção nativa controlada e pesquisa local opcional. [Form](components/Form.md) compõe campos num formulário HTML; a aplicação mantém dados, validações de negócio e operações de submissão.
 
 [DatePicker](components/DatePicker.md), [DateRangePicker](components/DateRangePicker.md) e [TimePicker](components/TimePicker.md) recebem valores civis e limites controlados; os seletores web são nativos e a aplicação valida disponibilidade e regras de negócio.
 
 [TeamSelector](components/TeamSelector.md), [UserSelector](components/UserSelector.md) e [AssignmentPanel](components/AssignmentPanel.md) apresentam opções e pedidos de atribuição controlados; a aplicação e o servidor validam associação, disponibilidade e permissões.
+
+### Estrutura, tabelas e sobreposições
 
 [NavItem](components/NavItem.md), [AppHeader](components/AppHeader.md), [PageLayout](components/PageLayout.md) e [AppShell](components/AppShell.md) compõem navegação e estrutura responsiva com slots; a aplicação continua responsável por rotas, destinos e foco entre páginas.
 
