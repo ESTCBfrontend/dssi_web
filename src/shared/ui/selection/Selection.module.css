@@ -1,0 +1,45 @@
+.root { display: flex; position: relative; align-items: center; gap: 8px; box-sizing: border-box; min-width: 0; padding: 4px 0; color: var(--mds-color-text-primary, #1f2938); cursor: pointer; font: 500 14px/20px Inter, system-ui, sans-serif; }
+.compact { min-height: 36px; }
+.comfortable { min-height: 44px; }
+.input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+.text { display: flex; flex: 1; flex-direction: column; min-width: 0; gap: 3px; overflow-wrap: anywhere; }
+.description { color: var(--mds-color-text-secondary, #667385); font: 400 12px/18px Inter, system-ui, sans-serif; }
+.root:has(.input:disabled) { color: var(--mds-color-text-disabled, #667385); cursor: not-allowed; }
+.root:has(.input:disabled) .description { color: var(--mds-color-text-disabled, #667385); }
+.visual { display: grid; place-items: center; flex: none; width: 28px; height: 28px; box-sizing: border-box; }
+.checkbox .visual { border-radius: 8px; }
+.checkbox .input:focus-visible + .visual { outline: 2px solid var(--mds-color-border-focus, #2159b8); outline-offset: -2px; }
+.checkbox .mark { box-sizing: border-box; display: grid; place-items: center; width: 18px; height: 18px; border: 1.5px solid var(--mds-color-border-strong, #667385); border-radius: 5px; background: var(--mds-color-bg-surface, #fff); }
+.checkbox.comfortable .mark { width: 20px; height: 20px; border-radius: 6px; }
+.checkbox .input:checked + .visual .mark, .checkbox .input:indeterminate + .visual .mark { border-color: var(--mds-color-bg-brand, #2159b8); background-color: var(--mds-color-bg-brand, #2159b8); }
+.checkbox .input:checked + .visual .mark { background-image: url('./assets/check.svg'); background-size: 14px 14px; background-position: center; background-repeat: no-repeat; }
+.checkbox .input:indeterminate + .visual .mark { background-image: none; }
+.checkbox .input:indeterminate + .visual .mark::after { content: ''; width: 10px; height: 2px; border-radius: 1px; background: var(--mds-color-icon-on-brand, #fff); }
+.checkbox .input:disabled + .visual .mark { background-color: var(--mds-color-bg-action-disabled, #e9edf3); border-color: var(--mds-color-border-disabled, #dee3eb); }
+.checkbox .input:disabled:checked + .visual .mark { background-image: url('./assets/check-disabled.svg'); }
+.checkbox .input:disabled:indeterminate + .visual .mark::after { background: var(--mds-color-icon-default, #475569); }
+.radio .visual { background: url('./assets/radio0.svg') center no-repeat; }
+.radio .input:checked + .visual { background-image: url('./assets/radio1.svg'); }
+.radio .input:focus-visible + .visual { background-image: url('./assets/radio2.svg'); }
+.radio .input:checked:focus-visible + .visual { background-image: url('./assets/radio3.svg'); }
+.radio .input:disabled + .visual { background-image: url('./assets/radio4.svg'); }
+.radio .input:disabled:checked + .visual { background-image: url('./assets/radio5.svg'); }
+.radio.comfortable .visual { background-image: url('./assets/radio6.svg'); }
+.radio.comfortable .input:checked + .visual { background-image: url('./assets/radio7.svg'); }
+.radio.comfortable .input:focus-visible + .visual { background-image: url('./assets/radio8.svg'); }
+.radio.comfortable .input:checked:focus-visible + .visual { background-image: url('./assets/radio9.svg'); }
+.radio.comfortable .input:disabled + .visual { background-image: url('./assets/radio10.svg'); }
+.radio.comfortable .input:disabled:checked + .visual { background-image: url('./assets/radio11.svg'); }
+.switch { gap: 16px; padding: 4px; min-height: 44px; }
+.switch.comfortable { min-height: 52px; }
+.switch .text { order: -1; }
+.switch .visual { width: 48px; height: 44px; border-radius: 14px; background: url('./assets/switch0.svg') center no-repeat; }
+.switch .input:checked + .visual { background-image: url('./assets/switch1.svg'); }
+.switch .input:disabled + .visual { background-image: url('./assets/switch2.svg'); }
+.switch .input:disabled:checked + .visual { background-image: url('./assets/switch3.svg'); }
+.switch.comfortable .visual { width: 56px; border-radius: 16px; background-image: url('./assets/switch4.svg'); }
+.switch.comfortable .input:checked + .visual { background-image: url('./assets/switch5.svg'); }
+.switch.comfortable .input:disabled + .visual { background-image: url('./assets/switch6.svg'); }
+.switch.comfortable .input:disabled:checked + .visual { background-image: url('./assets/switch7.svg'); }
+.switch .input:focus-visible + .visual { outline: 2px solid var(--mds-color-border-focus, #2159b8); outline-offset: -4px; }
+@media (forced-colors: active) { .input { position: static; opacity: 1; width: auto; height: auto; } .visual { display: none; } }
