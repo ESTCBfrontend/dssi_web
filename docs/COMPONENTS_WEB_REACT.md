@@ -465,6 +465,8 @@ Também implementados: [AttachmentItem](components/AttachmentItem.md) e [FileUpl
 
 Também implementados: [PhotoTile](components/PhotoTile.md) e [ImagePicker](components/ImagePicker.md).
 
+Também implementados: [ClientSummary](components/ClientSummary.md), [EquipmentCard](components/EquipmentCard.md) e [ServiceOrderCard](components/ServiceOrderCard.md).
+
 ### 9.1 — Átomos (3 famílias)
 
 #### `MDS/AlertIcon`

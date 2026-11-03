@@ -60,6 +60,8 @@ Os contentores [Card](components/Card.md), [ContentPanel](components/ContentPane
 
 [PhotoTile](components/PhotoTile.md) e [ImagePicker](components/ImagePicker.md) apresentam e selecionam imagens controladas; processamento, recursos temporários, câmara e transferência pertencem à aplicação.
 
+[ClientSummary](components/ClientSummary.md), [EquipmentCard](components/EquipmentCard.md) e [ServiceOrderCard](components/ServiceOrderCard.md) compõem Card, StatusBadge e Button para apresentar dados fornecidos pela aplicação; partilham a disposição interna de pares etiqueta/valor em `BusinessCard`.
+
 ## Orientação a objetos e abstração
 
 Usa objetos e classes quando encapsulem comportamento, invariantes ou responsabilidades que beneficiem de um contrato explícito. Prefere composição a herança profunda.
