@@ -48,6 +48,8 @@ A [comparação com os componentes mobile](components/comparacao-mobile-web.md) 
 
 Os contentores [Card](components/Card.md), [ContentPanel](components/ContentPanel.md) e [FormGroup](components/FormGroup.md) recebem conteúdo e ações da aplicação; os layouts responsivos dos dois últimos usam container queries.
 
+[Tab](components/Tab.md), [Tabs](components/Tabs.md) e [TabPanel](components/TabPanel.md) compõem separadores e painéis controlados, com navegação e associações acessíveis próprias da web.
+
 ## Orientação a objetos e abstração
 
 Usa objetos e classes quando encapsulem comportamento, invariantes ou responsabilidades que beneficiem de um contrato explícito. Prefere composição a herança profunda.

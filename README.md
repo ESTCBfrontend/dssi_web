@@ -35,3 +35,5 @@ O [guia de componentes React Web](docs/COMPONENTS_WEB_REACT.md) reúne o catálo
 Implementados: [Button](docs/components/Button.md), [StatusBadge](docs/components/StatusBadge.md), [TextField](docs/components/TextField.md), [Textarea](docs/components/Textarea.md), [FormField](docs/components/FormField.md), [Checkbox](docs/components/Checkbox.md), [Radio](docs/components/Radio.md), [Switch](docs/components/Switch.md), [CheckboxGroup](docs/components/CheckboxGroup.md), [RadioGroup](docs/components/RadioGroup.md), [ProgressBar](docs/components/ProgressBar.md), [LoadingIndicator](docs/components/LoadingIndicator.md), [AlertIcon](docs/components/AlertIcon.md) e [Alert](docs/components/Alert.md).
 
 Também implementados: [Card](docs/components/Card.md), [ContentPanel](docs/components/ContentPanel.md) e [FormGroup](docs/components/FormGroup.md).
+
+Também implementados: [Tab](docs/components/Tab.md), [Tabs](docs/components/Tabs.md) e [TabPanel](docs/components/TabPanel.md).
