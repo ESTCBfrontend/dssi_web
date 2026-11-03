@@ -64,6 +64,8 @@ Os contentores [Card](components/Card.md), [ContentPanel](components/ContentPane
 
 [Select](components/Select.md) usa seleção nativa controlada e pesquisa local opcional. [Form](components/Form.md) compõe campos num formulário HTML; a aplicação mantém dados, validações de negócio e operações de submissão.
 
+[DatePicker](components/DatePicker.md), [DateRangePicker](components/DateRangePicker.md) e [TimePicker](components/TimePicker.md) recebem valores civis e limites controlados; os seletores web são nativos e a aplicação valida disponibilidade e regras de negócio.
+
 ## Orientação a objetos e abstração
 
 Usa objetos e classes quando encapsulem comportamento, invariantes ou responsabilidades que beneficiem de um contrato explícito. Prefere composição a herança profunda.
