@@ -12,6 +12,7 @@ export interface SelectionOption {
 export interface SelectionGroupProps {
   label: string
   description?: string
+  helperText?: string
   error?: string
   layout?: 'stacked' | 'twoColumns'
   disabled?: boolean
@@ -19,15 +20,18 @@ export interface SelectionGroupProps {
   children: (ids: { describedBy?: string; invalid?: boolean }) => ReactNode
 }
 
-export function SelectionGroup({ label, description, error, layout = 'stacked', disabled, className, children }: SelectionGroupProps) {
+export function SelectionGroup({ label, description, helperText, error, layout = 'stacked', disabled, className, children }: SelectionGroupProps) {
   const id = useId()
+  if (!label.trim()) throw new Error('O grupo de seleção requer uma label não vazia.')
+  if (error !== undefined && !error.trim()) throw new Error('O grupo de seleção requer uma mensagem de erro não vazia.')
   const descriptionId = description ? `${id}-description` : undefined
-  const errorId = error ? `${id}-error` : undefined
-  const describedBy = [descriptionId, errorId].filter(Boolean).join(' ') || undefined
+  const message = error || helperText
+  const messageId = message ? `${id}-message` : undefined
+  const describedBy = [descriptionId, messageId].filter(Boolean).join(' ') || undefined
   return <fieldset disabled={disabled} aria-describedby={describedBy} className={[styles.group, styles[layout], error && styles.invalid, className].filter(Boolean).join(' ')}>
     <legend className={styles.legend}>{label}</legend>
     {description && <div className={styles.description} id={descriptionId}>{description}</div>}
     <div className={styles.options}>{children({ describedBy, invalid: error ? true : undefined })}</div>
-    {error && <div className={styles.error} id={errorId}>{error}</div>}
+    {message && <div className={error ? styles.error : styles.help} id={messageId}>{message}</div>}
   </fieldset>
 }

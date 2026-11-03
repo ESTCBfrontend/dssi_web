@@ -10,9 +10,9 @@ import { CheckboxGroup } from '../../shared/ui/CheckboxGroup'
 
 ## API
 
-- `label`: legenda obrigatória; `description` e `error` são textos opcionais. O erro altera a borda, é apresentado em texto e associado ao grupo e opções.
+- `label`: legenda obrigatória e não vazia; `description`, `helperText` e `error` são textos opcionais. O erro não pode ser vazio, substitui a ajuda, altera a borda e é associado ao grupo e opções.
 - `options`: lista de `{ value: string, label: string, description?: string, disabled?: boolean }`; cada `value` deve ser único e estável.
-- `values` é a lista controlada de valores selecionados; `onChange` recebe uma nova lista. Valores selecionados que não constem das opções são preservados ao alterar outra opção. O consumidor decide como validar e limpar dados.
+- `values` é a lista controlada de valores selecionados; `onChange` recebe uma nova lista. Valores selecionados que não constem das opções são preservados ao alterar outra opção; valores duplicados em `options` ou `values` geram erro. O consumidor decide como validar e limpar dados.
 - `name` define o nome nativo de submissão para cada checkbox; `disabled` desativa o grupo inteiro; cada opção também pode ser desativada. `size` define a dimensão dos controlos.
 - `layout` aceita `stacked` ou `twoColumns`; no segundo caso a grelha só usa duas colunas quando o contentor tem espaço suficiente. `className` personaliza o contentor.
 

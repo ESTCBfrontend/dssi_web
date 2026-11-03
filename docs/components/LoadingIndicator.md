@@ -11,11 +11,11 @@ import { LoadingIndicator } from '../../shared/ui/LoadingIndicator'
 
 ## API e comportamento
 
-- `type`: `spinner` (padrão), `inline` ou `skeleton`; `size`: `compact` (padrão) ou `comfortable`.
-- `label` descreve a espera, com valor inicial «A processar...». Em `inline` é visível; nas outras variantes está disponível a leitores de ecrã. O indicador usa `role="status"`; não coloca `aria-busy` automaticamente no conteúdo que está a ser atualizado: o consumidor deve gerir esse atributo na região relevante.
+- `type`: `spinner` (padrão), `inline` ou `skeleton`; `size`: `compact` ou `comfortable` (padrão).
+- `label` descreve a espera e não pode ser vazia, com valor inicial «A processar...». Em `inline` é visível; nas outras variantes está disponível a leitores de ecrã. O indicador usa `role="status"` e `aria-live="off"` por omissão; a composição pode optar por anúncios adequados. O consumidor deve gerir `aria-busy` na região relevante.
 - `active={false}` não apresenta o indicador. `reducedMotion` desativa a rotação; a preferência de movimento reduzido do sistema também a desativa. O skeleton é estático.
-- `className` personaliza o contentor. O skeleton adapta a largura ao espaço disponível.
+- `skeletonLines` configura entre 1 e 20 linhas inteiras, com três por omissão. `spinnerSrc` permite substituir o SVG para um tema personalizado; o recurso deve corresponder ao tamanho escolhido. `className`, `style` e atributos HTML permitem personalizar o contentor. O skeleton adapta a largura ao espaço disponível.
 
 ## Tema e validação
 
-Usa tokens CSS `--mds-*` com valores de reserva do Figma e Inter quando disponível. Os SVGs originais do spinner têm cores fixas, pelo que é necessário verificar a sua legibilidade em temas personalizados. Validar nome acessível, ativação/desativação, movimento reduzido, contraste e conteúdo estreito no navegador.
+Usa tokens CSS `--mds-*` com valores de reserva do Figma e Inter quando disponível. Os SVGs originais do spinner têm cores fixas e podem ser substituídos por `spinnerSrc`; verifica a sua legibilidade em temas personalizados. Validar nome acessível, ativação/desativação, movimento reduzido, contraste e conteúdo estreito no navegador.

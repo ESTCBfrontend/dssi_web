@@ -449,6 +449,8 @@ Cada ficha indica: (i) variantes de referência, (ii) contrato runtime sugerido,
 
 **Estado implementado:** [Button](components/Button.md), [StatusBadge](components/StatusBadge.md), [TextField](components/TextField.md), [Textarea](components/Textarea.md), [FormField](components/FormField.md), [Checkbox](components/Checkbox.md), [Radio](components/Radio.md), [Switch](components/Switch.md), [CheckboxGroup](components/CheckboxGroup.md), [RadioGroup](components/RadioGroup.md), [ProgressBar](components/ProgressBar.md) e [LoadingIndicator](components/LoadingIndicator.md). As fichas individuais descrevem as APIs reais e as limitações; os contratos e exemplos deste catálogo permanecem propostas de referência. Os campos e controlos individuais aceitam propriedades nativas React, incluindo uso controlado ou não controlado; os grupos de seleção têm estado controlado.
 
+Consulta também a [comparação com os componentes mobile](components/comparacao-mobile-web.md), incluindo diferenças de plataforma e limitações atuais.
+
 ### 9.1 — Átomos (3 famílias)
 
 #### `MDS/AlertIcon`

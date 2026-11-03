@@ -10,8 +10,8 @@ import { RadioGroup } from '../../shared/ui/RadioGroup'
 
 ## API
 
-- `label` é a legenda obrigatória; `description` e `error` são opcionais. O erro é apresentado em texto e associado ao grupo e às opções.
-- `options`: lista de `{ value: string, label: string, description?: string, disabled?: boolean }`; usa valores únicos e estáveis.
+- `label` é a legenda obrigatória e não vazia; `description`, `helperText` e `error` são opcionais. O erro não pode ser vazio, substitui a ajuda e é associado ao grupo e às opções.
+- `options`: lista de `{ value: string, label: string, description?: string, disabled?: boolean }`; valores duplicados geram erro e os valores devem ser estáveis.
 - `value` é o valor controlado ou `null` para nenhuma seleção; `onChange` recebe o valor escolhido. `required` ativa a validação nativa; `disabled` desativa o grupo e cada opção também pode ser desativada.
 - `name` define o nome nativo de submissão; se omitido é gerado um nome distinto por grupo. Para uma chave de submissão previsível fornece `name` explicitamente. `size` define a dimensão dos radios.
 - `layout` aceita `stacked` ou `twoColumns`, com adaptação à largura do contentor. `className` personaliza o contentor.
