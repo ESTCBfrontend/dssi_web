@@ -473,6 +473,8 @@ Também implementados: [DatePicker](components/DatePicker.md), [DateRangePicker]
 
 Também implementados: [TeamSelector](components/TeamSelector.md), [UserSelector](components/UserSelector.md) e [AssignmentPanel](components/AssignmentPanel.md).
 
+Também implementados: [NavItem](components/NavItem.md), [AppHeader](components/AppHeader.md), [PageLayout](components/PageLayout.md) e [AppShell](components/AppShell.md).
+
 ### 9.1 — Átomos (3 famílias)
 
 #### `MDS/AlertIcon`

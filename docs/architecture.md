@@ -68,6 +68,8 @@ Os contentores [Card](components/Card.md), [ContentPanel](components/ContentPane
 
 [TeamSelector](components/TeamSelector.md), [UserSelector](components/UserSelector.md) e [AssignmentPanel](components/AssignmentPanel.md) apresentam opções e pedidos de atribuição controlados; a aplicação e o servidor validam associação, disponibilidade e permissões.
 
+[NavItem](components/NavItem.md), [AppHeader](components/AppHeader.md), [PageLayout](components/PageLayout.md) e [AppShell](components/AppShell.md) compõem navegação e estrutura responsiva com slots; a aplicação continua responsável por rotas, destinos e foco entre páginas.
+
 ## Orientação a objetos e abstração
 
 Usa objetos e classes quando encapsulem comportamento, invariantes ou responsabilidades que beneficiem de um contrato explícito. Prefere composição a herança profunda.

@@ -55,3 +55,5 @@ Também implementados: [Select](docs/components/Select.md) e [Form](docs/compone
 Também implementados: [DatePicker](docs/components/DatePicker.md), [DateRangePicker](docs/components/DateRangePicker.md) e [TimePicker](docs/components/TimePicker.md).
 
 Também implementados: [TeamSelector](docs/components/TeamSelector.md), [UserSelector](docs/components/UserSelector.md) e [AssignmentPanel](docs/components/AssignmentPanel.md).
+
+Também implementados: [NavItem](docs/components/NavItem.md), [AppHeader](docs/components/AppHeader.md), [PageLayout](docs/components/PageLayout.md) e [AppShell](docs/components/AppShell.md).
