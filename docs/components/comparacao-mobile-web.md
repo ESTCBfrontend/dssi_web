@@ -13,6 +13,7 @@ Esta comparação descreve as APIs existentes após a revisão dos componentes p
 | CheckboxGroup, RadioGroup | Ambos recebem opções dinâmicas e estado controlado, validam valores únicos e suportam disposição adaptável, descrição e erro. Web usa `fieldset`/`legend`, nomes de formulário e associações ARIA. |
 | ProgressBar | Ambos limitam valores ao intervalo, rejeitam intervalos inválidos e estados de conclusão incompletos, e sincronizam texto, preenchimento e valor acessível. O texto do estado pode ser personalizado ou ocultado visualmente. |
 | LoadingIndicator | Ambos oferecem spinner, inline, skeleton, número de linhas configurável, ativação, movimento reduzido e texto acessível. Web utiliza `role="status"`; a composição decide anúncios e `aria-busy` na região afetada. |
+| AlertIcon, Alert | Ambos oferecem tons, etiqueta, composição, ação e fecho configuráveis. A web permite escolher anúncios normais ou urgentes com semântica própria do navegador; a visibilidade é controlada pelo consumidor. O símbolo do ícone usa texto na web e recurso gráfico no mobile. |
 
 ## Tema e validação
 
