@@ -25,6 +25,7 @@ Esta comparação descreve as APIs existentes após a revisão dos componentes p
 | Select, Form | Ambos recebem opções e dados controlados, suportam pesquisa local, erros, carregamento e composição de campos. Na web o Select usa controlo nativo com pesquisa separada e o Form usa semântica e reset HTML; mobile usa um painel de opções e controlos nativos da plataforma. |
 | DatePicker, DateRangePicker, TimePicker | Ambos usam datas civis e horas locais controladas, limites, estados de erro e disponibilidade fornecida pelo consumidor. Web usa inputs e select nativos do navegador; mobile usa seletores de sistema e painel de horários. O aspeto e a localidade visual dependem da plataforma. |
 | TeamSelector, UserSelector, AssignmentPanel | Ambos recebem listas e seleção controladas, pesquisa local, erros e autorização explícita de submissão; a pessoa é preservada ao alterar equipa. A web usa select nativo e pesquisa separada, enquanto mobile usa painel com opções visuais e avatares. A validação definitiva continua na aplicação e servidor. |
+| NavItem, AppHeader, PageLayout, AppShell | Ambos compõem cabeçalho, navegação e conteúdo sem escolher rotas; aceitam estado, ações e slots da aplicação. A web usa links, landmarks, atalho para o conteúdo e uma navegação responsiva lateral ou inferior; mobile usa controlos e áreas seguras nativos. |
 
 ## Tema e validação
 

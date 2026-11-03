@@ -1,0 +1,9 @@
+.root { box-sizing: border-box; container: mds-page / inline-size; display: flex; flex-direction: column; gap: 18px; width: 100%; min-width: 0; padding: var(--mds-page-padding, 18px); border-radius: var(--mds-page-radius, 14px); background: var(--mds-color-bg-page, #f5f7fa); color: var(--mds-color-text-primary, #1f2938); font-family: var(--mds-font-family, Inter, sans-serif); }
+.scrollable { overflow: auto; min-height: 0; }
+.breadcrumbs { color: var(--mds-color-text-secondary, #667385); font-size: 11px; overflow-wrap: anywhere; }
+.heading { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.copy, .content, .footer { min-width: 0; }
+.title { margin: 0; font-size: 22px; line-height: 30px; font-weight: 600; overflow-wrap: anywhere; }
+.description { margin: 6px 0 0; color: var(--mds-color-text-secondary, #667385); font-size: 14px; line-height: 21px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+@container mds-page (min-width: 640px) { .wide .heading { flex-direction: row; justify-content: space-between; align-items: flex-start; } .wide .copy { flex: 1; } }
