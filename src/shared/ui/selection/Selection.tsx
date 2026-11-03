@@ -19,6 +19,7 @@ export function Selection({ kind, label, description, size = 'comfortable', inde
   const descriptionId = description ? `${inputId}-description` : undefined
   const localRef = useRef<HTMLInputElement | null>(null)
   useLayoutEffect(() => { if (localRef.current && kind === 'checkbox') localRef.current.indeterminate = indeterminate })
+  if (!label.trim()) throw new Error('O controlo de seleção requer uma label não vazia.')
   return <label className={[styles.root, styles[size], styles[kind], className].filter(Boolean).join(' ')}>
     <input {...props} id={inputId} ref={node => { localRef.current = node; if (typeof ref === 'function') ref(node); else if (ref) ref.current = node }} type={kind === 'radio' ? 'radio' : 'checkbox'} role={kind === 'switch' ? 'switch' : undefined} aria-labelledby={props['aria-labelledby'] ?? (props['aria-label'] ? undefined : labelId)} aria-describedby={[describedBy, descriptionId].filter(Boolean).join(' ') || undefined} className={styles.input} />
     <span aria-hidden="true" className={styles.visual}><span className={styles.mark} /></span>

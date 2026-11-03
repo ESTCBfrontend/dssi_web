@@ -2,6 +2,8 @@
 .small { min-height: 24px; padding: 4px 9px; font-size: 11px; }
 .medium { min-height: 30px; padding: 6px 12px; font-size: 12px; }
 .badge img, .icon { flex: none; }
+.small img { width: 6px; height: 6px; }
+.medium img { width: 7px; height: 7px; }
 .icon { display: inline-flex; }
 .neutral { --badge-soft: var(--mds-color-bg-status-neutral, #e9edf3); --badge-text: var(--mds-color-text-primary, #1f2938); --badge-solid: var(--mds-color-bg-status-neutral-solid, #475569); }
 .info { --badge-soft: var(--mds-color-bg-info, #eff8ff); --badge-text: var(--mds-color-text-info, #175cd3); --badge-solid: var(--mds-color-bg-status-info-solid, #175cd3); }

@@ -17,4 +17,4 @@ import { Switch } from '../../shared/ui/Switch'
 
 ## Tema e validação
 
-Os SVGs de fundo e marcador são os originais do Figma e têm cores fixas; alterações de tema exigem verificar a sua legibilidade. As cores de texto e foco usam propriedades CSS `--mds-*`. Inter recorre à fonte do sistema quando indisponível. Validar alternância, estado anunciado, teclado, desativação, reset, contraste e zoom.
+Os SVGs de fundo e marcador são os originais do Figma e têm cores fixas. Podem ser substituídos pelas propriedades CSS `--mds-switch-{compact|comfortable}-{default|disabled}-{on|off}`, com valores `url(...)`; os recursos devem respeitar as dimensões originais de cada tamanho. As cores de texto e foco usam propriedades CSS `--mds-*`. Inter recorre à fonte do sistema quando indisponível. Validar alternância, estado anunciado, teclado, desativação, reset, contraste e zoom.

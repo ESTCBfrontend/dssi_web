@@ -20,4 +20,4 @@ import { Radio } from '../../shared/ui/Radio'
 
 ## Tema e validação
 
-Os SVGs dos estados são os originais do Figma, com cores fixas; os tokens CSS afetam texto e foco, mas a personalização dos SVGs exige atenção. Inter recorre à fonte do sistema se indisponível. Validar seleção exclusiva, teclado, desativação, contraste, reset e zoom no contexto de utilização.
+Os SVGs dos estados são os originais do Figma, com cores fixas. Podem ser substituídos pelas propriedades CSS `--mds-radio-{compact|comfortable}-{default|focus|disabled}-{checked|unchecked}`, com valores `url(...)` e recursos de 28 × 28 px. Inter recorre à fonte do sistema se indisponível. Validar seleção exclusiva, teclado, desativação, contraste, reset e zoom no contexto de utilização.

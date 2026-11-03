@@ -19,4 +19,4 @@ import { Checkbox } from '../../shared/ui/Checkbox'
 
 ## Tema e validação
 
-As cores usam propriedades CSS `--mds-*` com valores de reserva do Figma. Os ícones do visto são SVGs originais com cores fixas; verificar contraste após personalizar o tema. Inter usa a fonte do sistema quando indisponível. Validar seleção, estado misto, teclado, reset, desativação, contraste e zoom.
+As cores usam propriedades CSS `--mds-*` com valores de reserva do Figma. Os ícones do visto são SVGs originais com cores fixas; podem ser substituídos por `--mds-checkbox-check-image` e `--mds-checkbox-disabled-check-image`, com valores CSS `url(...)`. Verifica contraste após personalizar o tema. Inter usa a fonte do sistema quando indisponível. Validar seleção, estado misto, teclado, reset, desativação, contraste e zoom.

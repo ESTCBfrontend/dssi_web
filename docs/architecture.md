@@ -38,9 +38,13 @@ Os contratos devem ficar junto de quem define a necessidade. Não é obrigatóri
 
 ## Componentes visuais implementados
 
-Os componentes partilhados existentes estão em `src/shared/ui`. A implementação atual usa CSS Modules e propriedades CSS semânticas `--mds-*`, com valores de reserva consultados no Figma; podem ser substituídos por um antepassado. Não existe ainda um provider de tema global. A fonte Inter é usada quando disponível, com alternativa do sistema. Estes factos descrevem o código existente, sem impor uma solução futura de tema.
+Os componentes visuais partilhados usam tokens semânticos CSS configuráveis; a composição da aplicação pode fornecer temas e mudar entre eles, sem persistência implícita. Os tokens são acrescentados conforme as necessidades dos componentes e documentados com a correspondência ao Figma. Os recursos visuais usados pelos componentes também devem permitir personalização quando o tema o exigir.
+
+Os componentes existentes estão em `src/shared/ui`. A implementação atual usa CSS Modules e propriedades `--mds-*` com valores de reserva consultados no Figma, substituíveis por um antepassado. Não existe ainda um provider de tema global; os recursos SVG originais têm cores fixas e as opções de substituição são descritas nas fichas individuais. A fonte Inter é usada quando disponível, com alternativa do sistema.
 
 Contratos, exemplos, tokens e limitações: [Button](components/Button.md), [StatusBadge](components/StatusBadge.md), [TextField](components/TextField.md), [Textarea](components/Textarea.md), [FormField](components/FormField.md), [Checkbox](components/Checkbox.md), [Radio](components/Radio.md), [Switch](components/Switch.md), [CheckboxGroup](components/CheckboxGroup.md), [RadioGroup](components/RadioGroup.md), [ProgressBar](components/ProgressBar.md) e [LoadingIndicator](components/LoadingIndicator.md). Os componentes de seleção e os grupos reutilizam estruturas internas em `selection`; alguns SVGs têm cores fixas do Figma e exigem atenção na personalização visual.
+
+A [comparação com os componentes mobile](components/comparacao-mobile-web.md) regista capacidades, diferenças de plataforma e limitações conhecidas.
 
 ## Orientação a objetos e abstração
 

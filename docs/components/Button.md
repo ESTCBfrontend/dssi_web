@@ -15,6 +15,7 @@ import { Button } from '../../shared/ui/Button'
 - `variant`: `primary` (padrão), `secondary`, `outline` ou `danger`.
 - `size`: `small`, `medium` (padrão) ou `large`; a dimensão pequena destina-se a interfaces densas.
 - `disabled`: desativa o botão nativo. `loading` também o desativa, marca-o com `aria-busy` e apresenta um indicador decorativo. O texto continua visível.
+- `loadingLabel`: texto opcional e não vazio que substitui o conteúdo visível enquanto `loading` está ativo.
 - `iconStart` e `iconEnd`: elementos decorativos opcionais. Usa `aria-label` quando necessário; não coloques controlos interativos nos ícones.
 - `fullWidth`: ocupa a largura disponível. `className`, `style`, `ref` e demais atributos nativos podem ser usados; `type` é `button` por omissão, pelo que a submissão exige `type="submit"`.
 

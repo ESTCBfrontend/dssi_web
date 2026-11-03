@@ -14,6 +14,7 @@ import { Textarea } from '../../shared/ui/Textarea'
 ## API e comportamento
 
 - `height`: `compact` (padrão) ou `comfortable`; a largura acompanha o contentor e a altura pode ser redimensionada verticalmente.
+- `autoGrow`: quando ativo, ajusta a altura ao conteúdo nas alterações e na mudança de dimensões, mantendo a altura mínima da variante. A medição depende do layout real do navegador; quando desativado mantém o redimensionamento nativo.
 - `showCounter` apresenta a contagem atual e, se existir, `maxLength`. A contagem segue o comprimento de strings JavaScript e o limite nativo do browser. O contador visual não é uma região viva; quando o limite for relevante, comunica-o também na ajuda associada ao campo.
 - Aceita `value`/`onChange` ou `defaultValue`, `disabled`, `required`, `ref`, `aria-invalid` e restantes propriedades nativas de `textarea`. Um reset nativo do formulário atualiza o contador não controlado.
 - O foco é visível; usa `aria-invalid` e uma mensagem associada para erros. Garante sempre uma etiqueta acessível.
