@@ -62,6 +62,8 @@ Os contentores [Card](components/Card.md), [ContentPanel](components/ContentPane
 
 [ClientSummary](components/ClientSummary.md), [EquipmentCard](components/EquipmentCard.md) e [ServiceOrderCard](components/ServiceOrderCard.md) compõem Card, StatusBadge e Button para apresentar dados fornecidos pela aplicação; partilham a disposição interna de pares etiqueta/valor em `BusinessCard`.
 
+[Select](components/Select.md) usa seleção nativa controlada e pesquisa local opcional. [Form](components/Form.md) compõe campos num formulário HTML; a aplicação mantém dados, validações de negócio e operações de submissão.
+
 ## Orientação a objetos e abstração
 
 Usa objetos e classes quando encapsulem comportamento, invariantes ou responsabilidades que beneficiem de um contrato explícito. Prefere composição a herança profunda.
