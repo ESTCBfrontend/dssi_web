@@ -40,7 +40,7 @@ Os contratos devem ficar junto de quem define a necessidade. Não é obrigatóri
 
 Os componentes partilhados existentes estão em `src/shared/ui`. A implementação atual usa CSS Modules e propriedades CSS semânticas `--mds-*`, com valores de reserva consultados no Figma; podem ser substituídos por um antepassado. Não existe ainda um provider de tema global. A fonte Inter é usada quando disponível, com alternativa do sistema. Estes factos descrevem o código existente, sem impor uma solução futura de tema.
 
-Contratos, exemplos, tokens e limitações: [Button](components/Button.md), [StatusBadge](components/StatusBadge.md), [TextField](components/TextField.md), [Textarea](components/Textarea.md), [FormField](components/FormField.md), [Checkbox](components/Checkbox.md), [Radio](components/Radio.md) e [Switch](components/Switch.md). Os componentes de seleção reutilizam a estrutura interna em `selection`; os ficheiros SVG de Radio e Switch têm cores fixas do Figma e exigem atenção na personalização visual.
+Contratos, exemplos, tokens e limitações: [Button](components/Button.md), [StatusBadge](components/StatusBadge.md), [TextField](components/TextField.md), [Textarea](components/Textarea.md), [FormField](components/FormField.md), [Checkbox](components/Checkbox.md), [Radio](components/Radio.md), [Switch](components/Switch.md), [CheckboxGroup](components/CheckboxGroup.md) e [RadioGroup](components/RadioGroup.md). Os componentes de seleção e os grupos reutilizam estruturas internas em `selection`; os ficheiros SVG de Radio e Switch têm cores fixas do Figma e exigem atenção na personalização visual.
 
 ## Orientação a objetos e abstração
 
