@@ -24,6 +24,7 @@ Esta comparação descreve as APIs existentes após a revisão dos componentes p
 | ClientSummary, EquipmentCard, ServiceOrderCard | Ambos recebem dados, estados e ações controlados, permitem etiquetas, campos e badge personalizados e omitem valores opcionais vazios. A web associa campos com `dl` e usa atributos nativos e heading configurável; mobile usa semântica de acessibilidade da plataforma. |
 | Select, Form | Ambos recebem opções e dados controlados, suportam pesquisa local, erros, carregamento e composição de campos. Na web o Select usa controlo nativo com pesquisa separada e o Form usa semântica e reset HTML; mobile usa um painel de opções e controlos nativos da plataforma. |
 | DatePicker, DateRangePicker, TimePicker | Ambos usam datas civis e horas locais controladas, limites, estados de erro e disponibilidade fornecida pelo consumidor. Web usa inputs e select nativos do navegador; mobile usa seletores de sistema e painel de horários. O aspeto e a localidade visual dependem da plataforma. |
+| TeamSelector, UserSelector, AssignmentPanel | Ambos recebem listas e seleção controladas, pesquisa local, erros e autorização explícita de submissão; a pessoa é preservada ao alterar equipa. A web usa select nativo e pesquisa separada, enquanto mobile usa painel com opções visuais e avatares. A validação definitiva continua na aplicação e servidor. |
 
 ## Tema e validação
 

@@ -471,6 +471,8 @@ Também implementados: [Select](components/Select.md) e [Form](components/Form.m
 
 Também implementados: [DatePicker](components/DatePicker.md), [DateRangePicker](components/DateRangePicker.md) e [TimePicker](components/TimePicker.md).
 
+Também implementados: [TeamSelector](components/TeamSelector.md), [UserSelector](components/UserSelector.md) e [AssignmentPanel](components/AssignmentPanel.md).
+
 ### 9.1 — Átomos (3 famílias)
 
 #### `MDS/AlertIcon`
