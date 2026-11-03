@@ -1,0 +1,5 @@
+.row { background: var(--mds-color-bg-surface, #fff); color: var(--mds-color-text-primary, #1f2938); }
+.row:hover { background: var(--mds-color-bg-subtle, #fafbfd); }
+.row.selected, .row.selected:hover { background: var(--mds-color-bg-info, #eff8ff); outline: 1px solid var(--mds-color-border-focus, #2159b8); outline-offset: -1px; }
+.row td, .row th { padding: 10px 16px; border-bottom: 1px solid var(--mds-color-border-default, #dee3eb); font-size: 13px; line-height: 1.4; text-align: left; overflow-wrap: anywhere; }
+.row th { font-weight: 600; }

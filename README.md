@@ -57,3 +57,5 @@ Também implementados: [DatePicker](docs/components/DatePicker.md), [DateRangePi
 Também implementados: [TeamSelector](docs/components/TeamSelector.md), [UserSelector](docs/components/UserSelector.md) e [AssignmentPanel](docs/components/AssignmentPanel.md).
 
 Também implementados: [NavItem](docs/components/NavItem.md), [AppHeader](docs/components/AppHeader.md), [PageLayout](docs/components/PageLayout.md) e [AppShell](docs/components/AppShell.md).
+
+Também implementados: [SortableHeader](docs/components/SortableHeader.md), [TableRow](docs/components/TableRow.md), [DataTable](docs/components/DataTable.md) e [FilterBar](docs/components/FilterBar.md).

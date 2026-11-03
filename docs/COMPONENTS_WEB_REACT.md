@@ -475,6 +475,8 @@ Também implementados: [TeamSelector](components/TeamSelector.md), [UserSelector
 
 Também implementados: [NavItem](components/NavItem.md), [AppHeader](components/AppHeader.md), [PageLayout](components/PageLayout.md) e [AppShell](components/AppShell.md).
 
+Também implementados: [SortableHeader](components/SortableHeader.md), [TableRow](components/TableRow.md), [DataTable](components/DataTable.md) e [FilterBar](components/FilterBar.md).
+
 ### 9.1 — Átomos (3 famílias)
 
 #### `MDS/AlertIcon`
