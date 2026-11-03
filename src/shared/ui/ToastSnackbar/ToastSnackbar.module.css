@@ -1,0 +1,7 @@
+.toast { box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; width: 100%; padding: 16px; border: 1px solid var(--mds-color-border-default, #dee3eb); border-radius: var(--mds-radius-lg, 14px); background: var(--mds-color-bg-surface, #fff); color: var(--mds-color-text-primary, #1f2938); box-shadow: var(--mds-toast-shadow, 0 4px 16px rgb(15 23 42 / 9%)); font-family: var(--mds-font-family, Inter, sans-serif); }
+.message { display: flex; flex: 1 1 160px; min-width: 0; flex-direction: column; gap: 5px; overflow-wrap: anywhere; font-size: 13px; }
+.message strong { font-size: 14px; font-weight: 600; }
+.message strong + span { color: var(--mds-color-text-secondary, #667385); }
+.close { display: flex; align-items: center; justify-content: center; flex: 0 0 44px; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 9px; background: transparent; cursor: pointer; }
+.close:focus-visible { outline: 2px solid var(--mds-color-border-focus, #2159b8); outline-offset: 2px; }
+.close img { display: block; }
