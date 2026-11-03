@@ -461,6 +461,8 @@ Também implementados: [ActivityItem](components/ActivityItem.md) e [Timeline](c
 
 Também implementados: [TaskProgress](components/TaskProgress.md), [ChecklistItem](components/ChecklistItem.md) e [Checklist](components/Checklist.md).
 
+Também implementados: [AttachmentItem](components/AttachmentItem.md) e [FileUpload](components/FileUpload.md).
+
 ### 9.1 — Átomos (3 famílias)
 
 #### `MDS/AlertIcon`
