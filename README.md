@@ -30,7 +30,7 @@ Os princípios de qualidade e a direção de organização do código estão em 
 
 ## Componentes da interface
 
-O [guia de componentes React Web](docs/COMPONENTS_WEB_REACT.md) reúne o catálogo `MDS/*` do Figma, comportamento esperado, propostas de props, variantes, composição, exemplos de utilização e critérios de validação. Consulta-o ao criar, alterar ou reutilizar componentes, com ou sem assistência de IA. O catálogo orienta a implementação incremental; não representa uma biblioteca já implementada.
+O [guia de componentes React Web](docs/COMPONENTS_WEB_REACT.md) reúne o catálogo `MDS/*` do Figma, comportamento esperado, propostas de props, variantes, composição, exemplos de utilização e critérios de validação. Consulta-o ao criar, alterar ou reutilizar componentes, com ou sem assistência de IA. As fichas individuais descrevem as APIs implementadas e as respetivas limitações.
 
 Implementados: [Button](docs/components/Button.md), [StatusBadge](docs/components/StatusBadge.md), [TextField](docs/components/TextField.md), [Textarea](docs/components/Textarea.md), [FormField](docs/components/FormField.md), [Checkbox](docs/components/Checkbox.md), [Radio](docs/components/Radio.md), [Switch](docs/components/Switch.md), [CheckboxGroup](docs/components/CheckboxGroup.md), [RadioGroup](docs/components/RadioGroup.md), [ProgressBar](docs/components/ProgressBar.md), [LoadingIndicator](docs/components/LoadingIndicator.md), [AlertIcon](docs/components/AlertIcon.md) e [Alert](docs/components/Alert.md).
 
@@ -59,3 +59,5 @@ Também implementados: [TeamSelector](docs/components/TeamSelector.md), [UserSel
 Também implementados: [NavItem](docs/components/NavItem.md), [AppHeader](docs/components/AppHeader.md), [PageLayout](docs/components/PageLayout.md) e [AppShell](docs/components/AppShell.md).
 
 Também implementados: [SortableHeader](docs/components/SortableHeader.md), [TableRow](docs/components/TableRow.md), [DataTable](docs/components/DataTable.md) e [FilterBar](docs/components/FilterBar.md).
+
+Também implementados: [Dialog](docs/components/Dialog.md), [DrawerSheet](docs/components/DrawerSheet.md) e [ToastSnackbar](docs/components/ToastSnackbar.md).

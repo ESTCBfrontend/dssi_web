@@ -477,6 +477,8 @@ Também implementados: [NavItem](components/NavItem.md), [AppHeader](components/
 
 Também implementados: [SortableHeader](components/SortableHeader.md), [TableRow](components/TableRow.md), [DataTable](components/DataTable.md) e [FilterBar](components/FilterBar.md).
 
+Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/DrawerSheet.md) e [ToastSnackbar](components/ToastSnackbar.md). As fichas individuais descrevem a API efetiva e os limites de validação.
+
 ### 9.1 — Átomos (3 famílias)
 
 #### `MDS/AlertIcon`
@@ -746,6 +748,7 @@ Também implementados: [SortableHeader](components/SortableHeader.md), [TableRow
 ### 9.6 — Overlays (2 famílias)
 
 #### `MDS/Dialog`
+- **Implementação:** [Dialog](components/Dialog.md); o fecho é pedido por `onCloseRequest` e o estado permanece controlado.
 - **Figma / variantes:** size: compact|wide; intent: neutral|danger.
 - **API dinâmica a definir em TypeScript:** `open, onOpenChange, title, description?, children, actions?, initialFocus?`.
 - **Composição e reutilização:** Button + slots.
@@ -754,6 +757,7 @@ Também implementados: [SortableHeader](components/SortableHeader.md), [TableRow
 - **Referências ao draft do PO:** OS-05; RST-05.
 
 #### `MDS/DrawerSheet`
+- **Implementação:** [DrawerSheet](components/DrawerSheet.md); modal nativo, com pega inferior decorativa e sem gesto de arrastar.
 - **Figma / variantes:** placement: right|bottom|fullscreen.
 - **API dinâmica a definir em TypeScript:** `open, onClose, title, children, actions?, showHandle?`.
 - **Composição e reutilização:** ContentPanel + Button + slots.
@@ -788,6 +792,7 @@ Também implementados: [SortableHeader](components/SortableHeader.md), [TableRow
 - **Referências ao draft do PO:** RST-02; MOB-07.
 
 #### `MDS/ToastSnackbar`
+- **Implementação:** [ToastSnackbar](components/ToastSnackbar.md); a fila não usa portal e a composição deve considerar os diálogos modais nativos.
 - **Figma / variantes:** tone: info|success|warning|danger; layout: compact|detailed.
 - **API dinâmica a definir em TypeScript:** `id, tone, title?, message, action?, durationMs?, dismissible?`.
 - **Composição e reutilização:** AlertIcon + Button + ToastHost.

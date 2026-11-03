@@ -72,6 +72,8 @@ Os contentores [Card](components/Card.md), [ContentPanel](components/ContentPane
 
 [SortableHeader](components/SortableHeader.md), [TableRow](components/TableRow.md), [DataTable](components/DataTable.md) e [FilterBar](components/FilterBar.md) compõem listagens com dados e interações controlados; a aplicação efetua a filtragem, ordenação, paginação e obtenção de resultados.
 
+[Dialog](components/Dialog.md) e [DrawerSheet](components/DrawerSheet.md) partilham uma superfície modal nativa controlada; a aplicação decide abertura, fecho e ações. [ToastSnackbar](components/ToastSnackbar.md) permite apresentação isolada ou fila limitada ao `ToastProvider` escolhido pela composição.
+
 ## Orientação a objetos e abstração
 
 Usa objetos e classes quando encapsulem comportamento, invariantes ou responsabilidades que beneficiem de um contrato explícito. Prefere composição a herança profunda.
