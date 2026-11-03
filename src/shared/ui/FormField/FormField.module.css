@@ -1,0 +1,6 @@
+.field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.label { color: var(--mds-color-text-primary, #1f2938); font: 500 14px/20px Inter, system-ui, sans-serif; }
+.disabled .label { color: var(--mds-color-text-disabled, #667385); }
+.required, .error { color: var(--mds-color-text-danger, #b42318); }
+.help { color: var(--mds-color-text-secondary, #667385); }
+.help, .error { font: 400 12px/18px Inter, system-ui, sans-serif; overflow-wrap: anywhere; }

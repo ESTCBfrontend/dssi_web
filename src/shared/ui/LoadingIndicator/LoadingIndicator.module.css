@@ -1,0 +1,18 @@
+.root { box-sizing: border-box; display: inline-flex; align-items: center; gap: 12px; min-width: 0; min-height: 72px; padding: 14px; border: 1px solid var(--mds-color-border-default, #dee3eb); border-radius: 12px; background: var(--mds-color-bg-surface, #fff); color: var(--mds-color-text-secondary, #667385); font: 500 12px/1.4 Inter, system-ui, sans-serif; }
+.comfortable { padding: 20px; font-size: 13px; }
+.spinner { justify-content: center; }
+.spinnerArt { display: block; flex: none; animation: spin 1s linear infinite; }
+.compactArt { width: 22px; height: 22px; }
+.comfortableArt { width: 34px; height: 34px; }
+.label { overflow-wrap: anywhere; }
+.skeleton { display: flex; width: 100%; }
+.lines { display: flex; flex-direction: column; gap: 9px; width: 100%; }
+.lines span { display: block; width: 100%; height: 10px; border-radius: 999px; background: var(--mds-color-bg-status-neutral, #e9edf3); }
+.lines span:not(:first-child) { width: 91%; }
+.lines span:last-child:not(:first-child) { width: 64%; }
+.comfortable .lines { gap: 12px; }
+.comfortable .lines span { height: 13px; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.reducedMotion .spinnerArt { animation: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinnerArt { animation: none; } }

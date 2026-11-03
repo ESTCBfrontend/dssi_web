@@ -1,0 +1,3 @@
+.panel { --mds-panel-gap-wide: var(--mds-tab-panel-gap, 16px); --mds-panel-description-size: var(--mds-tab-panel-description-size, 12px); }
+.surface { --mds-panel-padding-wide: var(--mds-tab-panel-surface-padding, 24px); }
+.muted { --mds-panel-padding-wide: var(--mds-tab-panel-muted-padding, 20px); }

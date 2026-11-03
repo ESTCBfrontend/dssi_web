@@ -1,0 +1,107 @@
+# Arquitetura e qualidade
+
+Este documento contém princípios aprovados para orientar o crescimento do projeto web. Deve ser lido em conjunto com [AGENTS.md](../AGENTS.md) e [CONTRIBUTING.md](../CONTRIBUTING.md).
+
+## Estado atual e evolução
+
+A aplicação ainda é uma base React com Vite, com o ponto de entrada em `src/main.tsx` e o componente inicial em `src/App.tsx`. Ainda não existem funcionalidades de negócio organizadas em `src/features`.
+
+A direção acordada é organizar o código por funcionalidade e separar responsabilidades conforme a complexidade real. A estrutura abaixo é uma referência para as próximas funcionalidades; algumas pastas, como `shared/ui`, já existem. Não é necessário criar todas as camadas de uma vez.
+
+```text
+src/
+  app/                    # Composição, configuração e ligação das dependências
+  features/
+    <funcionalidade>/
+      domain/             # Conceitos e regras de negócio
+      application/        # Operações e coordenação dos casos de uso
+      infrastructure/     # Implementações de API, armazenamento e serviços externos
+      presentation/       # Páginas, componentes e hooks
+  shared/
+    ui/                   # Elementos visuais realmente partilhados
+    infrastructure/       # Mecanismos técnicos transversais
+```
+
+Uma funcionalidade pequena pode precisar apenas de parte desta estrutura. Acrescenta separações quando houver responsabilidades que as justifiquem; evita pastas vazias e camadas que apenas encaminham chamadas.
+
+## Responsabilidades e dependências
+
+- `domain` define comportamento e conceitos de negócio sem importar React, DOM, clientes HTTP, APIs do browser ou armazenamento.
+- `application` coordena operações usando o domínio e contratos necessários, sem depender de componentes visuais ou detalhes concretos da infraestrutura.
+- `infrastructure` implementa os contratos de integração e adapta os formatos externos às necessidades da aplicação.
+- `presentation` trata da interface e interação. Encaminha regras de negócio e operações relevantes para módulos próprios, evitando espalhá-las pelas páginas.
+- A composição da aplicação liga implementações concretas às operações e à apresentação, usando a solução mais simples que preserve os limites.
+- Mantém pontos de entrada explícitos entre funcionalidades e evita dependências cíclicas ou acesso arbitrário a detalhes internos.
+- `shared` deve conter responsabilidades identificáveis com utilização transversal demonstrada; não deve tornar-se um depósito genérico de utilitários.
+
+Os contratos devem ficar junto de quem define a necessidade. Não é obrigatório criar uma interface para cada classe nem adicionar uma biblioteca de injeção de dependências.
+
+## Componentes visuais implementados
+
+Os componentes visuais partilhados usam tokens semânticos CSS configuráveis; a composição da aplicação pode fornecer temas e mudar entre eles, sem persistência implícita. Os tokens são acrescentados conforme as necessidades dos componentes e documentados com a correspondência ao Figma. Os recursos visuais usados pelos componentes também devem permitir personalização quando o tema o exigir.
+
+Os componentes existentes estão em `src/shared/ui`. A implementação atual usa CSS Modules e propriedades `--mds-*` com valores de reserva consultados no Figma, substituíveis por um antepassado. Não existe ainda um provider de tema global; os recursos SVG originais têm cores fixas e as opções de substituição são descritas nas fichas individuais. A fonte Inter é usada quando disponível, com alternativa do sistema.
+
+O [catálogo por grupo](COMPONENTS_WEB_REACT.md#9-catálogo-de-implementação--53-famílias-do-figma) liga às 53 fichas individuais, que descrevem contratos, exemplos, tokens e limitações. Os componentes de seleção e os grupos reutilizam estruturas internas em `selection`.
+
+A [comparação com os componentes mobile](components/comparacao-mobile-web.md) regista capacidades, diferenças de plataforma e limitações conhecidas.
+
+### Composição e navegação
+
+Os contentores [Card](components/Card.md), [ContentPanel](components/ContentPanel.md) e [FormGroup](components/FormGroup.md) recebem conteúdo e ações da aplicação; os layouts responsivos dos dois últimos usam container queries.
+
+[Tab](components/Tab.md), [Tabs](components/Tabs.md) e [TabPanel](components/TabPanel.md) compõem separadores e painéis controlados, com navegação e associações acessíveis próprias da web.
+
+[PageButton](components/PageButton.md) e [Pagination](components/Pagination.md) compõem navegação por páginas controlada pela aplicação, sem carregar dados; o seletor de tamanho web é nativo.
+
+### Dados e componentes de domínio
+
+[ActivityItem](components/ActivityItem.md) e [Timeline](components/Timeline.md) apresentam acontecimentos e histórico fornecidos pela aplicação; a ordenação é visual e a carga incremental continua sob controlo do consumidor.
+
+[ChecklistItem](components/ChecklistItem.md), [TaskProgress](components/TaskProgress.md) e [Checklist](components/Checklist.md) compõem verificações e progresso; a aplicação fornece a regra de conclusão, gere evidências e controla os dados e ações.
+
+[AttachmentItem](components/AttachmentItem.md) e [FileUpload](components/FileUpload.md) apresentam e selecionam ficheiros controlados; a aplicação gere envio e persistência e o servidor valida os ficheiros recebidos.
+
+[PhotoTile](components/PhotoTile.md) e [ImagePicker](components/ImagePicker.md) apresentam e selecionam imagens controladas; processamento, recursos temporários, câmara e transferência pertencem à aplicação.
+
+[ClientSummary](components/ClientSummary.md), [EquipmentCard](components/EquipmentCard.md) e [ServiceOrderCard](components/ServiceOrderCard.md) compõem Card, StatusBadge e Button para apresentar dados fornecidos pela aplicação; partilham a disposição interna de pares etiqueta/valor em `BusinessCard`.
+
+### Formulários e seletores
+
+[Select](components/Select.md) usa seleção nativa controlada e pesquisa local opcional. [Form](components/Form.md) compõe campos num formulário HTML; a aplicação mantém dados, validações de negócio e operações de submissão.
+
+[DatePicker](components/DatePicker.md), [DateRangePicker](components/DateRangePicker.md) e [TimePicker](components/TimePicker.md) recebem valores civis e limites controlados; os seletores web são nativos e a aplicação valida disponibilidade e regras de negócio.
+
+[TeamSelector](components/TeamSelector.md), [UserSelector](components/UserSelector.md) e [AssignmentPanel](components/AssignmentPanel.md) apresentam opções e pedidos de atribuição controlados; a aplicação e o servidor validam associação, disponibilidade e permissões.
+
+### Estrutura, tabelas e sobreposições
+
+[NavItem](components/NavItem.md), [AppHeader](components/AppHeader.md), [PageLayout](components/PageLayout.md) e [AppShell](components/AppShell.md) compõem navegação e estrutura responsiva com slots; a aplicação continua responsável por rotas, destinos e foco entre páginas.
+
+[SortableHeader](components/SortableHeader.md), [TableRow](components/TableRow.md), [DataTable](components/DataTable.md) e [FilterBar](components/FilterBar.md) compõem listagens com dados e interações controlados; a aplicação efetua a filtragem, ordenação, paginação e obtenção de resultados.
+
+[Dialog](components/Dialog.md) e [DrawerSheet](components/DrawerSheet.md) partilham uma superfície modal nativa controlada; a aplicação decide abertura, fecho e ações. [ToastSnackbar](components/ToastSnackbar.md) permite apresentação isolada ou fila limitada ao `ToastProvider` escolhido pela composição.
+
+## Orientação a objetos e abstração
+
+Usa objetos e classes quando encapsulem comportamento, invariantes ou responsabilidades que beneficiem de um contrato explícito. Prefere composição a herança profunda.
+
+Componentes funcionais e hooks são o padrão da apresentação React. Funções puras são adequadas a transformações simples. A escolha deve preservar clareza e testabilidade.
+
+Extrai código partilhado quando representar a mesma responsabilidade ou regra de negócio. Blocos parecidos podem ter significados diferentes e evoluir separadamente. Evita tanto duplicação de regras de negócio como abstrações prematuras com muitas opções e condições.
+
+## Qualidade e validação
+
+Mantém alterações focadas, nomes claros e tratamento explícito de falhas relevantes. Segue a política de testes proporcionais ao risco em AGENTS.md e executa as verificações do README.
+
+Testa comportamento observável e contratos importantes. As correções devem ter testes de regressão quando viável. Alterações de documentação ou estilos de baixo risco não exigem testes que apenas reproduzam a implementação.
+
+Os testes com Vitest e React Testing Library em jsdom e o build Vite não substituem validação num browser real. Identifica no PR as limitações e, quando relevante, o impacto no comportamento, acessibilidade, diferentes tamanhos de ecrã e compatibilidade entre browsers.
+
+## Decisões que alteram a arquitetura
+
+Antes de transformar uma decisão nova numa regra transversal, segue o processo de proposta e aprovação de AGENTS.md. Inclui a documentação aprovada na branch e no PR da tarefa.
+
+Quando uma decisão precisar de justificar alternativas e consequências, cria um registo em `docs/decisions/` com contexto, decisão, alcance e consequências. Essa pasta não precisa de existir antes de haver uma decisão a registar.
+
+Não há nesta fase escolha aprovada de biblioteca de routing, gestão global de estado, cliente HTTP ou armazenamento de sessão. A escolha concreta deve partir de uma necessidade real e do respetivo impacto.

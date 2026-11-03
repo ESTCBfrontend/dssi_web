@@ -1,0 +1,10 @@
+.root { box-sizing: border-box; display: flex; flex-direction: column; gap: 14px; width: 100%; padding: var(--mds-task-progress-padding, 24px); border: 1px solid var(--mds-color-border-default, #dee3eb); border-radius: var(--mds-radius-lg, 14px); background: var(--mds-color-bg-surface, #fff); color: var(--mds-color-text-primary, #1f2938); font-family: var(--mds-font-family, Inter, sans-serif); }
+.heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; }
+.heading > div { flex: 1 1 200px; min-width: 0; }
+.title { margin: 0; font-size: 18px; font-weight: 600; overflow-wrap: anywhere; }
+.description { margin: 6px 0 0; color: var(--mds-color-text-secondary, #667385); font-size: 12px; }
+.indicator { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.progress { flex: 1 1 320px; min-width: 0; }
+.summary { flex: 1 1 160px; display: flex; flex-direction: column; gap: 5px; font-size: 12px; color: var(--mds-color-text-secondary, #667385); }
+.summary strong { color: var(--mds-color-text-primary, #1f2938); font-size: 15px; }
+.summary .complete { color: var(--mds-color-text-success, #166534); }
