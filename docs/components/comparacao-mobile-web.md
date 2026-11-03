@@ -16,6 +16,7 @@ Esta comparação descreve as APIs existentes após a revisão dos componentes p
 | AlertIcon, Alert | Ambos oferecem tons, etiqueta, composição, ação e fecho configuráveis. A web permite escolher anúncios normais ou urgentes com semântica própria do navegador; a visibilidade é controlada pelo consumidor. O símbolo do ícone usa texto na web e recurso gráfico no mobile. |
 | Card, ContentPanel, FormGroup | Ambos recebem conteúdo, ações e propriedades de apresentação configuráveis. A web usa headings e secções nativas, e container queries para adaptar o cabeçalho ou blocos de campos à largura disponível; mobile usa medição do contentor e acessibilidade nativa. |
 | Tab, Tabs, TabPanel | Ambos oferecem seleção controlada, contadores, conteúdo, ações e preservação opcional dos painéis. Na web existem relações `aria-controls`/`aria-labelledby` e navegação por setas, Home e End; mobile usa APIs e interação próprias da plataforma. |
+| PageButton, Pagination | Ambos são controlados, validam valores e permitem localizar textos. A web acrescenta páginas numeradas limitadas e seletor nativo opcional de tamanho; mobile apresenta anterior/seguinte e resumo de página. |
 
 ## Tema e validação
 

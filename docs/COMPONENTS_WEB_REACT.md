@@ -455,6 +455,8 @@ Também implementados: [Card](components/Card.md), [ContentPanel](components/Con
 
 Também implementados: [Tab](components/Tab.md), [Tabs](components/Tabs.md) e [TabPanel](components/TabPanel.md).
 
+Também implementados: [PageButton](components/PageButton.md) e [Pagination](components/Pagination.md).
+
 ### 9.1 — Átomos (3 famílias)
 
 #### `MDS/AlertIcon`
