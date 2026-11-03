@@ -37,3 +37,5 @@ Implementados: [Button](docs/components/Button.md), [StatusBadge](docs/component
 Também implementados: [Card](docs/components/Card.md), [ContentPanel](docs/components/ContentPanel.md) e [FormGroup](docs/components/FormGroup.md).
 
 Também implementados: [Tab](docs/components/Tab.md), [Tabs](docs/components/Tabs.md) e [TabPanel](docs/components/TabPanel.md).
+
+Também implementados: [PageButton](docs/components/PageButton.md) e [Pagination](docs/components/Pagination.md).

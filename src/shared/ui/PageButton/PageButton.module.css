@@ -1,0 +1,4 @@
+.page.page { box-sizing: border-box; min-width: 40px; min-height: 40px; padding: 6px 10px; border: 1px solid var(--mds-color-border-default, #dee3eb); border-radius: var(--mds-radius-md, 10px); background: var(--mds-color-bg-surface, #fff); color: var(--mds-color-text-primary, #1f2938); font-size: 13px; font-weight: 600; }
+.page.comfortable { min-width: 44px; min-height: 44px; }
+.page.current { background: var(--mds-color-bg-brand, #2159b8); border-color: var(--mds-color-bg-brand, #2159b8); color: var(--mds-color-text-on-brand, #fff); }
+.page.page:disabled { background: var(--mds-color-bg-input-disabled, #f5f7fa); border-color: var(--mds-color-border-disabled, #dee3eb); color: var(--mds-color-text-disabled, #667385); }

@@ -50,6 +50,8 @@ Os contentores [Card](components/Card.md), [ContentPanel](components/ContentPane
 
 [Tab](components/Tab.md), [Tabs](components/Tabs.md) e [TabPanel](components/TabPanel.md) compõem separadores e painéis controlados, com navegação e associações acessíveis próprias da web.
 
+[PageButton](components/PageButton.md) e [Pagination](components/Pagination.md) compõem navegação por páginas controlada pela aplicação, sem carregar dados; o seletor de tamanho web é nativo.
+
 ## Orientação a objetos e abstração
 
 Usa objetos e classes quando encapsulem comportamento, invariantes ou responsabilidades que beneficiem de um contrato explícito. Prefere composição a herança profunda.
