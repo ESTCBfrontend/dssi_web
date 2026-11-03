@@ -39,3 +39,5 @@ Também implementados: [Card](docs/components/Card.md), [ContentPanel](docs/comp
 Também implementados: [Tab](docs/components/Tab.md), [Tabs](docs/components/Tabs.md) e [TabPanel](docs/components/TabPanel.md).
 
 Também implementados: [PageButton](docs/components/PageButton.md) e [Pagination](docs/components/Pagination.md).
+
+Também implementados: [ActivityItem](docs/components/ActivityItem.md) e [Timeline](docs/components/Timeline.md).
