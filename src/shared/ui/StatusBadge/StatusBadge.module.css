@@ -1,9 +1,9 @@
 .badge { box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border-radius: var(--mds-radius-full, 999px); font-family: Inter, system-ui, sans-serif; font-weight: 500; line-height: 1.25; max-width: 100%; overflow-wrap: anywhere; }
 .small { min-height: 24px; padding: 4px 9px; font-size: 11px; }
 .medium { min-height: 30px; padding: 6px 12px; font-size: 12px; }
-.badge img, .icon { flex: none; }
-.small img { width: 6px; height: 6px; }
-.medium img { width: 7px; height: 7px; }
+.dot, .icon { flex: none; }
+.small .dot { width: 6px; height: 6px; }
+.medium .dot { width: 7px; height: 7px; }
 .icon { display: inline-flex; }
 .neutral { --badge-soft: var(--mds-color-bg-status-neutral, #e9edf3); --badge-text: var(--mds-color-text-primary, #1f2938); --badge-solid: var(--mds-color-bg-status-neutral-solid, #475569); }
 .info { --badge-soft: var(--mds-color-bg-info, #eff8ff); --badge-text: var(--mds-color-text-info, #175cd3); --badge-solid: var(--mds-color-bg-status-info-solid, #175cd3); }

@@ -19,6 +19,11 @@ export function Textarea({ height = 'compact', showCounter = false, autoGrow = f
     const borders = (parseFloat(style.borderTopWidth) || 0) + (parseFloat(style.borderBottomWidth) || 0)
     node.style.height = `${node.scrollHeight + borders}px`
   }, [autoGrow])
+  useLayoutEffect(() => {
+    if (autoGrow || !localRef.current) return
+    const configuredHeight = props.style?.height
+    localRef.current.style.height = typeof configuredHeight === 'number' ? `${configuredHeight}px` : configuredHeight ?? ''
+  }, [autoGrow, props.style?.height])
   useLayoutEffect(resizeToContent)
   useEffect(() => {
     const form = localRef.current?.form
@@ -27,7 +32,7 @@ export function Textarea({ height = 'compact', showCounter = false, autoGrow = f
     const reset = () => { clearTimeout(timer); timer = setTimeout(() => { setCount(localRef.current?.value.length ?? 0); resizeToContent() }, 0) }
     form.addEventListener('reset', reset)
     return () => { form.removeEventListener('reset', reset); clearTimeout(timer) }
-  }, [resizeToContent])
+  }, [resizeToContent, props.form])
   useEffect(() => {
     if (!autoGrow || !localRef.current || typeof ResizeObserver === 'undefined') return
     const observer = new ResizeObserver(resizeToContent)
