@@ -451,6 +451,8 @@ Cada ficha indica: (i) variantes de referência, (ii) contrato runtime sugerido,
 
 Consulta também a [comparação com os componentes mobile](components/comparacao-mobile-web.md), incluindo diferenças de plataforma e limitações atuais.
 
+Também implementados: [Card](components/Card.md), [ContentPanel](components/ContentPanel.md) e [FormGroup](components/FormGroup.md); consulta as fichas para os contratos efetivos.
+
 ### 9.1 — Átomos (3 famílias)
 
 #### `MDS/AlertIcon`

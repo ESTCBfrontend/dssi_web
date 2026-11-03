@@ -14,6 +14,7 @@ Esta comparação descreve as APIs existentes após a revisão dos componentes p
 | ProgressBar | Ambos limitam valores ao intervalo, rejeitam intervalos inválidos e estados de conclusão incompletos, e sincronizam texto, preenchimento e valor acessível. O texto do estado pode ser personalizado ou ocultado visualmente. |
 | LoadingIndicator | Ambos oferecem spinner, inline, skeleton, número de linhas configurável, ativação, movimento reduzido e texto acessível. Web utiliza `role="status"`; a composição decide anúncios e `aria-busy` na região afetada. |
 | AlertIcon, Alert | Ambos oferecem tons, etiqueta, composição, ação e fecho configuráveis. A web permite escolher anúncios normais ou urgentes com semântica própria do navegador; a visibilidade é controlada pelo consumidor. O símbolo do ícone usa texto na web e recurso gráfico no mobile. |
+| Card, ContentPanel, FormGroup | Ambos recebem conteúdo, ações e propriedades de apresentação configuráveis. A web usa headings e secções nativas, e container queries para adaptar o cabeçalho ou blocos de campos à largura disponível; mobile usa medição do contentor e acessibilidade nativa. |
 
 ## Tema e validação
 

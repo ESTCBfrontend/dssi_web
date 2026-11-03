@@ -46,6 +46,8 @@ Contratos, exemplos, tokens e limitações: [Button](components/Button.md), [Sta
 
 A [comparação com os componentes mobile](components/comparacao-mobile-web.md) regista capacidades, diferenças de plataforma e limitações conhecidas.
 
+Os contentores [Card](components/Card.md), [ContentPanel](components/ContentPanel.md) e [FormGroup](components/FormGroup.md) recebem conteúdo e ações da aplicação; os layouts responsivos dos dois últimos usam container queries.
+
 ## Orientação a objetos e abstração
 
 Usa objetos e classes quando encapsulem comportamento, invariantes ou responsabilidades que beneficiem de um contrato explícito. Prefere composição a herança profunda.
