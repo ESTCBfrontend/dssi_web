@@ -47,3 +47,5 @@ Também implementados: [TaskProgress](docs/components/TaskProgress.md), [Checkli
 Também implementados: [AttachmentItem](docs/components/AttachmentItem.md) e [FileUpload](docs/components/FileUpload.md).
 
 Também implementados: [PhotoTile](docs/components/PhotoTile.md) e [ImagePicker](docs/components/ImagePicker.md).
+
+Também implementados: [ClientSummary](docs/components/ClientSummary.md), [EquipmentCard](docs/components/EquipmentCard.md) e [ServiceOrderCard](docs/components/ServiceOrderCard.md).
