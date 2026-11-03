@@ -12,9 +12,9 @@
 Este documento foi incorporado a partir de `COMPONENTS_WEB_REACT.md`, fornecido pelo utilizador. É uma referência partilhada para colaboradores e agentes ao criar, alterar ou reutilizar componentes React Web. A sua inclusão não implementa componentes nem aprova automaticamente todas as propostas técnicas que contém.
 
 - **Ler em conjunto:** [AGENTS.md](../AGENTS.md), [README.md](../README.md), [CONTRIBUTING.md](../CONTRIBUTING.md) e [architecture.md](architecture.md). As instruções explícitas do utilizador e as decisões aprovadas do projeto prevalecem sobre exemplos ou sugestões deste guia. Novas decisões transversais seguem o processo de proposta e aprovação do projeto.
-- **Estado atual:** nesta inclusão, a aplicação é uma base React, TypeScript e Vite; o catálogo não é um inventário de componentes já disponíveis em código. Inspeciona sempre a implementação existente antes de reutilizar ou criar uma API.
+- **Estado atual:** as 53 famílias do catálogo têm implementação em `src/shared/ui` e documentação individual. A aplicação continua uma base React, TypeScript e Vite, sem funcionalidades de negócio implementadas. Consulta as fichas individuais e o código para os contratos efetivos e limitações.
 - **Âmbito:** consulta a ficha `MDS/<Nome>` da secção 9, os componentes de que depende e as secções transversais aplicáveis. Implementa apenas o âmbito da tarefa. Este guia não autoriza alterações ao repositório Mobile.
-- **Propostas:** props, tipos de domínio, organização de pastas, CSS Modules, `ThemeProvider`, modos de tema e dependências são referências a avaliar no contexto da tarefa, não escolhas globais aprovadas pela importação. Os caminhos dos exemplos devem ser adaptados à arquitetura aprovada; não criam uma estrutura paralela.
+- **Propostas:** props, tipos de domínio, organização de pastas, `ThemeProvider`, modos de tema e dependências são referências a avaliar no contexto da tarefa, não escolhas globais aprovadas pela importação. O estado atual dos CSS Modules e tokens está descrito em [architecture.md](architecture.md). Os caminhos dos exemplos devem ser adaptados à arquitetura aprovada; não criam uma estrutura paralela.
 - **Fontes:** as afirmações de consulta ao Figma e aos PDFs pertencem ao documento fornecido. Não foram revalidadas nesta inclusão. Os PDFs não estão incluídos no repositório; os seus nomes e códigos de backlog servem como referências de origem, não como requisitos de negócio já aprovados.
 - **Validação proporcional:** aplica os critérios de comportamento, acessibilidade e testes relevantes para o componente e para o risco da alteração. Os snippets são ilustrativos, não implementações prontas a copiar.
 
@@ -53,7 +53,7 @@ Percurso de leitura: contexto e responsabilidades (secções 1–3), tema e cont
 
 **Fluxo de referência:** proposta aceite → preparação/agendamento → logística → execução no terreno e registo → revisão pelo escritório → tratamento administrativo. Esta biblioteca tem de servir **um único produto integrado**, com modelos coerentes entre Web e Mobile, mas implementações e UX próprias de cada plataforma.
 
-**Fonte Figma:** inventário verificado da página de design: **53 famílias** de `MDS/*`, listadas integralmente na secção 9. A correspondência de nomes/variantes foi consultada no Figma; **as props TypeScript propostas neste guia são contratos de implementação sugeridos, não propriedades já existentes em código**.
+**Fonte Figma:** inventário da página de design: **53 famílias** de `MDS/*`, listadas na secção 9. A correspondência de nomes e variantes foi consultada no Figma. As props propostas neste guia são sugestões; as APIs efetivamente implementadas estão nas fichas individuais e no código.
 
 ## 3. Arquitetura mínima e reutilização
 
@@ -378,7 +378,9 @@ function EquipmentOverview({ equipment }: { equipment: { id: string; name: strin
 
 **Nota:** `openOrder`, `openEquipment`, `StatusBadge` e `Button` são dependências/handlers do projeto a importar ou injetar — não funções globais fornecidas por este documento. O exemplo ilustra **composição**, não é um ficheiro isolado pronto a compilar.
 
-### 6.6 Testes Web obrigatórios
+### 6.6 Verificações Web a considerar
+
+Seleciona as verificações proporcionais ao risco e regista as limitações, seguindo [AGENTS.md](../AGENTS.md). Os testes específicos dos componentes implementados até agora foram mantidos localmente por preferência do utilizador; os comandos existentes da CI continuam descritos no README.
 
 - Unit/interação: React Testing Library ou ferramentas já instaladas; usar queries por role/label em vez de classes CSS.
 - Acessibilidade: teclado (Tab, setas, Enter, Space, Escape), foco visível, labels, contraste, leitura de erros; integrar `axe` se disponível/aprovado.
@@ -447,43 +449,25 @@ Os nomes `MDS/*` e as famílias abaixo foram confirmados no Figma. As variantes 
 
 Cada ficha indica: (i) variantes de referência, (ii) contrato runtime sugerido, (iii) composição, (iv) regras da plataforma, (v) teste específico e (vi) necessidades do PO que justificam o caso de uso, ainda sujeitas a refinamento.
 
-**Estado implementado:** [Button](components/Button.md), [StatusBadge](components/StatusBadge.md), [TextField](components/TextField.md), [Textarea](components/Textarea.md), [FormField](components/FormField.md), [Checkbox](components/Checkbox.md), [Radio](components/Radio.md), [Switch](components/Switch.md), [CheckboxGroup](components/CheckboxGroup.md), [RadioGroup](components/RadioGroup.md), [ProgressBar](components/ProgressBar.md), [LoadingIndicator](components/LoadingIndicator.md), [AlertIcon](components/AlertIcon.md) e [Alert](components/Alert.md). As fichas individuais descrevem as APIs reais e as limitações; os contratos e exemplos deste catálogo permanecem propostas de referência. Os campos e controlos individuais aceitam propriedades nativas React, incluindo uso controlado ou não controlado; os grupos de seleção têm estado controlado.
+**Estado implementado:** as 53 famílias abaixo estão em `src/shared/ui`. As fichas individuais descrevem as APIs reais, opções de tema e limitações; as propostas de cada ficha do catálogo permanecem referências a avaliar. A existência de código não substitui a validação em navegadores reais.
 
-Consulta também a [comparação com os componentes mobile](components/comparacao-mobile-web.md), incluindo diferenças de plataforma e limitações atuais.
-
-Também implementados: [Card](components/Card.md), [ContentPanel](components/ContentPanel.md) e [FormGroup](components/FormGroup.md); consulta as fichas para os contratos efetivos.
-
-Também implementados: [Tab](components/Tab.md), [Tabs](components/Tabs.md) e [TabPanel](components/TabPanel.md).
-
-Também implementados: [PageButton](components/PageButton.md) e [Pagination](components/Pagination.md).
-
-Também implementados: [ActivityItem](components/ActivityItem.md) e [Timeline](components/Timeline.md).
-
-Também implementados: [TaskProgress](components/TaskProgress.md), [ChecklistItem](components/ChecklistItem.md) e [Checklist](components/Checklist.md).
-
-Também implementados: [AttachmentItem](components/AttachmentItem.md) e [FileUpload](components/FileUpload.md).
-
-Também implementados: [PhotoTile](components/PhotoTile.md) e [ImagePicker](components/ImagePicker.md).
-
-Também implementados: [ClientSummary](components/ClientSummary.md), [EquipmentCard](components/EquipmentCard.md) e [ServiceOrderCard](components/ServiceOrderCard.md).
-
-Também implementados: [Select](components/Select.md) e [Form](components/Form.md).
-
-Também implementados: [DatePicker](components/DatePicker.md), [DateRangePicker](components/DateRangePicker.md) e [TimePicker](components/TimePicker.md).
-
-Também implementados: [TeamSelector](components/TeamSelector.md), [UserSelector](components/UserSelector.md) e [AssignmentPanel](components/AssignmentPanel.md).
-
-Também implementados: [NavItem](components/NavItem.md), [AppHeader](components/AppHeader.md), [PageLayout](components/PageLayout.md) e [AppShell](components/AppShell.md).
-
-Também implementados: [SortableHeader](components/SortableHeader.md), [TableRow](components/TableRow.md), [DataTable](components/DataTable.md) e [FilterBar](components/FilterBar.md).
-
-Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/DrawerSheet.md) e [ToastSnackbar](components/ToastSnackbar.md). As fichas individuais descrevem a API efetiva e os limites de validação.
+| Grupo | Documentação dos componentes |
+|---|---|
+| Átomos | [AlertIcon](components/AlertIcon.md), [Button](components/Button.md), [StatusBadge](components/StatusBadge.md) |
+| Formulários | [Checkbox](components/Checkbox.md), [CheckboxGroup](components/CheckboxGroup.md), [DatePicker](components/DatePicker.md), [DateRangePicker](components/DateRangePicker.md), [Form](components/Form.md), [FormField](components/FormField.md), [FormGroup](components/FormGroup.md), [Radio](components/Radio.md), [RadioGroup](components/RadioGroup.md), [Select](components/Select.md), [Switch](components/Switch.md), [TextField](components/TextField.md), [Textarea](components/Textarea.md), [TimePicker](components/TimePicker.md) |
+| Composição | [Card](components/Card.md), [ContentPanel](components/ContentPanel.md) |
+| Navegação/layout | [AppHeader](components/AppHeader.md), [AppShell](components/AppShell.md), [NavItem](components/NavItem.md), [PageLayout](components/PageLayout.md), [Tab](components/Tab.md), [TabPanel](components/TabPanel.md), [Tabs](components/Tabs.md) |
+| Dados/listagens | [DataTable](components/DataTable.md), [FilterBar](components/FilterBar.md), [PageButton](components/PageButton.md), [Pagination](components/Pagination.md), [SortableHeader](components/SortableHeader.md), [TableRow](components/TableRow.md) |
+| Overlays | [Dialog](components/Dialog.md), [DrawerSheet](components/DrawerSheet.md) |
+| Feedback | [Alert](components/Alert.md), [LoadingIndicator](components/LoadingIndicator.md), [ProgressBar](components/ProgressBar.md), [ToastSnackbar](components/ToastSnackbar.md) |
+| Media/ficheiros | [AttachmentItem](components/AttachmentItem.md), [FileUpload](components/FileUpload.md), [ImagePicker](components/ImagePicker.md), [PhotoTile](components/PhotoTile.md) |
+| Negócio | [ActivityItem](components/ActivityItem.md), [AssignmentPanel](components/AssignmentPanel.md), [Checklist](components/Checklist.md), [ChecklistItem](components/ChecklistItem.md), [ClientSummary](components/ClientSummary.md), [EquipmentCard](components/EquipmentCard.md), [ServiceOrderCard](components/ServiceOrderCard.md), [TaskProgress](components/TaskProgress.md), [TeamSelector](components/TeamSelector.md), [Timeline](components/Timeline.md), [UserSelector](components/UserSelector.md) |
 
 ### 9.1 — Átomos (3 famílias)
 
 #### `MDS/AlertIcon`
 - **Figma / variantes:** tone: info|success|warning|danger.
-- **API dinâmica a definir em TypeScript:** `tone, size?, colorOverride?, decorative?`.
+- **API proposta em TypeScript:** `tone, size?, colorOverride?, decorative?`.
 - **Composição e reutilização:** Tokens de cor e ícones.
 - **Específico Web:** SVG/ícone marcado aria-hidden se decorativo.
 - **Teste de aceitação mínimo:** Significado não depende apenas da cor.
@@ -491,7 +475,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/Button`
 - **Figma / variantes:** size: small|medium|large; style: primary|secondary|outline|danger; state: default|disabled.
-- **API dinâmica a definir em TypeScript:** `children/label, iconStart?, iconEnd?, disabled?, loading?, onClick, fullWidth?`.
+- **API proposta em TypeScript:** `children/label, iconStart?, iconEnd?, disabled?, loading?, onClick, fullWidth?`.
 - **Composição e reutilização:** Tokens + LoadingIndicator.
 - **Específico Web:** button semântico, type="button" por omissão, foco visível, type="submit" explícito.
 - **Teste de aceitação mínimo:** Nenhum clique quando disabled/loading; teclado/leitor de ecrã.
@@ -499,7 +483,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/StatusBadge`
 - **Figma / variantes:** tone: neutral|info|success|warning|danger; style: soft|solid; size: small|medium.
-- **API dinâmica a definir em TypeScript:** `label, tone?, variant?, showDot?, icon?`.
+- **API proposta em TypeScript:** `label, tone?, variant?, showDot?, icon?`.
 - **Composição e reutilização:** Tokens.
 - **Específico Web:** span ou texto curto, sem depender de cor isoladamente.
 - **Teste de aceitação mínimo:** Categorias semânticas e contraste para claro/escuro.
@@ -509,7 +493,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/Checkbox`
 - **Figma / variantes:** size: compact|comfortable; state: default|focused|disabled; selection: unchecked|checked|mixed.
-- **API dinâmica a definir em TypeScript:** `checked, indeterminate?, onChange, label, description?, disabled?`.
+- **API proposta em TypeScript:** `checked, indeterminate?, onChange, label, description?, disabled?`.
 - **Composição e reutilização:** FormField.
 - **Específico Web:** input type=checkbox com indeterminate via ref quando aplicável.
 - **Teste de aceitação mínimo:** Não confundir com ChecklistItem, que tem quatro resultados.
@@ -517,7 +501,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/CheckboxGroup`
 - **Figma / variantes:** layout: stacked|twoColumns; state: default|error.
-- **API dinâmica a definir em TypeScript:** `options[], values[], onChange, label?, error?, disabled?`.
+- **API proposta em TypeScript:** `options[], values[], onChange, label?, error?, disabled?`.
 - **Composição e reutilização:** Checkbox + FormField.
 - **Específico Web:** fieldset/legend e grupos responsivos.
 - **Teste de aceitação mínimo:** Múltiplas escolhas funcionais e validadas.
@@ -525,7 +509,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/DatePicker`
 - **Figma / variantes:** viewport: web|mobile; state: closed|open|error.
-- **API dinâmica a definir em TypeScript:** `label, value:ISODate|null, onChange, minDate?, maxDate?, disabledDates?, error?`.
+- **API proposta em TypeScript:** `label, value:ISODate|null, onChange, minDate?, maxDate?, disabledDates?, error?`.
 - **Composição e reutilização:** FormField + calendário/seletor.
 - **Específico Web:** Input date nativo quando adequado ou calendário acessível; locale pt-PT.
 - **Teste de aceitação mínimo:** Bloqueio de datas e valor normalizado YYYY-MM-DD.
@@ -533,7 +517,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/DateRangePicker`
 - **Figma / variantes:** viewport: web|mobile; state: empty|selected|error.
-- **API dinâmica a definir em TypeScript:** `value:{start:ISODate|null,end:ISODate|null}, onChange, minDate?, maxDate?, error?`.
+- **API proposta em TypeScript:** `value:{start:ISODate|null,end:ISODate|null}, onChange, minDate?, maxDate?, error?`.
 - **Composição e reutilização:** DatePicker × 2.
 - **Específico Web:** Duas datas lado a lado em larguras suficientes.
 - **Teste de aceitação mínimo:** end >= start; limites; limpar intervalo.
@@ -541,7 +525,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/Form`
 - **Figma / variantes:** layout: stacked|wide.
-- **API dinâmica a definir em TypeScript:** `initialValues?/values, onSubmit, onReset?, children, pending?, error?`.
+- **API proposta em TypeScript:** `initialValues?/values, onSubmit, onReset?, children, pending?, error?`.
 - **Composição e reutilização:** FormGroup + Button + slots.
 - **Específico Web:** form real; submit por Enter quando pertinente; separar validação de UI.
 - **Teste de aceitação mínimo:** Erros de campo e servidor; sem perder inputs no loading.
@@ -549,7 +533,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/FormField`
 - **Figma / variantes:** size: small|medium|large; state: default|focused|error|disabled.
-- **API dinâmica a definir em TypeScript:** `label, required?, helperText?, error?, children, htmlFor/nativeId?`.
+- **API proposta em TypeScript:** `label, required?, helperText?, error?, children, htmlFor/nativeId?`.
 - **Composição e reutilização:** TextField / Select / Textarea / Switch.
 - **Específico Web:** label/htmlFor/aria-describedby/aria-invalid coerentes.
 - **Teste de aceitação mínimo:** Erro não depende só da cor.
@@ -557,7 +541,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/FormGroup`
 - **Figma / variantes:** layout: stacked|twoColumns.
-- **API dinâmica a definir em TypeScript:** `title?, description?, children, columns?, actions?`.
+- **API proposta em TypeScript:** `title?, description?, children, columns?, actions?`.
 - **Composição e reutilização:** FormField + ContentPanel.
 - **Específico Web:** CSS Grid com colunas responsivas; grupos com headings.
 - **Teste de aceitação mínimo:** Conteúdo cresce sem overflow.
@@ -565,7 +549,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/Radio`
 - **Figma / variantes:** size: compact|comfortable; state: default|focused|disabled; selection: selected|unselected.
-- **API dinâmica a definir em TypeScript:** `value, selected?, onChange, label, disabled?`.
+- **API proposta em TypeScript:** `value, selected?, onChange, label, disabled?`.
 - **Composição e reutilização:** FormField.
 - **Específico Web:** input type=radio com name de grupo.
 - **Teste de aceitação mínimo:** Escolha exclusiva e tecla de navegação apropriada.
@@ -573,7 +557,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/RadioGroup`
 - **Figma / variantes:** layout: stacked|twoColumns; state: default|error.
-- **API dinâmica a definir em TypeScript:** `options, value, onChange, label?, error?`.
+- **API proposta em TypeScript:** `options, value, onChange, label?, error?`.
 - **Composição e reutilização:** Radio + FormField.
 - **Específico Web:** fieldset/legend e teclas previstas para radio nativo.
 - **Teste de aceitação mínimo:** Valor ausente e mensagens de erro suportados.
@@ -581,7 +565,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/Select`
 - **Figma / variantes:** size: small|medium|large; state: default|focused|error|disabled.
-- **API dinâmica a definir em TypeScript:** `options, value, onChange, placeholder?, isLoading?, disabled?, searchable?`.
+- **API proposta em TypeScript:** `options, value, onChange, placeholder?, isLoading?, disabled?, searchable?`.
 - **Composição e reutilização:** FormField.
 - **Específico Web:** select nativo ou combobox acessível quando pesquisa necessária.
 - **Teste de aceitação mínimo:** Não inventar opções; opções remotas indicam loading/empty/error.
@@ -589,7 +573,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/Switch`
 - **Figma / variantes:** size: compact|comfortable; state: default|focused|disabled; value: on|off.
-- **API dinâmica a definir em TypeScript:** `value:boolean, onValueChange, label?, disabled?`.
+- **API proposta em TypeScript:** `value:boolean, onValueChange, label?, disabled?`.
 - **Composição e reutilização:** FormField.
 - **Específico Web:** button role=switch ou input checkbox com papel coerente.
 - **Teste de aceitação mínimo:** A alteração aplica-se imediatamente ou inclui botão explícito se requisito exigir.
@@ -597,7 +581,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/TextField`
 - **Figma / variantes:** size: small|medium|large; state: default|focused|error|disabled.
-- **API dinâmica a definir em TypeScript:** `value, onChange, placeholder?, type?, iconStart?, disabled?`.
+- **API proposta em TypeScript:** `value, onChange, placeholder?, type?, iconStart?, disabled?`.
 - **Composição e reutilização:** FormField.
 - **Específico Web:** input typed; onChange fornece valor, sem misturar evento DOM no contrato de domínio.
 - **Teste de aceitação mínimo:** Não perde foco ao atualizar valor.
@@ -605,7 +589,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/Textarea`
 - **Figma / variantes:** height: compact|comfortable; content: placeholder|value; state: default|focused|error|disabled.
-- **API dinâmica a definir em TypeScript:** `value, onChange, placeholder?, maxLength?, showCounter?, rows?/minHeight?`.
+- **API proposta em TypeScript:** `value, onChange, placeholder?, maxLength?, showCounter?, rows?/minHeight?`.
 - **Composição e reutilização:** FormField.
 - **Específico Web:** textarea, contador e resize vertical controlado.
 - **Teste de aceitação mínimo:** Texto longo cresce ou desloca sem ser cortado.
@@ -613,7 +597,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/TimePicker`
 - **Figma / variantes:** viewport: web|mobile; state: closed|open|error.
-- **API dinâmica a definir em TypeScript:** `label, value:HHmm|null, onChange, minTime?, maxTime?, availableSlots?, error?`.
+- **API proposta em TypeScript:** `label, value:HHmm|null, onChange, minTime?, maxTime?, availableSlots?, error?`.
 - **Composição e reutilização:** FormField.
 - **Específico Web:** input time ou seleção acessível em 24h.
 - **Teste de aceitação mínimo:** Validação de conflito de equipa/recurso ocorre no backend.
@@ -623,7 +607,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/Card`
 - **Figma / variantes:** density: compact|comfortable; style: outlined|elevated.
-- **API dinâmica a definir em TypeScript:** `title?, subtitle?, status?, children, actions?, footer?, styleOverride?`.
+- **API proposta em TypeScript:** `title?, subtitle?, status?, children, actions?, footer?, styleOverride?`.
 - **Composição e reutilização:** StatusBadge + ContentPanel + slots.
 - **Específico Web:** Container com header/content/actions flexíveis, sem largura fixa.
 - **Teste de aceitação mínimo:** Cresce com três linhas extras; botão não sai da borda.
@@ -631,7 +615,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/ContentPanel`
 - **Figma / variantes:** layout: stacked|wide; surface: surface|muted.
-- **API dinâmica a definir em TypeScript:** `title?, description?, children, actions?, footer?, collapsed?`.
+- **API proposta em TypeScript:** `title?, description?, children, actions?, footer?, collapsed?`.
 - **Composição e reutilização:** Card + slots.
 - **Específico Web:** Região semântica e largura flexível com grid de conteúdo.
 - **Teste de aceitação mínimo:** Slots são conteúdos reais, não placeholders de Figma.
@@ -641,7 +625,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/AppHeader`
 - **Figma / variantes:** viewport: web|mobile.
-- **API dinâmica a definir em TypeScript:** `title, subtitle?, avatar?, leading?, trailing?, onProfilePress?`.
+- **API proposta em TypeScript:** `title, subtitle?, avatar?, leading?, trailing?, onProfilePress?`.
 - **Composição e reutilização:** NavItem + Button + slots.
 - **Específico Web:** Cabeçalho compacto/fixo conforme layout; ações como botões reais.
 - **Teste de aceitação mínimo:** Não sobrepõe navegação/conteúdo.
@@ -649,7 +633,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/AppShell`
 - **Figma / variantes:** viewport: web|mobile.
-- **API dinâmica a definir em TypeScript:** `navigation, header?, children, footer?, sidebarCollapsed?`.
+- **API proposta em TypeScript:** `navigation, header?, children, footer?, sidebarCollapsed?`.
 - **Composição e reutilização:** AppHeader + NavItem + PageLayout.
 - **Específico Web:** Sidebar e conteúdo em grid responsivo; landmarks header/nav/main.
 - **Teste de aceitação mínimo:** Navegação e conteúdo sem duplicar estado ou perder scroll.
@@ -657,7 +641,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/NavItem`
 - **Figma / variantes:** place: sidebar|bottom; state: default|active|disabled.
-- **API dinâmica a definir em TypeScript:** `label, icon?, href?/screen?, active?, disabled?, badge?`.
+- **API proposta em TypeScript:** `label, icon?, href?/screen?, active?, disabled?, badge?`.
 - **Composição e reutilização:** Button + ícones.
 - **Específico Web:** Link/router, aria-current=page; sidebar.
 - **Teste de aceitação mínimo:** Ativo identificado visualmente e pelo leitor de ecrã.
@@ -665,7 +649,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/PageLayout`
 - **Figma / variantes:** layout: stacked|wide.
-- **API dinâmica a definir em TypeScript:** `title, description?, breadcrumbs?, actions?, children, footer?`.
+- **API proposta em TypeScript:** `title, description?, breadcrumbs?, actions?, children, footer?`.
 - **Composição e reutilização:** AppShell + PageHeader/ContentPanel.
 - **Específico Web:** Max width, grid/gaps, breadcrumbs navegáveis.
 - **Teste de aceitação mínimo:** Sem CSS específico acoplado a página concreta.
@@ -673,7 +657,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/Tab`
 - **Figma / variantes:** size: compact|comfortable; state: default|active|focused|disabled.
-- **API dinâmica a definir em TypeScript:** `id, label, selected, disabled?, onSelect, badge?`.
+- **API proposta em TypeScript:** `id, label, selected, disabled?, onSelect, badge?`.
 - **Composição e reutilização:** Tabs.
 - **Específico Web:** role=tab, aria-selected, aria-controls, tabIndex roving.
 - **Teste de aceitação mínimo:** Foco, estados e relação painel-tab coerentes.
@@ -681,7 +665,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/TabPanel`
 - **Figma / variantes:** surface: surface|muted.
-- **API dinâmica a definir em TypeScript:** `id, labelledBy?, title?, children, actions?`.
+- **API proposta em TypeScript:** `id, labelledBy?, title?, children, actions?`.
 - **Composição e reutilização:** Tab + ContentPanel.
 - **Específico Web:** role=tabpanel, aria-labelledby, ocultar painéis não selecionados.
 - **Teste de aceitação mínimo:** O conteúdo pode conter outros componentes sem largura fixa.
@@ -689,7 +673,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/Tabs`
 - **Figma / variantes:** viewport: web|mobile; active: configurable.
-- **API dinâmica a definir em TypeScript:** `items[], value, onChange, renderTab?, children?`.
+- **API proposta em TypeScript:** `items[], value, onChange, renderTab?, children?`.
 - **Composição e reutilização:** Tab + TabPanel.
 - **Específico Web:** tablist roving focus com ArrowLeft/Right, Home/End.
 - **Teste de aceitação mínimo:** Uma aba ativa e painel correspondente.
@@ -699,7 +683,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/DataTable`
 - **Figma / variantes:** layout: table|cards; state: populated|empty.
-- **API dinâmica a definir em TypeScript:** `rows[], columns[], keyExtractor, sorting?, onSort?, pagination?, loading?, renderCard?`.
+- **API proposta em TypeScript:** `rows[], columns[], keyExtractor, sorting?, onSort?, pagination?, loading?, renderCard?`.
 - **Composição e reutilização:** TableRow + SortableHeader + FilterBar + Pagination.
 - **Específico Web:** table com thead/tbody/aria-sort ou grid semântica; overflow horizontal só se necessário.
 - **Teste de aceitação mínimo:** Ordenação e paginação reais; estado vazio e carregamento.
@@ -707,7 +691,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/FilterBar`
 - **Figma / variantes:** layout: horizontal|stacked.
-- **API dinâmica a definir em TypeScript:** `filters, onChange, onReset?, search?, actions?, extraFilters?`.
+- **API proposta em TypeScript:** `filters, onChange, onReset?, search?, actions?, extraFilters?`.
 - **Composição e reutilização:** TextField + Select + DateRangePicker + slots.
 - **Específico Web:** Barra horizontal que quebra de forma previsível; filtros debounced quando útil.
 - **Teste de aceitação mínimo:** Combina critérios e expõe seleção ativa; não oculta filtros aplicados.
@@ -715,7 +699,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/PageButton`
 - **Figma / variantes:** size: compact|comfortable; state: default|current|disabled.
-- **API dinâmica a definir em TypeScript:** `page, current?, disabled?, onSelect`.
+- **API proposta em TypeScript:** `page, current?, disabled?, onSelect`.
 - **Composição e reutilização:** Button.
 - **Específico Web:** button com aria-current=page; nome acessível número de página.
 - **Teste de aceitação mínimo:** Indicadores numéricos não alteram página sem callback.
@@ -723,7 +707,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/Pagination`
 - **Figma / variantes:** viewport: web|mobile; position: first|middle|last.
-- **API dinâmica a definir em TypeScript:** `page, pageSize, total, onPageChange, onPageSizeChange?`.
+- **API proposta em TypeScript:** `page, pageSize, total, onPageChange, onPageSizeChange?`.
 - **Composição e reutilização:** PageButton + Button + Select.
 - **Específico Web:** Páginas numeradas e escolha de tamanho quando pertinente.
 - **Teste de aceitação mínimo:** Desativar limites, atualização da lista e estado acessível.
@@ -731,7 +715,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/SortableHeader`
 - **Figma / variantes:** state: none|ascending|descending|focused|disabled.
-- **API dinâmica a definir em TypeScript:** `label, direction, onSort, disabled?`.
+- **API proposta em TypeScript:** `label, direction, onSort, disabled?`.
 - **Composição e reutilização:** TableRow.
 - **Específico Web:** th e button, aria-sort apenas na coluna ordenada.
 - **Teste de aceitação mínimo:** Uma direção efetiva por coluna e ordenação previsível.
@@ -739,7 +723,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/TableRow`
 - **Figma / variantes:** layout: table|card; state: header|default|hover|selected.
-- **API dinâmica a definir em TypeScript:** `row, columns?, selected?, onOpen?, actions?`.
+- **API proposta em TypeScript:** `row, columns?, selected?, onOpen?, actions?`.
 - **Composição e reutilização:** SortableHeader + StatusBadge + Button.
 - **Específico Web:** tr/td ou componente de linha de tabela; hover não substitui foco.
 - **Teste de aceitação mínimo:** Chaves estáveis e campos opcionais sem deslocação.
@@ -750,7 +734,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 #### `MDS/Dialog`
 - **Implementação:** [Dialog](components/Dialog.md); o fecho é pedido por `onCloseRequest` e o estado permanece controlado.
 - **Figma / variantes:** size: compact|wide; intent: neutral|danger.
-- **API dinâmica a definir em TypeScript:** `open, onOpenChange, title, description?, children, actions?, initialFocus?`.
+- **API implementada:** `open, onCloseRequest, title, description?, message?, children?, actions?, initialFocusRef?, returnFocusRef?`; consulta a ficha individual para as restantes opções.
 - **Composição e reutilização:** Button + slots.
 - **Específico Web:** dialog nativo ou biblioteca existente; focus trap, Escape, restore focus, aria-labelledby.
 - **Teste de aceitação mínimo:** Ações irreversíveis exigem confirmação clara; corpo faz scroll.
@@ -759,9 +743,9 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 #### `MDS/DrawerSheet`
 - **Implementação:** [DrawerSheet](components/DrawerSheet.md); modal nativo, com pega inferior decorativa e sem gesto de arrastar.
 - **Figma / variantes:** placement: right|bottom|fullscreen.
-- **API dinâmica a definir em TypeScript:** `open, onClose, title, children, actions?, showHandle?`.
+- **API implementada:** `open, onCloseRequest, title, placement?, children?, actions?, showHandle?`; consulta a ficha individual para as restantes opções.
 - **Composição e reutilização:** ContentPanel + Button + slots.
-- **Específico Web:** Painel lateral ou inferior; scroll interno; overlay opcional.
+- **Específico Web:** Diálogo modal nativo lateral, inferior ou em ecrã inteiro, com scroll interno; o pedido de fecho ao clicar no fundo é opcional.
 - **Teste de aceitação mínimo:** Close não perde dados sem confirmar; formulário não fica tapado pelo teclado.
 - **Referências ao draft do PO:** OS-03; MOB-02.
 
@@ -769,7 +753,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/Alert`
 - **Figma / variantes:** tone: info|success|warning|danger; layout: compact|detailed.
-- **API dinâmica a definir em TypeScript:** `title?, message, action?, onDismiss?, dismissible`.
+- **API proposta em TypeScript:** `title?, message, action?, onDismiss?, dismissible`.
 - **Composição e reutilização:** AlertIcon + Button.
 - **Específico Web:** Persistente no fluxo; role=alert para erro urgente, não para toda a informação.
 - **Teste de aceitação mínimo:** Erro e ação acessíveis; sem corte de texto.
@@ -777,7 +761,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/LoadingIndicator`
 - **Figma / variantes:** type: spinner|inline|skeleton; size: compact|comfortable.
-- **API dinâmica a definir em TypeScript:** `type, label?, active?, reducedMotion?`.
+- **API proposta em TypeScript:** `type, label?, active?, reducedMotion?`.
 - **Composição e reutilização:** Tokens + ProgressBar.
 - **Específico Web:** aria-busy no contentor, shimmer respeitando prefers-reduced-motion.
 - **Teste de aceitação mínimo:** Não anunciar estado a cada frame.
@@ -785,7 +769,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/ProgressBar`
 - **Figma / variantes:** size: compact|regular; state: active|complete|error.
-- **API dinâmica a definir em TypeScript:** `value, min?, max?, label?, status?, showValue?`.
+- **API proposta em TypeScript:** `value, min?, max?, label?, status?, showValue?`.
 - **Composição e reutilização:** Tokens.
 - **Específico Web:** progress nativo ou role=progressbar com valor atual.
 - **Teste de aceitação mínimo:** Texto e percentagem visual têm sempre a mesma origem numérica.
@@ -794,17 +778,17 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 #### `MDS/ToastSnackbar`
 - **Implementação:** [ToastSnackbar](components/ToastSnackbar.md); a fila não usa portal e a composição deve considerar os diálogos modais nativos.
 - **Figma / variantes:** tone: info|success|warning|danger; layout: compact|detailed.
-- **API dinâmica a definir em TypeScript:** `id, tone, title?, message, action?, durationMs?, dismissible?`.
+- **API implementada:** `ToastSnackbar` recebe `toast` e `onDismiss?`; `ToastProvider` e `useToast` gerem uma fila opcional. Consulta a ficha individual para as opções de `ToastMessage`.
 - **Composição e reutilização:** AlertIcon + Button + ToastHost.
-- **Específico Web:** Portal e live-region; não rouba foco por omissão.
-- **Teste de aceitação mínimo:** Fila, limpeza e deduplicação; erros persistentes noutro componente.
+- **Específico Web:** Regiões de anúncio e fila sem portal; não rouba foco por omissão. Uma notificação exterior a um modal nativo pode ficar inacessível até ao seu fecho.
+- **Teste de aceitação mínimo:** Fila, limpeza e deduplicação; erros persistentes por omissão.
 - **Referências ao draft do PO:** MOB-07; CORE-05.
 
 ### 9.8 — Media/ficheiros (4 famílias)
 
 #### `MDS/AttachmentItem`
 - **Figma / variantes:** layout: row|stacked; kind: document|photo; state: ready|uploading|error.
-- **API dinâmica a definir em TypeScript:** `file:{id,name,mime,size,uri?}, progress?, onRemove?, onRetry?, onOpen?`.
+- **API proposta em TypeScript:** `file:{id,name,mime,size,uri?}, progress?, onRemove?, onRetry?, onOpen?`.
 - **Composição e reutilização:** StatusBadge + ProgressBar + Button.
 - **Específico Web:** Ficheiro em linha; nome extenso com quebra/elipse e título completo acessível.
 - **Teste de aceitação mínimo:** Erro e progresso coerentes; nenhuma ação muda estado sem callback.
@@ -812,7 +796,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/FileUpload`
 - **Figma / variantes:** viewport: web|mobile; state: empty|selected|uploading|error.
-- **API dinâmica a definir em TypeScript:** `files[], accept?, maxFiles?, maxSizeBytes?, onAdd, onRemove, onRetry?, disabled?`.
+- **API proposta em TypeScript:** `files[], accept?, maxFiles?, maxSizeBytes?, onAdd, onRemove, onRetry?, disabled?`.
 - **Composição e reutilização:** AttachmentItem + Button.
 - **Específico Web:** input type=file; drag/drop progressivo; aceitar teclado.
 - **Teste de aceitação mínimo:** Validar MIME/extensão/tamanho no cliente e servidor.
@@ -820,7 +804,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/ImagePicker`
 - **Figma / variantes:** viewport: web|mobile; state: empty|selected.
-- **API dinâmica a definir em TypeScript:** `photos[], onAdd?, onCapture?, onRemove?, renderPreview?, maxFiles?`.
+- **API proposta em TypeScript:** `photos[], onAdd?, onCapture?, onRemove?, renderPreview?, maxFiles?`.
 - **Composição e reutilização:** PhotoTile + FileUpload + Button.
 - **Específico Web:** input image/* + pré-visualização em galeria, seleção múltipla quando aplicável.
 - **Teste de aceitação mínimo:** Nova imagem quebra linha sem sobreposições.
@@ -828,7 +812,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/PhotoTile`
 - **Figma / variantes:** state: ready|uploading|error.
-- **API dinâmica a definir em TypeScript:** `photo:{id,uri,name,alt?,state}, progress?, onOpen?, onRemove?, onRetry?`.
+- **API proposta em TypeScript:** `photo:{id,uri,name,alt?,state}, progress?, onOpen?, onRemove?, onRetry?`.
 - **Composição e reutilização:** StatusBadge + Button + preview slot.
 - **Específico Web:** img com alt; layout de miniatura.
 - **Teste de aceitação mínimo:** Thumbnail vazia, erro, seleção, carga e remoção.
@@ -838,7 +822,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/ActivityItem`
 - **Figma / variantes:** viewport: web|mobile; event: status|assignment|comment|completion.
-- **API dinâmica a definir em TypeScript:** `event:ActivityEvent, onOpenRelated?, leading?, trailing?`.
+- **API proposta em TypeScript:** `event:ActivityEvent, onOpenRelated?, leading?, trailing?`.
 - **Composição e reutilização:** StatusBadge + Tokens de estado.
 - **Específico Web:** Evento com autor, timestamp e referência navegável; adequado a auditoria.
 - **Teste de aceitação mínimo:** Cada registo identifica ator, acontecimento, data/hora e ordem relacionada.
@@ -846,7 +830,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/AssignmentPanel`
 - **Figma / variantes:** viewport: web|mobile; state: draft|assigned.
-- **API dinâmica a definir em TypeScript:** `value:{teamId,technicianId?}, onChange, onSubmit, note?, pending?, error?`.
+- **API proposta em TypeScript:** `value:{teamId,technicianId?}, onChange, onSubmit, note?, pending?, error?`.
 - **Composição e reutilização:** TeamSelector + UserSelector + StatusBadge + Button.
 - **Específico Web:** Selectores lado a lado quando há espaço; estado ao topo.
 - **Teste de aceitação mínimo:** Não permite atribuição incompatível sem validação do servidor.
@@ -854,7 +838,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/Checklist`
 - **Figma / variantes:** viewport: web|mobile; state: inProgress|complete.
-- **API dinâmica a definir em TypeScript:** `items:ChecklistEntry[], value:Record<id,result>, onItemChange, onSave?, onSubmit?, actions?`.
+- **API proposta em TypeScript:** `items:ChecklistEntry[], value:Record<id,result>, onItemChange, onSave?, onSubmit?, actions?`.
 - **Composição e reutilização:** ChecklistItem + TaskProgress + PhotoTile.
 - **Específico Web:** Painel de verificação com lista dinâmica e ações no rodapé.
 - **Teste de aceitação mínimo:** Resultado e progresso calculados da mesma lista; N itens e evidências.
@@ -862,7 +846,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/ChecklistItem`
 - **Figma / variantes:** viewport: web|mobile; result: pending|pass|fail|notTested.
-- **API dinâmica a definir em TypeScript:** `item:{id,title,description?,required?}, result, note?, attachments?, onChange, onAddEvidence?`.
+- **API proposta em TypeScript:** `item:{id,title,description?,required?}, result, note?, attachments?, onChange, onAddEvidence?`.
 - **Composição e reutilização:** StatusBadge + Button + PhotoTile/AttachmentItem.
 - **Específico Web:** Controlos de escolha exclusiva; motivo/evidência visíveis para fail/notTested.
 - **Teste de aceitação mínimo:** fail e notTested não podem ser indistinguíveis de pending.
@@ -870,7 +854,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/ClientSummary`
 - **Figma / variantes:** viewport: web|mobile; state: active|review.
-- **API dinâmica a definir em TypeScript:** `client:{id,name,contacts?,sites?,status}, onOpen, actions?, fields?`.
+- **API proposta em TypeScript:** `client:{id,name,contacts?,sites?,status}, onOpen, actions?, fields?`.
 - **Composição e reutilização:** Card + StatusBadge + Button.
 - **Específico Web:** Resumo para listas, propostas e ordens.
 - **Teste de aceitação mínimo:** Render sem dados opcionais e sem inventar contactos.
@@ -878,7 +862,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/EquipmentCard`
 - **Figma / variantes:** viewport: web|mobile; state: operational|needsService.
-- **API dinâmica a definir em TypeScript:** `equipment:{id,identifier,model?,site?,status}, onOpen, actions?`.
+- **API proposta em TypeScript:** `equipment:{id,identifier,model?,site?,status}, onOpen, actions?`.
 - **Composição e reutilização:** Card + StatusBadge + Button.
 - **Específico Web:** Resumo com identificação e acesso a histórico/documentos.
 - **Teste de aceitação mínimo:** Nunca usar QR como substituto da verificação de permissões.
@@ -886,7 +870,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/ServiceOrderCard`
 - **Figma / variantes:** viewport: web|mobile; state: planned|active.
-- **API dinâmica a definir em TypeScript:** `order:{id,reference,clientId,siteId,status,scheduledAt?}, onOpen, actions?`.
+- **API proposta em TypeScript:** `order:{id,reference,clientId,siteId,status,scheduledAt?}, onOpen, actions?`.
 - **Composição e reutilização:** Card + StatusBadge + Button.
 - **Específico Web:** Listagem e overview operacional com prioridade/estado.
 - **Teste de aceitação mínimo:** Sem duplicar dados da ordem; datas e permissões respeitadas.
@@ -894,7 +878,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/TaskProgress`
 - **Figma / variantes:** viewport: web|mobile; state: inProgress|complete.
-- **API dinâmica a definir em TypeScript:** `completed, total, pending?, failed?, label?`.
+- **API proposta em TypeScript:** `completed, total, pending?, failed?, label?`.
 - **Composição e reutilização:** ProgressBar + StatusBadge.
 - **Específico Web:** Resumo de verificações com leitura numérica.
 - **Teste de aceitação mínimo:** O que conta como concluído deve ser regra de negócio explícita.
@@ -902,7 +886,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/TeamSelector`
 - **Figma / variantes:** viewport: web|mobile; state: closed|open.
-- **API dinâmica a definir em TypeScript:** `teams[], value, onChange, query?, onQueryChange?, loading?`.
+- **API proposta em TypeScript:** `teams[], value, onChange, query?, onQueryChange?, loading?`.
 - **Composição e reutilização:** Select + StatusBadge + UserSelector.
 - **Específico Web:** Combobox com opções e disponibilidade contextual.
 - **Teste de aceitação mínimo:** Disponibilidade validada na atribuição pelo backend.
@@ -910,7 +894,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/Timeline`
 - **Figma / variantes:** viewport: web|mobile; state: populated|empty.
-- **API dinâmica a definir em TypeScript:** `events:ActivityEvent[], onLoadMore?, hasMore?, isLoading?`.
+- **API proposta em TypeScript:** `events:ActivityEvent[], onLoadMore?, hasMore?, isLoading?`.
 - **Composição e reutilização:** ActivityItem + Pagination.
 - **Específico Web:** Lista cronológica com agrupamento por dia quando útil.
 - **Teste de aceitação mínimo:** Autor/hora/referência presentes; histórico não sobrescrito.
@@ -918,7 +902,7 @@ Também implementados: [Dialog](components/Dialog.md), [DrawerSheet](components/
 
 #### `MDS/UserSelector`
 - **Figma / variantes:** viewport: web|mobile; state: closed|open.
-- **API dinâmica a definir em TypeScript:** `users[], value, onChange, query?, onQueryChange?, loading?, teamId?`.
+- **API proposta em TypeScript:** `users[], value, onChange, query?, onQueryChange?, loading?, teamId?`.
 - **Composição e reutilização:** Select + StatusBadge.
 - **Específico Web:** Combobox por nome/função e disponibilidade.
 - **Teste de aceitação mínimo:** Filtrar por equipa opcional; confirmar disponibilidade no servidor.
