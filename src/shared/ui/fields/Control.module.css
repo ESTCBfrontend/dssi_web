@@ -1,0 +1,16 @@
+.control { box-sizing: border-box; width: 100%; min-width: 0; border: 1px solid var(--mds-color-border-default, #dee3eb); border-radius: var(--mds-radius-md, 10px); background: var(--mds-color-bg-surface, #fff); color: var(--mds-color-text-primary, #1f2938); font: 400 14px/21px Inter, system-ui, sans-serif; }
+.control::placeholder { color: var(--mds-color-text-placeholder, #667385); opacity: 1; }
+.control:focus-visible { outline: 2px solid var(--mds-color-border-focus, #2159b8); outline-offset: -2px; }
+.control[aria-invalid="true"] { border-color: var(--mds-color-border-error, #b42318); box-shadow: inset 0 0 0 1px var(--mds-color-border-error, #b42318); }
+.control:disabled { background: var(--mds-color-bg-input-disabled, #f5f7fa); border-color: var(--mds-color-border-disabled, #dee3eb); color: var(--mds-color-text-disabled, #667385); cursor: not-allowed; }
+.control:disabled::placeholder { color: var(--mds-color-text-disabled, #667385); }
+.small { min-height: var(--mds-size-control-sm, 36px); padding: 6px 14px; }
+.medium { min-height: var(--mds-size-control-md, 44px); padding: 10px 14px; }
+.large { min-height: var(--mds-size-control-lg, 52px); padding: 12px 14px; font-size: 16px; line-height: 24px; }
+.inputWrapper { display: block; position: relative; min-width: 0; }
+.leadingIcon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); display: flex; width: 20px; height: 20px; align-items: center; justify-content: center; pointer-events: none; }
+.withIcon { padding-left: 42px; }
+.textarea { display: block; padding: 14px 16px; resize: vertical; }
+.compact { min-height: var(--mds-size-textarea-compact, 112px); }
+.comfortable { min-height: var(--mds-size-textarea-comfortable, 156px); }
+.counter { margin-top: 4px; color: var(--mds-color-text-secondary, #667385); font: 400 11px/16px Inter, system-ui, sans-serif; text-align: right; }
