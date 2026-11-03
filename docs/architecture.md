@@ -66,6 +66,8 @@ Os contentores [Card](components/Card.md), [ContentPanel](components/ContentPane
 
 [DatePicker](components/DatePicker.md), [DateRangePicker](components/DateRangePicker.md) e [TimePicker](components/TimePicker.md) recebem valores civis e limites controlados; os seletores web são nativos e a aplicação valida disponibilidade e regras de negócio.
 
+[TeamSelector](components/TeamSelector.md), [UserSelector](components/UserSelector.md) e [AssignmentPanel](components/AssignmentPanel.md) apresentam opções e pedidos de atribuição controlados; a aplicação e o servidor validam associação, disponibilidade e permissões.
+
 ## Orientação a objetos e abstração
 
 Usa objetos e classes quando encapsulem comportamento, invariantes ou responsabilidades que beneficiem de um contrato explícito. Prefere composição a herança profunda.

@@ -53,3 +53,5 @@ Também implementados: [ClientSummary](docs/components/ClientSummary.md), [Equip
 Também implementados: [Select](docs/components/Select.md) e [Form](docs/components/Form.md).
 
 Também implementados: [DatePicker](docs/components/DatePicker.md), [DateRangePicker](docs/components/DateRangePicker.md) e [TimePicker](docs/components/TimePicker.md).
+
+Também implementados: [TeamSelector](docs/components/TeamSelector.md), [UserSelector](docs/components/UserSelector.md) e [AssignmentPanel](docs/components/AssignmentPanel.md).
