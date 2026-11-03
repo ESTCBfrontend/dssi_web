@@ -52,6 +52,8 @@ Os contentores [Card](components/Card.md), [ContentPanel](components/ContentPane
 
 [PageButton](components/PageButton.md) e [Pagination](components/Pagination.md) compõem navegação por páginas controlada pela aplicação, sem carregar dados; o seletor de tamanho web é nativo.
 
+[ActivityItem](components/ActivityItem.md) e [Timeline](components/Timeline.md) apresentam acontecimentos e histórico fornecidos pela aplicação; a ordenação é visual e a carga incremental continua sob controlo do consumidor.
+
 ## Orientação a objetos e abstração
 
 Usa objetos e classes quando encapsulem comportamento, invariantes ou responsabilidades que beneficiem de um contrato explícito. Prefere composição a herança profunda.

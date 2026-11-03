@@ -457,6 +457,8 @@ Também implementados: [Tab](components/Tab.md), [Tabs](components/Tabs.md) e [T
 
 Também implementados: [PageButton](components/PageButton.md) e [Pagination](components/Pagination.md).
 
+Também implementados: [ActivityItem](components/ActivityItem.md) e [Timeline](components/Timeline.md).
+
 ### 9.1 — Átomos (3 famílias)
 
 #### `MDS/AlertIcon`
