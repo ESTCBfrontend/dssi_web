@@ -1,0 +1,10 @@
+.root { box-sizing: border-box; width: 100%; display: flex; flex-direction: column; gap: 12px; padding: var(--mds-checklist-item-padding, 18px); border: 1px solid var(--mds-color-border-default, #dee3eb); border-radius: var(--mds-radius-lg, 14px); background: var(--mds-color-bg-surface, #fff); color: var(--mds-color-text-primary, #1f2938); font-family: var(--mds-font-family, Inter, sans-serif); }
+.fail { border-color: var(--mds-color-border-error, #b42318); }
+.heading { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.index { display: flex; align-items: center; justify-content: center; flex: 0 0 44px; height: 44px; border-radius: 10px; background: var(--mds-color-bg-subtle, #fafbfd); color: var(--mds-color-text-brand, #194a9d); font-size: 13px; font-weight: 600; }
+.copy { flex: 1 1 200px; min-width: 0; display: flex; flex-direction: column; gap: 5px; overflow-wrap: anywhere; }
+.copy strong { font-size: 14px; font-weight: 600; }
+.copy span { color: var(--mds-color-text-secondary, #667385); font-size: 12px; }
+.controls { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.evidence { display: flex; flex-direction: column; gap: 8px; padding: 12px; border-radius: 10px; background: var(--mds-color-bg-subtle, #fafbfd); color: var(--mds-color-text-secondary, #667385); font-size: 12px; overflow-wrap: anywhere; }
+.evidence strong { color: var(--mds-color-text-primary, #1f2938); }

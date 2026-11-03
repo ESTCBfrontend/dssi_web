@@ -459,6 +459,8 @@ Também implementados: [PageButton](components/PageButton.md) e [Pagination](com
 
 Também implementados: [ActivityItem](components/ActivityItem.md) e [Timeline](components/Timeline.md).
 
+Também implementados: [TaskProgress](components/TaskProgress.md), [ChecklistItem](components/ChecklistItem.md) e [Checklist](components/Checklist.md).
+
 ### 9.1 — Átomos (3 famílias)
 
 #### `MDS/AlertIcon`

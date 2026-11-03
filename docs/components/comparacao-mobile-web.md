@@ -18,6 +18,7 @@ Esta comparação descreve as APIs existentes após a revisão dos componentes p
 | Tab, Tabs, TabPanel | Ambos oferecem seleção controlada, contadores, conteúdo, ações e preservação opcional dos painéis. Na web existem relações `aria-controls`/`aria-labelledby` e navegação por setas, Home e End; mobile usa APIs e interação próprias da plataforma. |
 | PageButton, Pagination | Ambos são controlados, validam valores e permitem localizar textos. A web acrescenta páginas numeradas limitadas e seletor nativo opcional de tamanho; mobile apresenta anterior/seguinte e resumo de página. |
 | ActivityItem, Timeline | Ambos recebem eventos rastreáveis, ordenam-nos por timestamp e permitem carga incremental controlada e textos configuráveis. A web acrescenta estado opcional com StatusBadge e slots visuais; mobile virtualiza a lista, enquanto a web apresenta os eventos carregados numa lista HTML. |
+| TaskProgress, ChecklistItem, Checklist | Ambos calculam o progresso a partir da mesma lista e da regra fornecida pelo consumidor, oferecem resultados distintos, evidências e ações controladas. A web usa controlos e lista HTML, permite substituir o ponto do badge e mantém visível a área de evidências nos resultados não conforme e não testado; mobile virtualiza a lista. |
 
 ## Tema e validação
 

@@ -54,6 +54,8 @@ Os contentores [Card](components/Card.md), [ContentPanel](components/ContentPane
 
 [ActivityItem](components/ActivityItem.md) e [Timeline](components/Timeline.md) apresentam acontecimentos e histórico fornecidos pela aplicação; a ordenação é visual e a carga incremental continua sob controlo do consumidor.
 
+[ChecklistItem](components/ChecklistItem.md), [TaskProgress](components/TaskProgress.md) e [Checklist](components/Checklist.md) compõem verificações e progresso; a aplicação fornece a regra de conclusão, gere evidências e controla os dados e ações.
+
 ## Orientação a objetos e abstração
 
 Usa objetos e classes quando encapsulem comportamento, invariantes ou responsabilidades que beneficiem de um contrato explícito. Prefere composição a herança profunda.
