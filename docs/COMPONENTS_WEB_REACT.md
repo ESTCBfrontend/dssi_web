@@ -467,6 +467,8 @@ Também implementados: [PhotoTile](components/PhotoTile.md) e [ImagePicker](comp
 
 Também implementados: [ClientSummary](components/ClientSummary.md), [EquipmentCard](components/EquipmentCard.md) e [ServiceOrderCard](components/ServiceOrderCard.md).
 
+Também implementados: [Select](components/Select.md) e [Form](components/Form.md).
+
 ### 9.1 — Átomos (3 famílias)
 
 #### `MDS/AlertIcon`
