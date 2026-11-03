@@ -19,6 +19,7 @@ Esta comparação descreve as APIs existentes após a revisão dos componentes p
 | PageButton, Pagination | Ambos são controlados, validam valores e permitem localizar textos. A web acrescenta páginas numeradas limitadas e seletor nativo opcional de tamanho; mobile apresenta anterior/seguinte e resumo de página. |
 | ActivityItem, Timeline | Ambos recebem eventos rastreáveis, ordenam-nos por timestamp e permitem carga incremental controlada e textos configuráveis. A web acrescenta estado opcional com StatusBadge e slots visuais; mobile virtualiza a lista, enquanto a web apresenta os eventos carregados numa lista HTML. |
 | TaskProgress, ChecklistItem, Checklist | Ambos calculam o progresso a partir da mesma lista e da regra fornecida pelo consumidor, oferecem resultados distintos, evidências e ações controladas. A web usa controlos e lista HTML, permite substituir o ponto do badge e mantém visível a área de evidências nos resultados não conforme e não testado; mobile virtualiza a lista. |
+| AttachmentItem, FileUpload | Ambos apresentam anexos controlados, progresso, erros e ações, e verificam limites e formatos antes de os entregar ao consumidor. A web usa `File` e seletor nativo com arrastamento opcional; mobile usa o seletor Expo e respetivos metadados. O envio e a validação no servidor pertencem à aplicação. |
 
 ## Tema e validação
 

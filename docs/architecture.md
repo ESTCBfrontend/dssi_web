@@ -56,6 +56,8 @@ Os contentores [Card](components/Card.md), [ContentPanel](components/ContentPane
 
 [ChecklistItem](components/ChecklistItem.md), [TaskProgress](components/TaskProgress.md) e [Checklist](components/Checklist.md) compõem verificações e progresso; a aplicação fornece a regra de conclusão, gere evidências e controla os dados e ações.
 
+[AttachmentItem](components/AttachmentItem.md) e [FileUpload](components/FileUpload.md) apresentam e selecionam ficheiros controlados; a aplicação gere envio e persistência e o servidor valida os ficheiros recebidos.
+
 ## Orientação a objetos e abstração
 
 Usa objetos e classes quando encapsulem comportamento, invariantes ou responsabilidades que beneficiem de um contrato explícito. Prefere composição a herança profunda.

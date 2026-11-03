@@ -43,3 +43,5 @@ Também implementados: [PageButton](docs/components/PageButton.md) e [Pagination
 Também implementados: [ActivityItem](docs/components/ActivityItem.md) e [Timeline](docs/components/Timeline.md).
 
 Também implementados: [TaskProgress](docs/components/TaskProgress.md), [ChecklistItem](docs/components/ChecklistItem.md) e [Checklist](docs/components/Checklist.md).
+
+Também implementados: [AttachmentItem](docs/components/AttachmentItem.md) e [FileUpload](docs/components/FileUpload.md).
