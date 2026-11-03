@@ -1,0 +1,12 @@
+.root { box-sizing: border-box; min-width: 0; padding: 16px; display: flex; flex-direction: column; gap: 13px; border: 1px solid var(--mds-color-border-default, #dee3eb); border-radius: var(--mds-radius-lg, 14px); background: var(--mds-color-bg-surface, #fff); color: var(--mds-color-text-primary, #1f2938); font: 500 12px/1.35 Inter, system-ui, sans-serif; }
+.regular { padding: 20px; font-size: 13px; }
+.heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; min-width: 0; overflow-wrap: anywhere; }
+.value { color: var(--mds-color-text-brand, #194a9d); font-weight: 600; white-space: nowrap; }
+.track { overflow: hidden; height: 6px; border-radius: 999px; background: var(--mds-color-bg-status-neutral, #e9edf3); }
+.regular .track { height: 9px; }
+.fill { height: 100%; border-radius: inherit; background: var(--mds-color-bg-brand, #2159b8); }
+.complete .value { color: var(--mds-color-text-success, #166534); }
+.complete .fill { background: var(--mds-color-bg-status-success-solid, #166534); }
+.error .heading { color: var(--mds-color-text-danger, #b42318); }
+.error .value { color: inherit; }
+.error .fill { background: var(--mds-color-bg-status-danger-solid, #b42318); }
