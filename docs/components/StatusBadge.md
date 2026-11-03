@@ -14,7 +14,7 @@ import { StatusBadge } from '../../shared/ui/StatusBadge'
 - `label`: texto obrigatório com significado; a cor e o ponto não devem ser a única forma de identificar o estado.
 - `tone`: `neutral` (padrão), `info`, `success`, `warning` ou `danger`.
 - `variant`: `soft` (padrão) ou `solid`; `size`: `small` ou `medium` (padrão).
-- `showDot`: mostra o indicador decorativo do Figma. `icon` aceita um ícone decorativo facultativo e substitui o ponto quando ambos são fornecidos. `dotSrc` permite substituir o recurso do ponto para um tema personalizado.
+- `showDot`: mostra o indicador decorativo do Figma. `icon` aceita um ícone decorativo facultativo e substitui o ponto quando ambos são fornecidos; o tamanho do ponto não é imposto ao ícone. `dotSrc` permite substituir o recurso do ponto para um tema personalizado.
 - `className`, `style`, `ref` e outros atributos de `span` são encaminhados para o elemento. Para comunicar mudanças dinâmicas, a aplicação pode usar uma região viva apropriada ao contexto.
 
 ## Tema e validação

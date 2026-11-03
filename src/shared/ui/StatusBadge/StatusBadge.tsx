@@ -29,7 +29,7 @@ export interface StatusBadgeProps extends Omit<ComponentPropsWithRef<'span'>, 'c
 export function StatusBadge({ label, tone = 'neutral', variant = 'soft', size = 'medium', showDot = false, icon, dotSrc, className, ...props }: StatusBadgeProps) {
   if (!label.trim()) throw new Error('StatusBadge requer uma label não vazia.')
   return <span {...props} className={[styles.badge, styles[size], styles[tone], styles[variant], className].filter(Boolean).join(' ')}>
-    {showDot && !icon && <img src={dotSrc ?? dots[size][variant === 'solid' ? 'solid' : tone]} alt="" aria-hidden="true" />}
+    {showDot && !icon && <img className={styles.dot} src={dotSrc ?? dots[size][variant === 'solid' ? 'solid' : tone]} alt="" aria-hidden="true" />}
     {icon && <span className={styles.icon} aria-hidden="true">{icon}</span>}
     <span>{label}</span>
   </span>

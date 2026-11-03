@@ -13,7 +13,7 @@ import { Checkbox } from '../../shared/ui/Checkbox'
 
 - `label` é obrigatório e associa a etiqueta ao controlo. `description` acrescenta descrição acessível. Texto longo quebra linha.
 - `size` aceita `compact` ou `comfortable` (padrão). `checked`/`onChange` permitem uso controlado; `defaultChecked` permite uso não controlado.
-- `indeterminate` aplica a propriedade nativa de estado misto ao input. O consumidor mantém a coerência entre estados individuais e misto e atualiza-a após interação; o estado misto não determina por si só o valor submetido.
+- `indeterminate` aplica a propriedade nativa de estado misto ao input e mantém esse estado enquanto a propriedade continuar ativa, mesmo após interação. O consumidor mantém a coerência entre estados individuais e misto e atualiza-a quando necessário; o estado misto não determina por si só o valor submetido.
 - Aceita `id`, `name`, `value`, `disabled`, `required`, `ref` e restantes atributos nativos. `aria-describedby` fornecido é combinado com a descrição.
 - Foco, ativação por teclado, desativação, reset e submissão seguem o comportamento nativo. Em cores forçadas é apresentado o controlo nativo.
 
