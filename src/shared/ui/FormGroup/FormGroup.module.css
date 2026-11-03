@@ -1,0 +1,10 @@
+.group { box-sizing: border-box; container-type: inline-size; display: flex; flex-direction: column; gap: 20px; min-width: 0; width: 100%; padding: 20px; border: 1px solid var(--mds-color-border-default, #dee3eb); border-radius: var(--mds-radius-lg, 14px); background: var(--mds-color-bg-surface, #fff); color: var(--mds-color-text-primary, #1f2938); font-family: Inter, system-ui, sans-serif; }
+.twoColumns { padding: 24px; }
+.heading { display: flex; min-width: 0; flex-direction: column; gap: 5px; }
+.title, .description { margin: 0; overflow-wrap: anywhere; }
+.title { font-size: 18px; line-height: 26px; font-weight: 600; }
+.description { color: var(--mds-color-text-secondary, #667385); font-size: 13px; line-height: 1.4; }
+.fields { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.block { display: flex; flex-direction: column; min-width: 0; gap: 12px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; }
+@container (min-width: 640px) { .twoColumns .fields { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; } .twoColumns .block { gap: 18px; } }
