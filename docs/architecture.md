@@ -58,6 +58,8 @@ Os contentores [Card](components/Card.md), [ContentPanel](components/ContentPane
 
 [AttachmentItem](components/AttachmentItem.md) e [FileUpload](components/FileUpload.md) apresentam e selecionam ficheiros controlados; a aplicação gere envio e persistência e o servidor valida os ficheiros recebidos.
 
+[PhotoTile](components/PhotoTile.md) e [ImagePicker](components/ImagePicker.md) apresentam e selecionam imagens controladas; processamento, recursos temporários, câmara e transferência pertencem à aplicação.
+
 ## Orientação a objetos e abstração
 
 Usa objetos e classes quando encapsulem comportamento, invariantes ou responsabilidades que beneficiem de um contrato explícito. Prefere composição a herança profunda.

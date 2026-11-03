@@ -45,3 +45,5 @@ Também implementados: [ActivityItem](docs/components/ActivityItem.md) e [Timeli
 Também implementados: [TaskProgress](docs/components/TaskProgress.md), [ChecklistItem](docs/components/ChecklistItem.md) e [Checklist](docs/components/Checklist.md).
 
 Também implementados: [AttachmentItem](docs/components/AttachmentItem.md) e [FileUpload](docs/components/FileUpload.md).
+
+Também implementados: [PhotoTile](docs/components/PhotoTile.md) e [ImagePicker](docs/components/ImagePicker.md).

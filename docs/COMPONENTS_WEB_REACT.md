@@ -463,6 +463,8 @@ Também implementados: [TaskProgress](components/TaskProgress.md), [ChecklistIte
 
 Também implementados: [AttachmentItem](components/AttachmentItem.md) e [FileUpload](components/FileUpload.md).
 
+Também implementados: [PhotoTile](components/PhotoTile.md) e [ImagePicker](components/ImagePicker.md).
+
 ### 9.1 — Átomos (3 famílias)
 
 #### `MDS/AlertIcon`
