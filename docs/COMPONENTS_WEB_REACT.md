@@ -453,6 +453,8 @@ Consulta também a [comparação com os componentes mobile](components/comparaca
 
 Também implementados: [Card](components/Card.md), [ContentPanel](components/ContentPanel.md) e [FormGroup](components/FormGroup.md); consulta as fichas para os contratos efetivos.
 
+Também implementados: [Tab](components/Tab.md), [Tabs](components/Tabs.md) e [TabPanel](components/TabPanel.md).
+
 ### 9.1 — Átomos (3 famílias)
 
 #### `MDS/AlertIcon`

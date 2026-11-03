@@ -20,4 +20,4 @@ import { ContentPanel } from '../../shared/ui/ContentPanel'
 
 ## Tema e validação
 
-Usa tokens CSS `--mds-*` com valores de reserva do Figma e Inter se disponível. Testar conteúdo, cabeçalho e rodapé opcionais, controlos, zoom e larguras de painel; a apresentação responsiva usa container queries e deve ser validada nos navegadores suportados. Não adiciona conteúdo demonstrativo nem controla o estado de visibilidade.
+Usa tokens CSS `--mds-*` com valores de reserva do Figma e Inter se disponível. `--mds-panel-padding-wide`, `--mds-panel-gap-wide` e `--mds-panel-description-size` permitem personalizar medidas usadas também pelo TabPanel. Testar conteúdo, cabeçalho e rodapé opcionais, controlos, zoom e larguras de painel; a apresentação responsiva usa container queries e deve ser validada nos navegadores suportados. Não adiciona conteúdo demonstrativo nem controla o estado de visibilidade.
