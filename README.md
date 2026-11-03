@@ -51,3 +51,5 @@ Também implementados: [PhotoTile](docs/components/PhotoTile.md) e [ImagePicker]
 Também implementados: [ClientSummary](docs/components/ClientSummary.md), [EquipmentCard](docs/components/EquipmentCard.md) e [ServiceOrderCard](docs/components/ServiceOrderCard.md).
 
 Também implementados: [Select](docs/components/Select.md) e [Form](docs/components/Form.md).
+
+Também implementados: [DatePicker](docs/components/DatePicker.md), [DateRangePicker](docs/components/DateRangePicker.md) e [TimePicker](docs/components/TimePicker.md).

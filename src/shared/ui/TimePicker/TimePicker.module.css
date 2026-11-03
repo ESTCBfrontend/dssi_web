@@ -1,0 +1,2 @@
+.root { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.input { min-height: 48px; }

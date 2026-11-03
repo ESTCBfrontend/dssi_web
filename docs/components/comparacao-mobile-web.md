@@ -23,6 +23,7 @@ Esta comparação descreve as APIs existentes após a revisão dos componentes p
 | PhotoTile, ImagePicker | Ambos apresentam miniaturas e galeria controladas, progresso, seleção e ações. A web usa ficheiros do navegador e uma ação de câmara opcional fornecida pela aplicação; mobile integra seletores Expo e pedidos de permissão. Na web a aplicação gere eventuais object URLs e a validação adicional de ficheiros. |
 | ClientSummary, EquipmentCard, ServiceOrderCard | Ambos recebem dados, estados e ações controlados, permitem etiquetas, campos e badge personalizados e omitem valores opcionais vazios. A web associa campos com `dl` e usa atributos nativos e heading configurável; mobile usa semântica de acessibilidade da plataforma. |
 | Select, Form | Ambos recebem opções e dados controlados, suportam pesquisa local, erros, carregamento e composição de campos. Na web o Select usa controlo nativo com pesquisa separada e o Form usa semântica e reset HTML; mobile usa um painel de opções e controlos nativos da plataforma. |
+| DatePicker, DateRangePicker, TimePicker | Ambos usam datas civis e horas locais controladas, limites, estados de erro e disponibilidade fornecida pelo consumidor. Web usa inputs e select nativos do navegador; mobile usa seletores de sistema e painel de horários. O aspeto e a localidade visual dependem da plataforma. |
 
 ## Tema e validação
 

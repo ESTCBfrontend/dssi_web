@@ -469,6 +469,8 @@ Também implementados: [ClientSummary](components/ClientSummary.md), [EquipmentC
 
 Também implementados: [Select](components/Select.md) e [Form](components/Form.md).
 
+Também implementados: [DatePicker](components/DatePicker.md), [DateRangePicker](components/DateRangePicker.md) e [TimePicker](components/TimePicker.md).
+
 ### 9.1 — Átomos (3 famílias)
 
 #### `MDS/AlertIcon`
