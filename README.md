@@ -41,3 +41,5 @@ Também implementados: [Tab](docs/components/Tab.md), [Tabs](docs/components/Tab
 Também implementados: [PageButton](docs/components/PageButton.md) e [Pagination](docs/components/Pagination.md).
 
 Também implementados: [ActivityItem](docs/components/ActivityItem.md) e [Timeline](docs/components/Timeline.md).
+
+Também implementados: [TaskProgress](docs/components/TaskProgress.md), [ChecklistItem](docs/components/ChecklistItem.md) e [Checklist](docs/components/Checklist.md).
