@@ -26,6 +26,7 @@ Esta comparação descreve as APIs existentes após a revisão dos componentes p
 | DatePicker, DateRangePicker, TimePicker | Ambos usam datas civis e horas locais controladas, limites, estados de erro e disponibilidade fornecida pelo consumidor. Web usa inputs e select nativos do navegador; mobile usa seletores de sistema e painel de horários. O aspeto e a localidade visual dependem da plataforma. |
 | TeamSelector, UserSelector, AssignmentPanel | Ambos recebem listas e seleção controladas, pesquisa local, erros e autorização explícita de submissão; a pessoa é preservada ao alterar equipa. A web usa select nativo e pesquisa separada, enquanto mobile usa painel com opções visuais e avatares. A validação definitiva continua na aplicação e servidor. |
 | NavItem, AppHeader, PageLayout, AppShell | Ambos compõem cabeçalho, navegação e conteúdo sem escolher rotas; aceitam estado, ações e slots da aplicação. A web usa links, landmarks, atalho para o conteúdo e uma navegação responsiva lateral ou inferior; mobile usa controlos e áreas seguras nativos. |
+| SortableHeader, TableRow, DataTable, FilterBar | Ambos recebem dados e critérios controlados, pedem ordenação e paginação à aplicação e mostram carregamento, erro e vazio. A web usa tabela HTML genérica com colunas configuráveis ou cartões explícitos; mobile usa cartões virtualizados e APIs nativas. |
 
 ## Tema e validação
 

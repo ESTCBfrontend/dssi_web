@@ -1,0 +1,5 @@
+.root { box-sizing: border-box; display: flex; flex-direction: column; gap: 12px; width: 100%; min-width: 0; padding: var(--mds-filter-bar-padding, 20px); border: 1px solid var(--mds-color-border-default, #dee3eb); border-radius: var(--mds-radius-lg, 14px); background: var(--mds-color-bg-subtle, #fafbfd); color: var(--mds-color-text-primary, #1f2938); font-family: var(--mds-font-family, Inter, sans-serif); }
+.title { margin: 0; font-size: 13px; font-weight: 600; }
+.controls { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; min-width: 0; }
+.search { flex: 2 1 250px; min-width: 0; }
+.filter { flex: 1 1 170px; min-width: 0; }

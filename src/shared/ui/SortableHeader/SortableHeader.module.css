@@ -1,0 +1,5 @@
+.header { padding: 0; text-align: left; font-weight: 500; }
+.button { box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 0 10px; border: 0; border-radius: 9px; background: transparent; color: var(--mds-color-text-secondary, #667385); font: 500 12px/1.3 Inter, system-ui, sans-serif; text-align: left; cursor: pointer; }
+.button:focus-visible { outline: 2px solid var(--mds-color-border-focus, #2159b8); outline-offset: -2px; }
+.button:disabled { color: var(--mds-color-text-disabled, #667385); cursor: not-allowed; }
+.header[aria-sort] .button { background: var(--mds-color-bg-info, #eff8ff); color: var(--mds-color-text-brand, #194a9d); font-weight: 600; }

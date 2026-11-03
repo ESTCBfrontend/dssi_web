@@ -70,6 +70,8 @@ Os contentores [Card](components/Card.md), [ContentPanel](components/ContentPane
 
 [NavItem](components/NavItem.md), [AppHeader](components/AppHeader.md), [PageLayout](components/PageLayout.md) e [AppShell](components/AppShell.md) compõem navegação e estrutura responsiva com slots; a aplicação continua responsável por rotas, destinos e foco entre páginas.
 
+[SortableHeader](components/SortableHeader.md), [TableRow](components/TableRow.md), [DataTable](components/DataTable.md) e [FilterBar](components/FilterBar.md) compõem listagens com dados e interações controlados; a aplicação efetua a filtragem, ordenação, paginação e obtenção de resultados.
+
 ## Orientação a objetos e abstração
 
 Usa objetos e classes quando encapsulem comportamento, invariantes ou responsabilidades que beneficiem de um contrato explícito. Prefere composição a herança profunda.
