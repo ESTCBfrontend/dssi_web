@@ -1,0 +1,13 @@
+{
+  "id": "mock-os-3",
+  "code": "OS-EXEMPLO-003",
+  "client": { "id": "mock-client-1", "name": "Cliente de demonstração" },
+  "site": { "id": "mock-site-1", "name": "Instalação de demonstração" },
+  "serviceType": "Assistência técnica",
+  "description": "Substituição de equipamento pendente de material.",
+  "status": "PENDENTE",
+  "priority": "NORMAL",
+  "scheduledDate": null,
+  "assignedTechnician": null,
+  "instructions": "Confirmar a disponibilidade do material."
+}

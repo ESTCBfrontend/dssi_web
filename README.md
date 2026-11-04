@@ -13,6 +13,16 @@ npm run dev
 
 Abre no navegador o endereço indicado pelo Vite. No PowerShell, se a política de execução impedir o comando `npm`, usa `npm.cmd` nos mesmos comandos.
 
+## Origem de dados em preparação
+
+A configuração `VITE_DATA_SOURCE` aceita `api` ou `mock` e usa `api` por defeito. Valores inválidos são rejeitados ao iniciar a aplicação. A origem configurada é independente das ferramentas de desenvolvimento.
+
+A composição da aplicação disponibiliza a origem aos componentes React. A flag `ENABLE_DEBUG_LAYER` em [debugConfig.ts](src/app/debug/debugConfig.ts) controla o menu: altera-a para `true` para o apresentar ou `false` para o ocultar durante o desenvolvimento. Está atualmente ativa. Inicia a aplicação com `npm run dev` (ou `npm.cmd run dev` no PowerShell) e atualiza a página depois de mudar a flag.
+
+A flag existe para permitir que colaboradores testem diferentes origens e, futuramente, cenários fictícios. Uma build de produção exclui o menu mesmo quando a flag está ativa; assim, estas ferramentas ficam limitadas ao desenvolvimento. A visibilidade do menu não determina a origem inicial dos dados. O suporte a builds internas preparadas para debug ainda não está implementado.
+
+O botão no topo abre o menu; «Origem de dados» permite alterar a origem temporariamente. Com Mock selecionado, «Mocks» abre um diálogo para escolher um cenário, adicionar um ou todos os exemplos de ordens de serviço, remover todas ou repor os dados iniciais do cenário. As ações relevantes apresentam notificações de sucesso ou erro; estas são feedback de interface, não substituem o sistema de logs. Um clique fora do diálogo regressa ao nível anterior. Mudar de cenário também repõe os dados fictícios. A seleção regressa à configuração inicial ao recarregar. O serviço mock provisório está ligado à composição, mas ainda não existem ecrãs de ordens de serviço. O serviço API ainda não foi implementado e a sua seleção não recorre a dados mock. A [arquitetura](docs/architecture.md#origem-de-dados-e-ferramentas-de-desenvolvimento) explica a organização dos mocks e as limitações atuais. Não coloques credenciais em variáveis `VITE_*`: os seus valores são disponibilizados ao código do navegador.
+
 ## Verificações
 
 ```bash

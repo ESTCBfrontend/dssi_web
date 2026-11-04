@@ -1,0 +1,13 @@
+{
+  "id": "mock-os-5",
+  "code": "OS-EXEMPLO-005",
+  "client": { "id": "mock-client-1", "name": "Cliente de demonstração" },
+  "site": { "id": "mock-site-1", "name": "Instalação de demonstração" },
+  "serviceType": "Assistência técnica",
+  "description": "Substituir um equipamento avariado.",
+  "status": "CONCLUIDA_TECNICAMENTE",
+  "priority": "NORMAL",
+  "scheduledDate": "2026-11-04",
+  "assignedTechnician": { "id": "mock-tech-1", "name": "Técnico fictício" },
+  "instructions": null
+}

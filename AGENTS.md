@@ -4,6 +4,8 @@ Lê este ficheiro, [README.md](README.md), [CONTRIBUTING.md](CONTRIBUTING.md) e 
 
 Para criar, alterar ou reutilizar componentes da interface, consulta também [docs/COMPONENTS_WEB_REACT.md](docs/COMPONENTS_WEB_REACT.md), incluindo a ficha `MDS/<Nome>` e as dependências relevantes. O guia descreve comportamento, composição, utilização e validação; as propostas técnicas e os exemplos não substituem as decisões aprovadas do projeto nem alargam o âmbito da tarefa.
 
+Para criar, alterar ou reutilizar mocks e dados fictícios, consulta as orientações de [docs/architecture.md](docs/architecture.md#origem-de-dados-e-ferramentas-de-desenvolvimento).
+
 ## Projeto e colaboração
 
 - React, TypeScript, Vite e npm, com `package-lock.json`.

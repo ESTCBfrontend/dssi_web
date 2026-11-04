@@ -1,0 +1,13 @@
+{
+  "id": "mock-os-1",
+  "code": "OS-EXEMPLO-001",
+  "client": { "id": "mock-client-1", "name": "Cliente de demonstração" },
+  "site": { "id": "mock-site-1", "name": "Instalação de demonstração" },
+  "serviceType": "Assistência técnica",
+  "description": "Verificar o funcionamento da central de alarme.",
+  "status": "NOVA",
+  "priority": "NORMAL",
+  "scheduledDate": null,
+  "assignedTechnician": null,
+  "instructions": null
+}

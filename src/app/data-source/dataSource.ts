@@ -1,0 +1,51 @@
+export type DataSource = 'api' | 'mock'
+
+type DataSourceOptions = {
+  configuredSource?: string
+  allowRuntimeSelection: boolean
+}
+
+/** Keeps the configured source independent from the optional development tools. */
+export class DataSourceSelection {
+  private currentSource: DataSource
+  private readonly allowRuntimeSelection: boolean
+  private readonly listeners = new Set<() => void>()
+
+  constructor({ configuredSource, allowRuntimeSelection }: DataSourceOptions) {
+    if (configuredSource !== undefined && configuredSource !== 'api' && configuredSource !== 'mock') {
+      throw new Error(`Origem de dados inválida: ${configuredSource}`)
+    }
+
+    this.currentSource = configuredSource === 'mock' ? 'mock' : 'api'
+    this.allowRuntimeSelection = allowRuntimeSelection
+  }
+
+  get source(): DataSource {
+    return this.currentSource
+  }
+
+  get canSelect(): boolean {
+    return this.allowRuntimeSelection
+  }
+
+  getSnapshot = (): DataSource => this.currentSource
+
+  subscribe = (listener: () => void): (() => void) => {
+    this.listeners.add(listener)
+    return () => { this.listeners.delete(listener) }
+  }
+
+  select(source: DataSource): void {
+    if (!this.allowRuntimeSelection) {
+      throw new Error('A alteração da origem de dados não está disponível nesta build.')
+    }
+
+    if (source !== 'api' && source !== 'mock') {
+      throw new Error(`Origem de dados inválida: ${source}`)
+    }
+    if (source === this.currentSource) return
+
+    this.currentSource = source
+    for (const listener of this.listeners) listener()
+  }
+}

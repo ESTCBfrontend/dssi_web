@@ -4,7 +4,7 @@ Este documento contém princípios aprovados para orientar o crescimento do proj
 
 ## Estado atual e evolução
 
-A aplicação ainda é uma base React com Vite, com o ponto de entrada em `src/main.tsx` e o componente inicial em `src/App.tsx`. Ainda não existem funcionalidades de negócio organizadas em `src/features`.
+A aplicação é uma base React com Vite, com o ponto de entrada em `src/main.tsx` e o componente inicial em `src/App.tsx`. Em `src/features/work-orders` existe um primeiro serviço mock provisório de ordens de serviço, ligado à composição mas ainda sem ecrãs de negócio.
 
 A direção acordada é organizar o código por funcionalidade e separar responsabilidades conforme a complexidade real. A estrutura abaixo é uma referência para as próximas funcionalidades; algumas pastas, como `shared/ui`, já existem. Não é necessário criar todas as camadas de uma vez.
 
@@ -35,6 +35,26 @@ Uma funcionalidade pequena pode precisar apenas de parte desta estrutura. Acresc
 - `shared` deve conter responsabilidades identificáveis com utilização transversal demonstrada; não deve tornar-se um depósito genérico de utilitários.
 
 Os contratos devem ficar junto de quem define a necessidade. Não é obrigatório criar uma interface para cada classe nem adicionar uma biblioteca de injeção de dependências.
+
+## Origem de dados e ferramentas de desenvolvimento
+
+A origem de dados é configurada independentemente das ferramentas de desenvolvimento. A seleção em execução fica restrita a builds de desenvolvimento ou internas explicitamente preparadas; builds de produção não disponibilizam o Debug Menu. Os serviços de cada funcionalidade expõem o mesmo contrato à apresentação para as implementações mock e API, mantendo os dados fictícios isolados do backend real.
+
+Em `src/app/data-source` está preparada a configuração inicial da origem e a sua disponibilização reativa ao React. O Debug Menu em `src/app/debug` permite selecionar a origem em execução quando a flag `ENABLE_DEBUG_LAYER`, definida em `debugConfig.ts`, está ativa no modo de desenvolvimento do Vite. Esta flag facilita os testes locais; o código do menu é excluído das builds de produção independentemente do seu valor. A composição em `src/app/work-orders` disponibiliza o serviço mock conforme a origem selecionada. O serviço API e o suporte a builds internas continuam por implementar; enquanto a API estiver selecionada, o serviço de ordens de serviço é explicitamente indicado como indisponível. Os contratos de negócio devem ser acordados com o Backend. O [README](../README.md#origem-de-dados-em-preparação) explica como alterar a flag.
+
+Os dados fictícios JSON utilizados pelos mocks ficam em `src/mocks/<funcionalidade>`, com nomes `json_mock_<funcionalidade>_<caso>`. Os serviços, parsers e cenários específicos ficam junto da respetiva funcionalidade; mecanismos comuns só são extraídos quando houver reutilização demonstrada.
+
+Para acrescentar dados fictícios, consulta o modelo e o contrato da funcionalidade, cria o JSON na respetiva pasta e usa apenas dados fictícios. Mantém os dados coerentes com os requisitos conhecidos, com identificadores distintos quando exigidos, e assinala campos ou valores ainda não acordados com o Backend. Confirma que o serviço carrega e valida os novos dados e testa os comportamentos relevantes, incluindo dados inválidos, erros e limites. Acrescentar um ficheiro não cria automaticamente o serviço ou o carregador de uma funcionalidade nova.
+
+Na implementação atual, `src/mocks/work-orders` contém exemplos incluídos automaticamente pelo carregador de `src/features/work-orders/infrastructure/mock/loaders`; o parser correspondente fica em `src/features/work-orders/infrastructure/mock/parsers`. Os ficheiros são lidos como texto e interpretados com `JSON.parse`; cada um pode conter uma ordem ou um array de ordens. O parser rejeita JSON inválido, dados incompatíveis e IDs repetidos no ficheiro; o carregador verifica IDs repetidos entre ficheiros. Outras funcionalidades precisam dos seus próprios serviços e carregadores quando forem implementadas.
+
+O serviço mock de ordens de serviço fica em `src/features/work-orders/infrastructure/mock/services`, mantém dados em memória e disponibiliza `list`, `getById` e `create`; uma ordem inexistente devolve `null`. Os cenários `normal`, `empty`, `error` e `slow` criam instâncias independentes, e `slow` simula 1,2 segundos de latência. O Debug Menu permite mudar de cenário quando a origem é Mock. Mudar de cenário cria uma nova instância e repõe os dados; alternar temporariamente para API preserva a instância mock enquanto a página estiver aberta. Ao recarregar, os dados fictícios são perdidos. Os mocks não comunicam com o Backend nem partilham dados com o Mobile.
+
+Os controlos de desenvolvimento das ordens de serviço estão separados do contrato de negócio. Na secção «Mocks» do Debug Menu, permitem adicionar cópias individuais ou de todos os exemplos JSON em vários estados, remover todas as ordens fictícias ou repor os dados iniciais do cenário selecionado. As ações apresentam notificações de sucesso ou erro, incluindo falhas parciais na adição; são feedback de interface e não constituem logs. Os identificadores e números gerados para as cópias são locais. Os controlos ficam indisponíveis com a origem API ou as ferramentas de desenvolvimento desativadas; não efetuam pedidos reais. Se uma criação simulada estiver pendente quando os dados são limpos ou repostos, essa criação é rejeitada.
+
+O modelo e os JSON de ordens de serviço são provisórios. A criação mock recebe o número da ordem, mas ainda é necessário acordar com o Backend quem o gera, os formatos de IDs, datas, prioridade, cliente e local, bem como pedidos, respostas, paginação, erros e autenticação. Os endpoints de referência do PO não são uma API confirmada. Uma nova ordem mock começa em `NOVA`, com prioridade `NORMAL` por defeito, e pode não ter data prevista ou técnico. Atribuições, intervenções e transições estão por implementar; a conclusão de uma intervenção não determina por si só a conclusão da ordem. Os IDs gerados pelo mock são locais.
+
+Quando a equipa de Backend fornecer exemplos JSON, revê os contratos com os consumidores Web e Mobile e implementa as adaptações necessárias. Os modelos internos e o formato de transporte podem ser diferentes; documenta as diferenças e os pontos por confirmar.
 
 ## Componentes visuais implementados
 
