@@ -3,6 +3,10 @@ import type { MockWorkOrderControls } from '../../../features/work-orders/infras
 import type { MockWorkOrderService } from '../../../features/work-orders/infrastructure/mock/services/MockWorkOrderService'
 import { createWorkOrderMockScenario } from '../../../features/work-orders/infrastructure/mock/scenarios/workOrderScenarios'
 import type { WorkOrderMockScenario } from '../../../features/work-orders/infrastructure/mock/scenarios/workOrderScenarios'
+import { logger } from '../../../shared/logging/logger'
+import type { LogEvent } from '../../../shared/logging/logger'
+
+let operationSequence = 0
 
 /** Só carrega os dados fictícios quando uma operação mock é efetivamente pedida. */
 export function createLazyMockWorkOrderService(scenario: WorkOrderMockScenario): {
@@ -12,18 +16,58 @@ export function createLazyMockWorkOrderService(scenario: WorkOrderMockScenario):
   let instance: MockWorkOrderService | undefined
   const getInstance = () => instance ??= createWorkOrderMockScenario(scenario)
 
+  function record(operation: LogEvent['operation'], result: LogEvent['result'] = 'sucesso'): void {
+    logger.log(result === 'erro' ? 'error' : 'info', { area: 'ordens-servico', operation, result, source: 'mock' })
+  }
+  function run<T>(operation: LogEvent['operation'], action: () => T): T {
+    try {
+      const result = action()
+      if ((operation === 'limpar' || operation === 'repor') && typeof result === 'number') {
+        logger.log('info', { area: 'ordens-servico', operation, result: 'sucesso', source: 'mock', count: result })
+      } else record(operation, result === null ? 'existente' : 'sucesso')
+      return result
+    } catch (error) {
+      record(operation, 'erro')
+      throw error
+    }
+  }
+  async function runAsync<T>(operation: LogEvent['operation'], action: () => Promise<T>): Promise<T> {
+    const correlation = scenario === 'slow' ? ++operationSequence : undefined
+    const started = correlation === undefined ? undefined : performance.now()
+    if (correlation !== undefined) logger.log('info', { area: 'ordens-servico', operation, result: 'iniciada', source: 'mock', correlation })
+    try {
+      const result = await action()
+      if (correlation === undefined) record(operation, operation === 'consultar' && result === null ? 'inexistente' : 'sucesso')
+      else logger.log('info', { area: 'ordens-servico', operation, result: operation === 'consultar' && result === null ? 'inexistente' : 'sucesso', source: 'mock', correlation, durationMs: Math.round(performance.now() - started!) })
+      return result
+    } catch (error) {
+      if (correlation === undefined) record(operation, 'erro')
+      else logger.log('error', { area: 'ordens-servico', operation, result: 'erro', source: 'mock', correlation, durationMs: Math.round(performance.now() - started!) })
+      throw error
+    }
+  }
+
   return {
     service: {
-      async list() { return getInstance().list() },
-      async getById(id) { return getInstance().getById(id) },
-      async create(input) { return getInstance().create(input) },
+      async list() { return runAsync('listar', () => getInstance().list()) },
+      async getById(id) { return runAsync('consultar', () => getInstance().getById(id)) },
+      async create(input) { return runAsync('criar', () => getInstance().create(input)) },
     },
     controls: {
-      listExamples() { return getInstance().listExamples() },
-      addExample(exampleId) { return getInstance().addExample(exampleId) },
-      addAllExamples() { return getInstance().addAllExamples() },
-      clear() { return getInstance().clear() },
-      reset() { return getInstance().reset() },
+      listExamples() { return run('listar-exemplos', () => getInstance().listExamples()) },
+      addExample(exampleId) { return run('adicionar-exemplo', () => getInstance().addExample(exampleId)) },
+      addAllExamples() {
+        try {
+          const counts = getInstance().addAllExamples()
+          logger.log(counts.failed ? 'warn' : 'info', { area: 'ordens-servico', operation: 'adicionar-todos', result: counts.failed ? 'parcial' : 'sucesso', source: 'mock', counts })
+          return counts
+        } catch (error) {
+          record('adicionar-todos', 'erro')
+          throw error
+        }
+      },
+      clear() { return run('limpar', () => getInstance().clear()) },
+      reset() { return run('repor', () => getInstance().reset()) },
     },
   }
 }
