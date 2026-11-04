@@ -1,0 +1,13 @@
+{
+  "id": "mock-os-6",
+  "code": "OS-EXEMPLO-006",
+  "client": { "id": "mock-client-1", "name": "Cliente de demonstração" },
+  "site": { "id": "mock-site-1", "name": "Instalação de demonstração" },
+  "serviceType": "Manutenção",
+  "description": "Inspecionar o sistema de alarme.",
+  "status": "VALIDADA",
+  "priority": "NORMAL",
+  "scheduledDate": "2026-11-03",
+  "assignedTechnician": { "id": "mock-tech-1", "name": "Técnico fictício" },
+  "instructions": null
+}

@@ -1,0 +1,13 @@
+{
+  "id": "mock-os-7",
+  "code": "OS-EXEMPLO-007",
+  "client": { "id": "mock-client-2", "name": "Cliente fictício B" },
+  "site": { "id": "mock-site-2", "name": "Instalação fictícia B" },
+  "serviceType": "Assistência técnica",
+  "description": "Inspecionar a central de alarme.",
+  "status": "CANCELADA",
+  "priority": "NORMAL",
+  "scheduledDate": null,
+  "assignedTechnician": null,
+  "instructions": "Exemplo fictício: intervenção cancelada a pedido do cliente."
+}

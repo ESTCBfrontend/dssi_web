@@ -46,6 +46,10 @@ Ao preparar uma entrega, move as entradas incluídas para uma secção com o nú
 
 Ao criar, alterar ou reutilizar componentes, consulta o [guia React Web](docs/COMPONENTS_WEB_REACT.md) e a ficha `MDS/<Nome>` relevante. Confirma o código existente, o contexto da tarefa e as variantes do Figma a implementar. As props e soluções técnicas propostas no guia devem ser ajustadas às decisões aprovadas do projeto; documenta no PR as verificações e eventuais limitações de comparação visual.
 
+## Mocks e dados fictícios
+
+Ao criar ou alterar mocks, consulta a [arquitetura](docs/architecture.md#origem-de-dados-e-ferramentas-de-desenvolvimento) para a organização dos dados e dos serviços, os exemplos disponíveis e as limitações da implementação atual.
+
 ## Entregas
 
 Quando o estado de `develop` estiver pronto para entrega, abre um PR de `develop` para `main`, com CI e revisão. O merge para `main` representa uma versão estável. Não se assume qualquer publicação automática.

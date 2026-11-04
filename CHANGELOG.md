@@ -6,6 +6,10 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ### Adicionado
 
+- Configuração reativa da origem de dados e menu de desenvolvimento para a selecionar temporariamente, com flag independente.
+- Serviço mock provisório em memória para ordens de serviço, com exemplos JSON por funcionalidade e controlos no Debug Menu para cenários, adição, limpeza e reposição de dados fictícios.
+- Notificações para os resultados relevantes dos controlos mock e correção do fecho em cascata de diálogos sobrepostos.
+- Orientações comuns para organizar e validar mocks e dados fictícios, com referências para colaboradores e agentes.
 - Registo de alterações e orientações para o manter durante as tarefas e a preparação de versões.
 
 ## 0.1.0 — 2026-11-03
