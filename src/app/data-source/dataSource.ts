@@ -1,3 +1,5 @@
+import { logger } from '../../shared/logging/logger'
+
 export type DataSource = 'api' | 'mock'
 
 type DataSourceOptions = {
@@ -45,7 +47,9 @@ export class DataSourceSelection {
     }
     if (source === this.currentSource) return
 
+    const previousSource = this.currentSource
     this.currentSource = source
+    logger.log('info', { area: 'origem-dados', operation: 'selecionar', result: 'sucesso', source, previousSource })
     for (const listener of this.listeners) listener()
   }
 }

@@ -6,6 +6,8 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ### Adicionado
 
+- Logs técnicos legíveis na consola para a seleção de origem e as operações mock de ordens de serviço, com instrumentação preparada para futuros pedidos HTTP.
+
 - Configuração reativa da origem de dados e menu de desenvolvimento para a selecionar temporariamente, com flag independente.
 - Os exemplos mock de OS já presentes deixam de ser adicionados novamente e as notificações do menu substituem a anterior e desaparecem automaticamente.
 - Serviço mock provisório em memória para ordens de serviço, com exemplos JSON por funcionalidade e controlos no Debug Menu para cenários, adição, limpeza e reposição de dados fictícios.

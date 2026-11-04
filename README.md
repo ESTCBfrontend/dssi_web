@@ -25,6 +25,8 @@ O botão no topo abre o menu; «Origem de dados» permite alterar a origem tempo
 
 ## Verificações
 
+Os eventos técnicos da seleção de origem e do serviço mock de OS aparecem em linhas na consola das ferramentas de desenvolvimento do navegador. Em desenvolvimento são apresentados eventos informativos, avisos e erros; em produção apenas avisos e erros. Os logs são independentes do Debug Menu e não são enviados para um serviço externo. A instrumentação HTTP está preparada, mas a API ainda não está ligada; a [arquitetura](docs/architecture.md#origem-de-dados-e-ferramentas-de-desenvolvimento) descreve os dados filtrados e as limitações.
+
 ```bash
 npm run lint
 npm run typecheck
