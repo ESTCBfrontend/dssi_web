@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import type { CreateWorkOrder } from '../../../domain/workOrder'
 import { MockWorkOrderService } from './MockWorkOrderService'
+import { logger } from '../../../../../shared/logging/logger'
 
 function exampleInput(): CreateWorkOrder {
   return {
@@ -28,6 +29,13 @@ describe('serviço mock de ordens de serviço', () => {
     const service = new MockWorkOrderService([])
     expect(await service.list()).toEqual([])
     expect(await service.getById('inexistente')).toBeNull()
+  })
+
+  it('não reutiliza os IDs dos exemplos ao criar uma OS num cenário vazio', async () => {
+    const service = new MockWorkOrderService([])
+    const exampleIds = new Set(service.listExamples().map(order => order.id))
+    const created = await service.create(exampleInput())
+    expect(exampleIds.has(created.id)).toBe(false)
   })
 
   it('rejeita campos obrigatórios em branco sem criar uma ordem', async () => {
@@ -77,6 +85,21 @@ describe('serviço mock de ordens de serviço', () => {
     expect(await service.list()).toEqual([])
     expect(service.reset()).toBe(initialCount)
     expect(await service.list()).toHaveLength(initialCount)
+  })
+
+  it('regista apenas o JSON fictício dos exemplos efetivamente adicionados', async () => {
+    const log = vi.spyOn(logger, 'mockExample').mockImplementation(() => {})
+    try {
+      const service = new MockWorkOrderService([])
+      const example = service.addExample('mock-os-1')
+      expect(log).toHaveBeenCalledWith('OS', example)
+      service.addExample('mock-os-1')
+      expect(log).toHaveBeenCalledOnce()
+      const remaining = service.addAllExamples().added
+      expect(log).toHaveBeenCalledTimes(remaining + 1)
+      await service.create(exampleInput())
+      expect(log).toHaveBeenCalledTimes(remaining + 1)
+    } finally { log.mockRestore() }
   })
 
   it('rejeita um exemplo inexistente sem alterar os dados', async () => {

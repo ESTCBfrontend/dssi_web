@@ -5,6 +5,7 @@ import { createWorkOrderMockScenario } from '../../../features/work-orders/infra
 import type { WorkOrderMockScenario } from '../../../features/work-orders/infrastructure/mock/scenarios/workOrderScenarios'
 import { logger } from '../../../shared/logging/logger'
 import type { LogEvent } from '../../../shared/logging/logger'
+import { MockInterventionService } from '../../../features/interventions/infrastructure/mock/services/MockInterventionService'
 
 let operationSequence = 0
 
@@ -12,9 +13,11 @@ let operationSequence = 0
 export function createLazyMockWorkOrderService(scenario: WorkOrderMockScenario): {
   service: WorkOrderService
   controls: MockWorkOrderControls
+  interventions: MockInterventionService
 } {
   let instance: MockWorkOrderService | undefined
   const getInstance = () => instance ??= createWorkOrderMockScenario(scenario)
+  const interventions = new MockInterventionService(id => getInstance().hasOrder(id))
 
   function record(operation: LogEvent['operation'], result: LogEvent['result'] = 'sucesso'): void {
     logger.log(result === 'erro' ? 'error' : 'info', { area: 'ordens-servico', operation, result, source: 'mock' })
@@ -48,6 +51,7 @@ export function createLazyMockWorkOrderService(scenario: WorkOrderMockScenario):
   }
 
   return {
+    interventions,
     service: {
       async list() { return runAsync('listar', () => getInstance().list()) },
       async getById(id) { return runAsync('consultar', () => getInstance().getById(id)) },
@@ -66,8 +70,8 @@ export function createLazyMockWorkOrderService(scenario: WorkOrderMockScenario):
           throw error
         }
       },
-      clear() { return run('limpar', () => getInstance().clear()) },
-      reset() { return run('repor', () => getInstance().reset()) },
+      clear() { return run('limpar', () => { const count = getInstance().clear(); interventions.clear(); return count }) },
+      reset() { return run('repor', () => { const count = getInstance().reset(); interventions.clear(); return count }) },
     },
   }
 }

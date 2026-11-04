@@ -16,7 +16,7 @@ describe('pedidos HTTP instrumentados', () => {
     const id = lines[0].match(/pedido \d+/)?.[0]
     expect(id).toBeDefined()
     expect(lines.every(line => line.includes(id!))).toBe(true)
-    expect(lines.join(' ')).toContain('"total":2')
+    expect(lines.join(' ')).toContain('"total": 2')
     expect(lines.join(' ')).not.toMatch(/privado|segredo|password|email|123/)
   })
 

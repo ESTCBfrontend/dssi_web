@@ -12,7 +12,7 @@ function filteredBody(value: unknown): string {
   for (const key of safeNumericFields) {
     if (typeof source[key] === 'number' && Number.isFinite(source[key])) safe[key] = source[key]
   }
-  return Object.keys(safe).length ? JSON.stringify(safe) : '[omitido]'
+  return Object.keys(safe).length ? JSON.stringify(safe, null, 2) : '[omitido]'
 }
 
 function requestBody(body: BodyInit | null | undefined): string {
@@ -35,7 +35,7 @@ async function logResponseBody(response: Response, label: string): Promise<void>
       content += decoder.decode(part.value, { stream: true })
     }
     content += decoder.decode()
-    writeHttpLog('info', `${label} | corpo recebido: ${filteredBody(JSON.parse(content))}`)
+    writeHttpLog('info', `${label} | corpo recebido:\n${filteredBody(JSON.parse(content))}`)
   } catch (error) {
     writeHttpLog('warn', `${label} | ${error instanceof SyntaxError ? 'resposta JSON inválida' : 'não foi possível inspecionar a resposta'}`)
   }
@@ -51,7 +51,7 @@ export async function loggedFetch(route: string, input: RequestInfo | URL, init?
   const label = `pedido ${++sequence} | ${safeMethod} ${route}`
   const start = performance.now()
   writeHttpLog('info', `${label} | iniciado`)
-  if (import.meta.env.DEV && init?.body != null) writeHttpLog('info', `${label} | corpo enviado: ${requestBody(init.body)}`)
+  if (import.meta.env.DEV && init?.body != null) writeHttpLog('info', `${label} | corpo enviado:\n${requestBody(init.body)}`)
   let response: Response
   try {
     response = await fetch(input, init)

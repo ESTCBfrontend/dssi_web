@@ -16,6 +16,7 @@ export function WorkOrderServiceProvider({ children }: { children: ReactNode }) 
   // A API ainda não tem adaptador acordado; null indica explicitamente que está indisponível.
   const service = source === 'mock' ? mock.instance.service : null
   const mockControls = source === 'mock' && canSelect ? mock.instance.controls : null
+  const interventionControls = source === 'mock' && canSelect ? mock.instance.interventions : null
   const status: WorkOrderServices['status'] = source === 'api' ? 'unavailable' : 'ready'
 
   const selectMockScenario = useCallback((scenario: WorkOrderMockScenario) => {
@@ -29,8 +30,8 @@ export function WorkOrderServiceProvider({ children }: { children: ReactNode }) 
   }, [source, canSelect])
 
   const value = useMemo(
-    () => ({ service, status, mockScenario: mock.scenario, mockControls, selectMockScenario }),
-    [service, status, mock.scenario, mockControls, selectMockScenario],
+    () => ({ service, status, mockScenario: mock.scenario, mockControls, interventionControls, selectMockScenario }),
+    [service, status, mock.scenario, mockControls, interventionControls, selectMockScenario],
   )
 
   return <WorkOrderServiceContext.Provider value={value}>{children}</WorkOrderServiceContext.Provider>
