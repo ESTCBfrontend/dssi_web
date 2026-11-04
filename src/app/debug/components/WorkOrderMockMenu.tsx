@@ -23,7 +23,7 @@ const statusLabels: Record<WorkOrderStatus, string> = {
 }
 
 export function WorkOrderMockMenu({ controls }: { controls: MockWorkOrderControls }) {
-  const { mockScenario, selectMockScenario } = useWorkOrderServices()
+  const { mockScenario, selectMockScenario, interventionControls } = useWorkOrderServices()
   const { show, clear: clearToasts } = useToast()
   const [view, setView] = useState<'menu' | 'scenario' | 'add'>('menu')
   const [examples, setExamples] = useState<{ value: string; label: string }[]>([])
@@ -61,8 +61,10 @@ export function WorkOrderMockMenu({ controls }: { controls: MockWorkOrderControl
 
   const clear = () => {
     try {
+      const interventionCount = interventionControls?.list().length ?? 0
       const count = controls.clear()
-      notify(count === 0 ? 'Não havia OS para remover.' : `${count} OS ${count === 1 ? 'removida' : 'removidas'}.`, count === 0 ? 'info' : 'success')
+      const details = interventionCount ? ` ${interventionCount} ${interventionCount === 1 ? 'intervenção removida' : 'intervenções removidas'}.` : ''
+      notify((count === 0 ? 'Não havia OS para remover.' : `${count} OS ${count === 1 ? 'removida' : 'removidas'}.`) + details, count === 0 && !interventionCount ? 'info' : 'success')
     } catch {
       notify('Não foi possível remover as OS.', 'danger')
     }
@@ -70,8 +72,10 @@ export function WorkOrderMockMenu({ controls }: { controls: MockWorkOrderControl
 
   const reset = () => {
     try {
+      const interventionCount = interventionControls?.list().length ?? 0
       const count = controls.reset()
-      notify(`${count} OS ${count === 1 ? 'reposta' : 'repostas'}.`, 'success')
+      const details = interventionCount ? ` ${interventionCount} ${interventionCount === 1 ? 'intervenção removida' : 'intervenções removidas'}.` : ''
+      notify(`${count} OS ${count === 1 ? 'reposta' : 'repostas'}.${details}`, 'success')
     }
     catch { notify('Não foi possível repor as OS.', 'danger') }
   }

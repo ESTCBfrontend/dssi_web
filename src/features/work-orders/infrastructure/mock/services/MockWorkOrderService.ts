@@ -2,6 +2,7 @@ import type { WorkOrderService } from '../../../application/workOrderService'
 import type { CreateWorkOrder, WorkOrder } from '../../../domain/workOrder'
 import { loadMockWorkOrders } from '../loaders/loadMockWorkOrders'
 import type { MockWorkOrderControls } from './MockWorkOrderControls'
+import { logger } from '../../../../../shared/logging/logger'
 
 type MockBehavior = { delayMs?: number; failure?: boolean }
 
@@ -43,15 +44,18 @@ export class MockWorkOrderService implements WorkOrderService, MockWorkOrderCont
 
   private createId(): string {
     let id: string
+    const reserved = new Set(this.listExamples().map(order => order.id))
     do {
       id = `mock-os-${this.nextId++}`
-    } while (this.orders.has(id))
+    } while (this.orders.has(id) || reserved.has(id))
     return id
   }
 
   listExamples(): WorkOrder[] {
     return loadMockWorkOrders().map(copyOrder)
   }
+
+  hasOrder(id: string): boolean { return this.orders.has(id) }
 
   addExample(exampleId: string): WorkOrder | null {
     const example = this.listExamples().find(order => order.id === exampleId)
@@ -60,6 +64,7 @@ export class MockWorkOrderService implements WorkOrderService, MockWorkOrderCont
     if (this.orders.has(example.id)) return null
     const order = copyOrder(example)
     this.orders.set(order.id, order)
+    logger.mockExample('OS', order)
     return copyOrder(order)
   }
 

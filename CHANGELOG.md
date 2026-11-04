@@ -4,8 +4,17 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ## Por lançar
 
+### Corrigido
+
+- O aviso de intervenção sem OS associada identifica o motivo e a OS fictícia necessária durante o desenvolvimento.
+- O exemplo de OS cancelada identifica o cancelamento da ordem, sem o confundir com o de uma intervenção.
+
 ### Adicionado
 
+- Exemplos JSON provisórios de intervenções associadas a ordens de serviço, incluindo várias intervenções, cancelamento e pendência de material.
+- Carregamento e gestão de intervenções fictícias no Debug Menu, com validação da OS associada e prevenção de duplicados.
+- Secções separadas para OS e intervenções no Debug Menu e logs para as operações mock de intervenções.
+- Logs formatados dos exemplos fictícios adicionados em desenvolvimento e dos campos permitidos nos corpos HTTP.
 - Logs técnicos legíveis na consola para a seleção de origem e as operações mock de ordens de serviço, com instrumentação preparada para futuros pedidos HTTP.
 
 - Configuração reativa da origem de dados e menu de desenvolvimento para a selecionar temporariamente, com flag independente.

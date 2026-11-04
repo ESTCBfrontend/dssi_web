@@ -30,8 +30,34 @@ describe('logging técnico', () => {
     expect(output.mock.calls[1][0]).toContain('removidas: 7')
   })
 
+  it('explica a OS ausente e só identifica a OS fictícia em desenvolvimento', () => {
+    const output = vi.spyOn(console, 'warn').mockImplementation(() => {})
+    const event = { area: 'intervencoes', operation: 'adicionar-exemplo', result: 'os-ausente', source: 'mock', mockWorkOrderId: 'mock-os-4' } as const
+    createLogger(true).log('warn', event)
+    expect(output.mock.calls[0][0]).toContain('OS associada não está presente | OS fictícia: mock-os-4')
+    createLogger(false).log('warn', event)
+    expect(output.mock.calls[1][0]).toContain('OS associada não está presente')
+    expect(output.mock.calls[1][0]).not.toContain('mock-os-4')
+  })
+
   it('não interrompe a aplicação quando a consola falha', () => {
     vi.spyOn(console, 'error').mockImplementation(() => { throw new Error('consola indisponível') })
     expect(() => createLogger(true).log('error', { area: 'ordens-servico', operation: 'listar', result: 'erro', source: 'mock' })).not.toThrow()
+  })
+
+  it('apresenta JSON fictício formatado em desenvolvimento e omite-o em produção', () => {
+    const output = vi.spyOn(console, 'info').mockImplementation(() => {})
+    const fixture = { id: 'exemplo', dados: { estado: 'NOVA' } }
+    createLogger(true).mockExample('OS', fixture)
+    expect(output).toHaveBeenCalledWith('[DSSI] [Mock] OS | Exemplo adicionado:\n{\n  "id": "exemplo",\n  "dados": {\n    "estado": "NOVA"\n  }\n}')
+    output.mockClear()
+    createLogger(false).mockExample('OS', fixture)
+    expect(output).not.toHaveBeenCalled()
+  })
+
+  it('não interrompe a operação se não for possível formatar o JSON fictício', () => {
+    const cyclic: { self?: unknown } = {}
+    cyclic.self = cyclic
+    expect(() => createLogger(true).mockExample('OS', cyclic)).not.toThrow()
   })
 })

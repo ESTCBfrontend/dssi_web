@@ -2,12 +2,14 @@ import { createContext, useContext } from 'react'
 import type { WorkOrderService } from '../../../features/work-orders/application/workOrderService'
 import type { WorkOrderMockScenario } from '../../../features/work-orders/infrastructure/mock/scenarios/workOrderScenarios'
 import type { MockWorkOrderControls } from '../../../features/work-orders/infrastructure/mock/services/MockWorkOrderControls'
+import type { MockInterventionService } from '../../../features/interventions/infrastructure/mock/services/MockInterventionService'
 
 export type WorkOrderServices = {
   service: WorkOrderService | null
   status: 'ready' | 'unavailable'
   mockScenario: WorkOrderMockScenario
   mockControls: MockWorkOrderControls | null
+  interventionControls: MockInterventionService | null
   selectMockScenario: (scenario: WorkOrderMockScenario) => void
 }
 

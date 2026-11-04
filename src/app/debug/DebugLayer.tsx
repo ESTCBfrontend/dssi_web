@@ -3,10 +3,9 @@ import { Button } from '../../shared/ui/Button'
 import { DrawerSheet } from '../../shared/ui/DrawerSheet'
 import { Dialog } from '../../shared/ui/Dialog'
 import { Select } from '../../shared/ui/Select'
-import { ToastProvider } from '../../shared/ui/ToastSnackbar'
 import { useDataSource } from '../data-source/dataSourceContext'
 import { useWorkOrderServices } from '../work-orders/providers/workOrderServiceContext'
-import { WorkOrderMockMenu } from './components/WorkOrderMockMenu'
+import { MockMenu } from './components/MockMenu'
 import styles from './DebugLayer.module.css'
 
 const sourceOptions = [
@@ -16,7 +15,7 @@ const sourceOptions = [
 
 export default function DebugLayer() {
   const { source, canSelect, select } = useDataSource()
-  const { mockControls } = useWorkOrderServices()
+  const { mockControls, interventionControls } = useWorkOrderServices()
   const [open, setOpen] = useState(false)
   const [sourceOpen, setSourceOpen] = useState(false)
   const [mocksOpen, setMocksOpen] = useState(false)
@@ -91,7 +90,7 @@ export default function DebugLayer() {
               />
             </Dialog>
           </li>
-          {source === 'mock' && mockControls && (
+          {source === 'mock' && mockControls && interventionControls && (
             <li>
               <Button
                 ref={mocksTriggerRef}
@@ -115,7 +114,7 @@ export default function DebugLayer() {
                 returnFocusRef={mocksTriggerRef}
                 onCloseRequest={() => setMocksOpen(false)}
               >
-                {mocksOpen && <ToastProvider><WorkOrderMockMenu controls={mockControls} /></ToastProvider>}
+                {mocksOpen && <MockMenu orders={mockControls} interventions={interventionControls} />}
               </Dialog>
             </li>
           )}
