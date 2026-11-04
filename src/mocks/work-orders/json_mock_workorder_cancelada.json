@@ -1,13 +1,13 @@
 {
   "id": "mock-os-7",
   "code": "OS-EXEMPLO-007",
-  "client": { "id": "mock-client-2", "name": "Cliente fictício B" },
-  "site": { "id": "mock-site-2", "name": "Instalação fictícia B" },
+  "client": { "id": "CLI-1002", "name": "Vale Sereno, Lda." },
+  "site": { "id": "LOC-1002", "name": "Edifício Administrativo", "address": "Avenida dos Pinheiros, 18, 6000-000 Castelo Branco" },
   "serviceType": "Assistência técnica",
-  "description": "Inspecionar a central de alarme.",
+  "description": "Inspecionar a central de alarme após uma falha comunicada.",
   "status": "CANCELADA",
   "priority": "NORMAL",
   "scheduledDate": null,
   "assignedTechnician": null,
-  "instructions": "Exemplo fictício: intervenção cancelada a pedido do cliente."
+  "instructions": "Intervenção cancelada a pedido do cliente após resolução da falha."
 }

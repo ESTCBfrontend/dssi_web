@@ -53,37 +53,30 @@ export class MockWorkOrderService implements WorkOrderService, MockWorkOrderCont
     return loadMockWorkOrders().map(copyOrder)
   }
 
-  addExample(exampleId: string): WorkOrder {
+  addExample(exampleId: string): WorkOrder | null {
     const example = this.listExamples().find(order => order.id === exampleId)
     if (!example) throw new Error('Exemplo de ordem fictícia não encontrado.')
 
-    return this.insertExample(example)
+    if (this.orders.has(example.id)) return null
+    const order = copyOrder(example)
+    this.orders.set(order.id, order)
+    return copyOrder(order)
   }
 
-  addAllExamples(): { added: number; total: number } {
+  addAllExamples(): { added: number; skipped: number; failed: number; total: number } {
     const examples = this.listExamples()
     let added = 0
+    let skipped = 0
+    let failed = 0
     for (const example of examples) {
       try {
-        this.addExample(example.id)
-        added++
+        if (this.addExample(example.id)) added++
+        else skipped++
       } catch {
-        // O resultado comunica as falhas; as outras ordens ainda podem ser adicionadas.
+        failed++
       }
     }
-    return { added, total: examples.length }
-  }
-
-  private insertExample(example: WorkOrder): WorkOrder {
-    let id: string
-    let code: string
-    do {
-      id = this.createId()
-      code = `${example.code}-${id}`
-    } while (Array.from(this.orders.values()).some(order => order.code === code))
-    const order = copyOrder({ ...example, id, code })
-    this.orders.set(id, order)
-    return copyOrder(order)
+    return { added, skipped, failed, total: examples.length }
   }
 
   clear(): number {

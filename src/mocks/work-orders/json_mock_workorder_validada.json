@@ -1,13 +1,13 @@
 {
   "id": "mock-os-6",
   "code": "OS-EXEMPLO-006",
-  "client": { "id": "mock-client-1", "name": "Cliente de demonstração" },
-  "site": { "id": "mock-site-1", "name": "Instalação de demonstração" },
+  "client": { "id": "CLI-1001", "name": "Horizonte Azul, Lda." },
+  "site": { "id": "LOC-1001", "name": "Armazém da Zona Industrial", "address": "Rua da Oficina, 24, 6000-000 Castelo Branco" },
   "serviceType": "Manutenção",
-  "description": "Inspecionar o sistema de alarme.",
+  "description": "Inspecionar a central de alarme e testar a comunicação com os sensores.",
   "status": "VALIDADA",
   "priority": "NORMAL",
   "scheduledDate": "2026-11-03",
-  "assignedTechnician": { "id": "mock-tech-1", "name": "Técnico fictício" },
-  "instructions": null
+  "assignedTechnician": { "id": "TEC-1002", "name": "Mariana Ferreira" },
+  "instructions": "Manutenção concluída e validada após a intervenção."
 }

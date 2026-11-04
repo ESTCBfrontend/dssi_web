@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { useState } from 'react'
 import { DataSourceProvider } from '../data-source/DataSourceProvider'
@@ -108,6 +108,7 @@ describe('ferramentas de desenvolvimento', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Abrir ferramentas de desenvolvimento' }))
     fireEvent.click(screen.getByRole('button', { name: 'Mocks' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Remover todas as OS' }))
     fireEvent.click(screen.getByRole('button', { name: 'Adicionar OS' }))
     fireEvent.change(screen.getByRole('combobox', { name: 'Exemplo de ordem de serviço' }), { target: { value: 'mock-os-1' } })
     fireEvent.click(screen.getByRole('button', { name: 'Adicionar' }))
@@ -117,10 +118,10 @@ describe('ferramentas de desenvolvimento', () => {
     expect(within(addDialog).getAllByText('OS adicionada.').length).toBeGreaterThan(0)
     fireEvent.click(screen.getByRole('button', { name: 'Fechar adicionar OS' }))
     query()
-    await viWaitForCount(counter, initialCount + 2)
+    await viWaitForCount(counter, 2)
 
     fireEvent.click(screen.getByRole('button', { name: 'Remover todas as OS' }))
-    expect(within(screen.getByRole('dialog', { name: 'Mocks' })).getAllByText(`${initialCount + 2} OS removidas.`).length).toBeGreaterThan(0)
+    expect(within(screen.getByRole('dialog', { name: 'Mocks' })).getAllByText('2 OS removidas.').length).toBeGreaterThan(0)
     query()
     await viWaitForCount(counter, 0)
     fireEvent.click(screen.getByRole('button', { name: 'Adicionar todas as OS' }))
@@ -128,7 +129,7 @@ describe('ferramentas de desenvolvimento', () => {
     await viWaitForCount(counter, initialCount)
     fireEvent.click(screen.getByRole('button', { name: 'Adicionar todas as OS' }))
     query()
-    await viWaitForCount(counter, initialCount * 2)
+    await viWaitForCount(counter, initialCount)
     fireEvent.click(screen.getByRole('button', { name: 'Repor cenário' }))
     query()
     await viWaitForCount(counter, initialCount)
@@ -145,7 +146,7 @@ describe('ferramentas de desenvolvimento', () => {
     const controls: MockWorkOrderControls = {
       listExamples: () => [],
       addExample: () => { throw new Error('Não disponível') },
-      addAllExamples: () => ({ added: 2, total: 3 }),
+      addAllExamples: () => ({ added: 2, skipped: 0, failed: 1, total: 3 }),
       clear: () => 0,
       reset: () => 0,
     }
@@ -154,6 +155,55 @@ describe('ferramentas de desenvolvimento', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Adicionar todas as OS' }))
     expect(screen.getAllByText('Não foi possível adicionar 1 de 3 OS. 2 adicionadas.').length).toBeGreaterThan(0)
     expect(screen.getByRole('alert')).toHaveTextContent('Não foi possível adicionar 1 de 3 OS.')
+  })
+
+  it('remove automaticamente uma notificação de erro', () => {
+    vi.useFakeTimers()
+    try {
+      const selection = new DataSourceSelection({ configuredSource: 'mock', allowRuntimeSelection: true })
+      const controls = new MockWorkOrderService([])
+      vi.spyOn(controls, 'addAllExamples').mockImplementation(() => { throw new Error('Falha simulada') })
+      render(<DataSourceProvider selection={selection}><WorkOrderServiceProvider><ToastProvider><WorkOrderMockMenu controls={controls} /></ToastProvider></WorkOrderServiceProvider></DataSourceProvider>)
+      fireEvent.click(screen.getByRole('button', { name: 'Adicionar todas as OS' }))
+      expect(screen.getByRole('alert')).toHaveTextContent('Não foi possível adicionar os exemplos de OS.')
+      act(() => { vi.advanceTimersByTime(5000) })
+      expect(screen.getByRole('alert')).toBeEmptyDOMElement()
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('substitui a notificação anterior e reinicia os cinco segundos', () => {
+    vi.useFakeTimers()
+    try {
+      const selection = new DataSourceSelection({ configuredSource: 'mock', allowRuntimeSelection: true })
+      const controls = new MockWorkOrderService([])
+      render(<DataSourceProvider selection={selection}><WorkOrderServiceProvider><ToastProvider><WorkOrderMockMenu controls={controls} /></ToastProvider></WorkOrderServiceProvider></DataSourceProvider>)
+      fireEvent.click(screen.getByRole('button', { name: 'Adicionar todas as OS' }))
+      expect(screen.getByRole('status')).toHaveTextContent('OS adicionadas.')
+      act(() => { vi.advanceTimersByTime(4000) })
+      fireEvent.click(screen.getByRole('button', { name: 'Remover todas as OS' }))
+      expect(screen.getByRole('status')).toHaveTextContent('OS removidas.')
+      act(() => { vi.advanceTimersByTime(1000) })
+      expect(screen.getByRole('status')).toHaveTextContent('OS removidas.')
+      act(() => { vi.advanceTimersByTime(4000) })
+      expect(screen.getByRole('status')).toBeEmptyDOMElement()
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('substitui a notificação anterior ao adicionar uma OS individualmente', () => {
+    const selection = new DataSourceSelection({ configuredSource: 'mock', allowRuntimeSelection: true })
+    const controls = new MockWorkOrderService([])
+    render(<DataSourceProvider selection={selection}><WorkOrderServiceProvider><ToastProvider><WorkOrderMockMenu controls={controls} /></ToastProvider></WorkOrderServiceProvider></DataSourceProvider>)
+    fireEvent.click(screen.getByRole('button', { name: 'Adicionar OS' }))
+    const dialog = screen.getByRole('dialog', { name: 'Adicionar OS' })
+    fireEvent.change(within(dialog).getByRole('combobox', { name: 'Exemplo de ordem de serviço' }), { target: { value: 'mock-os-1' } })
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Adicionar' }))
+    expect(within(dialog).getByRole('status')).toHaveTextContent('OS adicionada.')
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Adicionar' }))
+    expect(within(dialog).getByRole('status')).toHaveTextContent('Esta OS já foi adicionada.')
   })
 
   it('apresenta o erro de adição no diálogo que está aberto', () => {
