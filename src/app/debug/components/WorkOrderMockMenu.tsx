@@ -24,7 +24,7 @@ const statusLabels: Record<WorkOrderStatus, string> = {
 
 export function WorkOrderMockMenu({ controls }: { controls: MockWorkOrderControls }) {
   const { mockScenario, selectMockScenario } = useWorkOrderServices()
-  const { show } = useToast()
+  const { show, clear: clearToasts } = useToast()
   const [view, setView] = useState<'menu' | 'scenario' | 'add'>('menu')
   const [examples, setExamples] = useState<{ value: string; label: string }[]>([])
   const scenarioTriggerRef = useRef<HTMLButtonElement>(null)
@@ -33,12 +33,14 @@ export function WorkOrderMockMenu({ controls }: { controls: MockWorkOrderControl
   const scenarioLabel = scenarioOptions.find(option => option.value === mockScenario)?.label ?? mockScenario
 
   const notify = (message: string, tone: 'success' | 'danger' | 'info') => {
-    show({ id: `mock-menu-${++nextToast.current}`, message, tone })
+    clearToasts()
+    show({ id: `mock-menu-${++nextToast.current}`, message, tone, durationMs: 5000 })
   }
 
   const openAdd = () => {
     try {
       setExamples(controls.listExamples().map(order => ({ value: order.id, label: `${statusLabels[order.status]} — ${order.code}` })))
+      clearToasts()
       setView('add')
     } catch {
       notify('Não foi possível carregar os exemplos de OS.', 'danger')
@@ -47,10 +49,10 @@ export function WorkOrderMockMenu({ controls }: { controls: MockWorkOrderControl
 
   const addAll = () => {
     try {
-      const { added, total } = controls.addAllExamples()
-      const failed = total - added
+      const { added, failed, total } = controls.addAllExamples()
       if (failed > 0) notify(`Não foi possível adicionar ${failed} de ${total} OS. ${added} ${added === 1 ? 'adicionada' : 'adicionadas'}.`, 'danger')
       else if (total === 0) notify('Não há exemplos de OS disponíveis.', 'info')
+      else if (added === 0) notify('Todas as OS disponíveis já foram adicionadas.', 'info')
       else notify(`${added} OS ${added === 1 ? 'adicionada' : 'adicionadas'}.`, 'success')
     } catch {
       notify('Não foi possível adicionar os exemplos de OS.', 'danger')

@@ -63,18 +63,17 @@ describe('serviço mock de ordens de serviço', () => {
     expect(await otherService.list()).toEqual([])
   })
 
-  it('adiciona vários exemplos em estados diferentes, limpa e repõe os dados iniciais', async () => {
+  it('não repete exemplos existentes e permite adicioná-los após limpar', async () => {
     const service = new MockWorkOrderService()
     const initialCount = (await service.list()).length
+    expect(service.addExample('mock-os-1')).toBeNull()
+    expect(service.clear()).toBe(initialCount)
     const nova = service.addExample('mock-os-1')
     const atribuida = service.addExample('mock-os-2')
-    const outraNova = service.addExample('mock-os-1')
-
-    expect([nova.status, atribuida.status, outraNova.status]).toEqual(['NOVA', 'ATRIBUIDA', 'NOVA'])
-    expect(new Set([nova.id, atribuida.id, outraNova.id]).size).toBe(3)
-    expect(new Set([nova.code, atribuida.code, outraNova.code]).size).toBe(3)
-    expect((await service.list())).toHaveLength(initialCount + 3)
-    expect(service.clear()).toBe(initialCount + 3)
+    expect([nova?.status, atribuida?.status]).toEqual(['NOVA', 'ATRIBUIDA'])
+    expect(service.addExample('mock-os-1')).toBeNull()
+    expect((await service.list())).toHaveLength(2)
+    expect(service.clear()).toBe(2)
     expect(await service.list()).toEqual([])
     expect(service.reset()).toBe(initialCount)
     expect(await service.list()).toHaveLength(initialCount)
@@ -89,10 +88,13 @@ describe('serviço mock de ordens de serviço', () => {
   it('adiciona todas as ordens disponíveis sem repetir identificadores ou números', async () => {
     const service = new MockWorkOrderService([])
     const examples = service.listExamples()
-    expect(service.addAllExamples()).toEqual({ added: examples.length, total: examples.length })
-    expect(service.addAllExamples()).toEqual({ added: examples.length, total: examples.length })
+    expect(service.addAllExamples()).toEqual({ added: examples.length, skipped: 0, failed: 0, total: examples.length })
+    expect(service.addAllExamples()).toEqual({ added: 0, skipped: examples.length, failed: 0, total: examples.length })
+    const newExample = { ...examples[0], id: 'exemplo-novo', code: 'OS-NOVA-EXEMPLO' }
+    vi.spyOn(service, 'listExamples').mockReturnValue([...examples, newExample])
+    expect(service.addAllExamples()).toEqual({ added: 1, skipped: examples.length, failed: 0, total: examples.length + 1 })
     const orders = await service.list()
-    expect(orders).toHaveLength(examples.length * 2)
+    expect(orders).toHaveLength(examples.length + 1)
     expect(new Set(orders.map(order => order.id)).size).toBe(orders.length)
     expect(new Set(orders.map(order => order.code)).size).toBe(orders.length)
     expect(new Set(orders.map(order => order.status))).toEqual(new Set(examples.map(order => order.status)))
@@ -106,7 +108,7 @@ describe('serviço mock de ordens de serviço', () => {
       if (id === 'mock-os-1') throw new Error('Falha simulada')
       return add(id)
     })
-    expect(service.addAllExamples()).toEqual({ added: total - 1, total })
+    expect(service.addAllExamples()).toEqual({ added: total - 1, skipped: 0, failed: 1, total })
     expect(await service.list()).toHaveLength(total - 1)
   })
 
