@@ -13,7 +13,7 @@ npm run dev
 
 Abre no navegador o endereço indicado pelo Vite. No PowerShell, se a política de execução impedir o comando `npm`, usa `npm.cmd` nos mesmos comandos.
 
-As rotas Web usam React Router: `/` e `/ordens-servico` apresentam a listagem de ordens de serviço e os endereços desconhecidos apresentam uma página com ligação de regresso. A listagem permite pesquisar, filtrar, ordenar e paginar os dados disponíveis. A criação e os detalhes ainda não estão disponíveis. Para publicação, o servidor terá de encaminhar os endereços da aplicação para `index.html`; o alojamento ainda não foi configurado.
+As rotas Web usam React Router: `/` e `/ordens-servico` apresentam a listagem, `/ordens-servico/nova` permite criar uma ordem fictícia, `/ordens-servico/:id` apresenta o detalhe e `/ordens-servico/:id/editar` permite editar dados fictícios. A listagem permite pesquisar, filtrar, ordenar e paginar. A criação e edição funcionam apenas em memória; ao recarregar, as alterações são perdidas. Clientes e locais vêm dos exemplos mock e não constituem um catálogo completo. Os campos editáveis são provisórios e não há histórico nem permissões reais. Para publicação, o servidor terá de encaminhar os endereços da aplicação para `index.html`; o alojamento ainda não foi configurado.
 
 ## Origem de dados em preparação
 
@@ -25,7 +25,7 @@ A flag existe para permitir que colaboradores testem diferentes origens e cenár
 
 O botão no topo abre o menu; «Origem de dados» permite alterar a origem temporariamente. Com Mock selecionado, «Mocks» abre um diálogo para escolher um cenário, adicionar um ou todos os exemplos de ordens de serviço, remover todas ou repor os dados iniciais do cenário. Os exemplos já presentes, identificados pelo ID do JSON, não são adicionados novamente. As ações relevantes apresentam notificações temporárias de sucesso ou erro; estas são feedback de interface, não substituem o sistema de logs. Um clique fora do diálogo regressa ao nível anterior. Mudar de cenário também repõe os dados fictícios. A seleção regressa à configuração inicial ao recarregar. A listagem acompanha as alterações ao serviço mock provisório. O serviço API ainda não foi implementado e a sua seleção apresenta essa indisponibilidade sem recorrer a dados mock. A [arquitetura](docs/architecture.md#origem-de-dados-e-ferramentas-de-desenvolvimento) explica a organização dos mocks e as limitações atuais. Não coloques credenciais em variáveis `VITE_*`: os seus valores são disponibilizados ao código do navegador.
 
-Em «Mocks», escolhe «Ordens de serviço» ou «Intervenções» para aceder às ações de cada tipo. Nas intervenções, é possível adicionar exemplos individualmente ou todos de uma vez e removê-los. Cada exemplo exige que a OS associada exista e não é adicionado novamente se já estiver presente. Limpar ou repor as OS, ou mudar o cenário, limpa as intervenções locais.
+Em «Mocks», escolhe «Ordens de serviço» ou «Intervenções» para aceder às ações de cada tipo. Nas intervenções, é possível adicionar exemplos individualmente ou todos de uma vez e removê-los. Cada exemplo exige que a OS associada exista e não é adicionado novamente se já estiver presente. O detalhe de uma OS apresenta apenas as intervenções associadas que foram adicionadas. Limpar ou repor as OS, ou mudar o cenário, limpa as intervenções locais.
 
 ## Verificações
 
@@ -49,5 +49,7 @@ As alterações relevantes por entregar e por versão estão em [CHANGELOG.md](C
 ## Componentes da interface
 
 O [guia de componentes React Web](docs/COMPONENTS_WEB_REACT.md) reúne o catálogo `MDS/*` do Figma, comportamento esperado, propostas de props, variantes, composição, exemplos de utilização e critérios de validação. Consulta-o ao criar, alterar ou reutilizar componentes, com ou sem assistência de IA. As fichas individuais descrevem as APIs implementadas e as respetivas limitações.
+
+Os padrões de movimento e tokens para a interface Web estão em [docs/animations.md](docs/animations.md).
 
 As 53 famílias implementadas em `src/shared/ui` estão organizadas por grupo no [índice do catálogo](docs/COMPONENTS_WEB_REACT.md#9-catálogo-de-implementação--53-famílias-do-figma), com ligações para as fichas individuais. A listagem de ordens usa dados fictícios enquanto a integração com o Backend não estiver disponível.

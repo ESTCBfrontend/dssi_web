@@ -11,6 +11,7 @@
   line-height: 1.25;
   text-align: center;
   cursor: pointer;
+  transition: box-shadow var(--mds-motion-feedback-duration, 160ms) var(--mds-motion-feedback-easing, ease);
 }
 .small { min-height: 36px; padding: 8px var(--mds-spacing-3, 12px); font-size: 13px; }
 .medium { min-height: 44px; padding: 10px var(--mds-spacing-4, 16px); font-size: 14px; }
@@ -21,8 +22,9 @@
 .danger { background: var(--mds-color-bg-action-danger, #b42318); color: var(--mds-color-text-on-danger, #fff); }
 .button:focus-visible { outline: 3px solid var(--mds-color-border-focus, #2159b8); outline-offset: 3px; }
 .button:disabled { background: var(--mds-color-bg-action-disabled, #e9edf3); color: var(--mds-color-text-disabled, #667385); border-color: var(--mds-color-border-disabled, #dee3eb); cursor: not-allowed; }
+@media (hover: hover) { .button:not(:disabled):hover { box-shadow: inset 0 0 0 999px rgb(0 0 0 / 7%); } }
 .fullWidth { width: 100%; }
 .icon { display: inline-flex; flex: none; align-items: center; }
 .spinner { width: 1em; height: 1em; flex: none; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
-@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .button { transition: none; } .spinner { animation: none; } }

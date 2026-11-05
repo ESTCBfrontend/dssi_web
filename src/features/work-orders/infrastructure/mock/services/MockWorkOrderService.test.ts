@@ -14,6 +14,31 @@ function exampleInput(): CreateWorkOrder {
 }
 
 describe('serviço mock de ordens de serviço', () => {
+  it('edita os campos permitidos, preserva os restantes e informa os subscritores', async () => {
+    const service = new MockWorkOrderService()
+    const original = (await service.list())[0]
+    const listener = vi.fn()
+    service.subscribe(listener)
+    const input = { serviceType: ' Reparação ', description: ' Descrição atualizada ', priority: 'ALTA', scheduledDate: '2026-11-10', instructions: null }
+    const changed = await service.update(original.id, input)
+    expect(changed).toMatchObject({ id: original.id, code: original.code, client: original.client, site: original.site, status: original.status, serviceType: 'Reparação', description: 'Descrição atualizada', priority: 'ALTA' })
+    expect(await service.getById(original.id)).toEqual(changed)
+    expect(listener).toHaveBeenCalledOnce()
+    await expect(service.update('inexistente', input)).resolves.toBeNull()
+    await expect(service.update(original.id, { ...input, serviceType: ' ' })).rejects.toThrow()
+    expect(await service.getById(original.id)).toEqual(changed)
+  })
+
+  it('rejeita uma edição pendente após reposição dos dados', async () => {
+    vi.useFakeTimers()
+    try {
+      const service = new MockWorkOrderService(undefined, { delayMs: 1000 })
+      const pending = service.update('mock-os-1', { serviceType: 'Alterado', description: 'A', priority: 'NORMAL', scheduledDate: null, instructions: null }).then(() => null, error => error)
+      service.reset()
+      await vi.advanceTimersByTimeAsync(1000)
+      expect(await pending).toBeInstanceOf(Error)
+    } finally { vi.useRealTimers() }
+  })
   it('cria uma ordem não atribuída com prioridade normal e permite listá-la e consultá-la', async () => {
     const service = new MockWorkOrderService()
     const original = await service.list()

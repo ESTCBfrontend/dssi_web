@@ -1,4 +1,7 @@
 :root {
+  --mds-motion-feedback-duration: 160ms;
+  --mds-motion-feedback-easing: ease;
+  --mds-motion-arrow-distance: 4px;
   font-family: system-ui, sans-serif;
   color: #18212b;
   background: #f7f9fc;

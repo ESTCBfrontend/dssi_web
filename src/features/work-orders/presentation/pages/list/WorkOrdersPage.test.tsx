@@ -2,11 +2,11 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import { afterEach, describe, expect, it } from 'vitest'
 import { MemoryRouter } from 'react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { DataSourceProvider } from '../../../app/data-source/DataSourceProvider'
-import { DataSourceSelection } from '../../../app/data-source/dataSource'
-import { WorkOrderServiceProvider } from '../../../app/work-orders/providers/WorkOrderServiceProvider'
-import { useWorkOrderServices } from '../../../app/work-orders/providers/workOrderServiceContext'
-import { useDataSource } from '../../../app/data-source/dataSourceContext'
+import { DataSourceProvider } from '../../../../../app/data-source/DataSourceProvider'
+import { DataSourceSelection } from '../../../../../app/data-source/dataSource'
+import { WorkOrderServiceProvider } from '../../../../../app/work-orders/providers/WorkOrderServiceProvider'
+import { useWorkOrderServices } from '../../../../../app/work-orders/providers/workOrderServiceContext'
+import { useDataSource } from '../../../../../app/data-source/dataSourceContext'
 import { WorkOrdersPage } from './WorkOrdersPage'
 
 afterEach(cleanup)

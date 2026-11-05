@@ -1,0 +1,29 @@
+.shell { min-height: 100vh; --mds-sidebar-width: 246px; --mds-color-bg-page: #f4f5f7; --mds-color-bg-brand: #f97316; --mds-color-text-brand: #c45a0b; --mds-color-border-focus: #e56a10; --mds-font-family: Inter, system-ui, sans-serif; }
+.shell > div { min-height: 100vh; }
+.shell :global(nav[aria-label="Navegação principal"]) { padding: 0; border: 0; background: #20272d; }
+.sidebar { box-sizing: border-box; display: flex; flex-direction: column; min-height: 100%; color: white; background: url('../assets/sidebar-accent.svg') no-repeat left bottom, linear-gradient(207deg, #15191e 11%, #222a32 60%, #172029 100%); }
+.brand { display: flex; align-items: center; gap: 12px; min-height: 111px; padding: 0 22px; box-sizing: border-box; }
+.brand img { width: 46px; height: 49px; }
+.brand strong, .brand small { display: block; }
+.brand strong { font-size: 23px; line-height: 38px; }
+.brand small { color: #b4bec9; font-size: 9px; font-weight: 600; line-height: 12px; }
+.navigation { display: flex; flex-direction: column; gap: 5px; padding: 14px; }
+.navigation :global(a), .navigation :global(button) { color: #d2dae4; background: transparent; min-height: 48px; }
+.navigation :global(button:disabled) { opacity: .7; }
+.navigation :global(a[aria-current="page"]) { background: linear-gradient(90deg, #f97316, #e37524 48%, #28313b); color: white; }
+.navigation :global(a span:first-child), .navigation :global(button span:first-child) { width: 20px; color: inherit; font-size: 19px; }
+.topbar { min-height: 70px; }
+.topbar h2 { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.topbar input { width: min(483px, 55vw); background: #f0f2f5; }
+.topbar > div:last-child img { width: 35px; height: 36px; }
+@media (min-width: 768px) { .shell > div { grid-template-areas: 'navigation header' 'navigation main'; grid-template-rows: auto 1fr; } }
+@media (max-width: 767px) {
+  .sidebar { flex-direction: row; min-height: 0; width: max-content; background: #20272d; }
+  .brand { min-height: 64px; padding: 8px 12px; }
+  .brand img { width: 46px; height: 49px; }
+  .brand strong { font-size: 16px; }
+  .brand small { display: none; }
+  .navigation { flex-direction: row; padding: 8px; }
+  .navigation :global(a), .navigation :global(button) { min-width: 90px; }
+  .topbar input { width: min(360px, 65vw); }
+}

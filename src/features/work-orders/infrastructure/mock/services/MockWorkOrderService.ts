@@ -1,5 +1,5 @@
 import type { WorkOrderService } from '../../../application/workOrderService'
-import type { CreateWorkOrder, WorkOrder } from '../../../domain/workOrder'
+import type { CreateWorkOrder, UpdateWorkOrder, WorkOrder } from '../../../domain/workOrder'
 import { loadMockWorkOrders } from '../loaders/loadMockWorkOrders'
 import type { MockWorkOrderControls } from './MockWorkOrderControls'
 import { logger } from '../../../../../shared/logging/logger'
@@ -147,6 +147,21 @@ export class MockWorkOrderService implements WorkOrderService, MockWorkOrderCont
       assignedTechnician: null,
       instructions: input.instructions ?? null,
     }
+    this.orders.set(id, order)
+    this.notify()
+    return copyOrder(order)
+  }
+
+  async update(id: string, input: UpdateWorkOrder): Promise<WorkOrder | null> {
+    const revision = this.revision
+    await this.simulateResponse()
+    if (revision !== this.revision) throw new Error('A edição foi cancelada porque os dados fictícios foram alterados.')
+    const existing = this.orders.get(id)
+    if (!existing) return null
+    if (![input.serviceType, input.description, input.priority].every(value => value.trim())) {
+      throw new Error('Preenche os dados obrigatórios da ordem de serviço.')
+    }
+    const order: WorkOrder = { ...existing, serviceType: input.serviceType.trim(), description: input.description.trim(), priority: input.priority.trim(), scheduledDate: input.scheduledDate, instructions: input.instructions?.trim() || null }
     this.orders.set(id, order)
     this.notify()
     return copyOrder(order)

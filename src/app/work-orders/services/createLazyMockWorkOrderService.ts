@@ -6,6 +6,7 @@ import type { WorkOrderMockScenario } from '../../../features/work-orders/infras
 import { logger } from '../../../shared/logging/logger'
 import type { LogEvent } from '../../../shared/logging/logger'
 import { MockInterventionService } from '../../../features/interventions/infrastructure/mock/services/MockInterventionService'
+import type { InterventionService } from '../../../features/interventions/application/interventionService'
 
 let operationSequence = 0
 
@@ -14,6 +15,8 @@ export function createLazyMockWorkOrderService(scenario: WorkOrderMockScenario):
   service: WorkOrderService
   controls: MockWorkOrderControls
   interventions: MockInterventionService
+  interventionService: InterventionService
+  subscribeToInterventions: (listener: () => void) => () => void
   subscribe: (listener: () => void) => () => void
 } {
   let instance: MockWorkOrderService | undefined
@@ -41,8 +44,8 @@ export function createLazyMockWorkOrderService(scenario: WorkOrderMockScenario):
     if (correlation !== undefined) logger.log('info', { area: 'ordens-servico', operation, result: 'iniciada', source: 'mock', correlation })
     try {
       const result = await action()
-      if (correlation === undefined) record(operation, operation === 'consultar' && result === null ? 'inexistente' : 'sucesso')
-      else logger.log('info', { area: 'ordens-servico', operation, result: operation === 'consultar' && result === null ? 'inexistente' : 'sucesso', source: 'mock', correlation, durationMs: Math.round(performance.now() - started!) })
+      if (correlation === undefined) record(operation, (operation === 'consultar' || operation === 'editar') && result === null ? 'inexistente' : 'sucesso')
+      else logger.log('info', { area: 'ordens-servico', operation, result: (operation === 'consultar' || operation === 'editar') && result === null ? 'inexistente' : 'sucesso', source: 'mock', correlation, durationMs: Math.round(performance.now() - started!) })
       return result
     } catch (error) {
       if (correlation === undefined) record(operation, 'erro')
@@ -53,11 +56,14 @@ export function createLazyMockWorkOrderService(scenario: WorkOrderMockScenario):
 
   return {
     interventions,
+    interventionService: { listByWorkOrder: id => interventions.listByWorkOrder(id) },
+    subscribeToInterventions: listener => interventions.subscribe(listener),
     subscribe(listener) { return getInstance().subscribe(listener) },
     service: {
       async list() { return runAsync('listar', () => getInstance().list()) },
       async getById(id) { return runAsync('consultar', () => getInstance().getById(id)) },
       async create(input) { return runAsync('criar', () => getInstance().create(input)) },
+      async update(id, input) { return runAsync('editar', () => getInstance().update(id, input)) },
     },
     controls: {
       listExamples() { return run('listar-exemplos', () => getInstance().listExamples()) },

@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useDataSource } from '../../../../app/data-source/dataSourceContext'
-import { useWorkOrderServices } from '../../../../app/work-orders/providers/workOrderServiceContext'
+import { useDataSource } from '../../../../../../app/data-source/dataSourceContext'
+import { useWorkOrderServices } from '../../../../../../app/work-orders/providers/workOrderServiceContext'
 
 export function useWorkOrders() {
   const { source } = useDataSource()

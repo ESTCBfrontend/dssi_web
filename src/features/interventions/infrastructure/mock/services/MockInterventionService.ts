@@ -9,6 +9,7 @@ function copy(item: Intervention): Intervention {
 /** Estado fictício local; a existência da OS é verificada pelo serviço associado. */
 export class MockInterventionService {
   private readonly items = new Map<string, Intervention>()
+  private readonly listeners = new Set<() => void>()
   private readonly hasWorkOrder: (id: string) => boolean
   constructor(hasWorkOrder: (id: string) => boolean) { this.hasWorkOrder = hasWorkOrder }
 
@@ -17,6 +18,17 @@ export class MockInterventionService {
     logger.log('info', { area: 'intervencoes', operation: 'listar', result: 'sucesso', source: 'mock', count: items.length })
     return items
   }
+
+  async listByWorkOrder(workOrderId: string): Promise<Intervention[]> {
+    return this.list().filter(item => item.workOrderId === workOrderId)
+  }
+
+  subscribe(listener: () => void): () => void {
+    this.listeners.add(listener)
+    return () => { this.listeners.delete(listener) }
+  }
+
+  private notify(): void { for (const listener of this.listeners) listener() }
   listExamples(): Intervention[] {
     try {
       const examples = loadMockInterventions().map(copy)
@@ -33,6 +45,7 @@ export class MockInterventionService {
     if (!this.hasWorkOrder(item.workOrderId)) return 'missing-order'
     this.items.set(item.id, copy(item))
     logger.mockExample('Intervenções', item)
+    this.notify()
     return 'added'
   }
 
@@ -73,6 +86,7 @@ export class MockInterventionService {
   clear(): number {
     const count = this.items.size
     this.items.clear()
+    if (count) this.notify()
     logger.log('info', { area: 'intervencoes', operation: 'limpar', result: 'sucesso', source: 'mock', count })
     return count
   }
