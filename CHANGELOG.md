@@ -10,6 +10,7 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ### Adicionado
 
+- Edição em memória de dados e planeamento de ordens fictícias, a partir do detalhe.
 - Escolha da prioridade ao criar ordens fictícias, com Normal como valor inicial.
 - Criação de ordens em memória com clientes e locais dos exemplos fictícios.
 - Consulta das intervenções fictícias associadas a cada ordem no ecrã de detalhe, atualizada ao alterar os mocks.

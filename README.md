@@ -13,7 +13,7 @@ npm run dev
 
 Abre no navegador o endereço indicado pelo Vite. No PowerShell, se a política de execução impedir o comando `npm`, usa `npm.cmd` nos mesmos comandos.
 
-As rotas Web usam React Router: `/` e `/ordens-servico` apresentam a listagem de ordens de serviço, `/ordens-servico/nova` permite criar uma ordem fictícia e `/ordens-servico/:id` apresenta o detalhe. Os endereços desconhecidos apresentam uma página com ligação de regresso. A listagem permite pesquisar, filtrar, ordenar e paginar os dados disponíveis. A criação funciona apenas em memória, usando clientes e locais presentes nos exemplos mock; estes não constituem um catálogo completo. Ao recarregar, as ordens criadas são perdidas. A edição ainda não está disponível. Para publicação, o servidor terá de encaminhar os endereços da aplicação para `index.html`; o alojamento ainda não foi configurado.
+As rotas Web usam React Router: `/` e `/ordens-servico` apresentam a listagem, `/ordens-servico/nova` permite criar uma ordem fictícia, `/ordens-servico/:id` apresenta o detalhe e `/ordens-servico/:id/editar` permite editar dados fictícios. A listagem permite pesquisar, filtrar, ordenar e paginar. A criação e edição funcionam apenas em memória; ao recarregar, as alterações são perdidas. Clientes e locais vêm dos exemplos mock e não constituem um catálogo completo. Os campos editáveis são provisórios e não há histórico nem permissões reais. Para publicação, o servidor terá de encaminhar os endereços da aplicação para `index.html`; o alojamento ainda não foi configurado.
 
 ## Origem de dados em preparação
 

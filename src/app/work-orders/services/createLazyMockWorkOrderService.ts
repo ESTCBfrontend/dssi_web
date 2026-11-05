@@ -44,8 +44,8 @@ export function createLazyMockWorkOrderService(scenario: WorkOrderMockScenario):
     if (correlation !== undefined) logger.log('info', { area: 'ordens-servico', operation, result: 'iniciada', source: 'mock', correlation })
     try {
       const result = await action()
-      if (correlation === undefined) record(operation, operation === 'consultar' && result === null ? 'inexistente' : 'sucesso')
-      else logger.log('info', { area: 'ordens-servico', operation, result: operation === 'consultar' && result === null ? 'inexistente' : 'sucesso', source: 'mock', correlation, durationMs: Math.round(performance.now() - started!) })
+      if (correlation === undefined) record(operation, (operation === 'consultar' || operation === 'editar') && result === null ? 'inexistente' : 'sucesso')
+      else logger.log('info', { area: 'ordens-servico', operation, result: (operation === 'consultar' || operation === 'editar') && result === null ? 'inexistente' : 'sucesso', source: 'mock', correlation, durationMs: Math.round(performance.now() - started!) })
       return result
     } catch (error) {
       if (correlation === undefined) record(operation, 'erro')
@@ -63,6 +63,7 @@ export function createLazyMockWorkOrderService(scenario: WorkOrderMockScenario):
       async list() { return runAsync('listar', () => getInstance().list()) },
       async getById(id) { return runAsync('consultar', () => getInstance().getById(id)) },
       async create(input) { return runAsync('criar', () => getInstance().create(input)) },
+      async update(id, input) { return runAsync('editar', () => getInstance().update(id, input)) },
     },
     controls: {
       listExamples() { return run('listar-exemplos', () => getInstance().listExamples()) },

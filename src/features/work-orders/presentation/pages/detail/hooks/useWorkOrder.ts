@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useDataSource } from '../../../../../../app/data-source/dataSourceContext'
 import { useWorkOrderServices } from '../../../../../../app/work-orders/providers/workOrderServiceContext'
 
-export function useWorkOrder(id: string) {
+export function useWorkOrder(id: string, subscribe = true) {
   const { source } = useDataSource()
   const { service, mockScenario, mockVersion, subscribeToWorkOrders } = useWorkOrderServices()
   const client = useQueryClient()
@@ -17,6 +17,7 @@ export function useWorkOrder(id: string) {
   })
 
   useEffect(() => {
+    if (!subscribe) return
     let active = true
     let scheduled = false
     const unsubscribe = subscribeToWorkOrders?.(() => {
@@ -28,7 +29,7 @@ export function useWorkOrder(id: string) {
       })
     })
     return () => { active = false; unsubscribe?.() }
-  }, [client, queryKey, subscribeToWorkOrders])
+  }, [client, queryKey, subscribeToWorkOrders, subscribe])
 
   const available = service !== null
   return {
