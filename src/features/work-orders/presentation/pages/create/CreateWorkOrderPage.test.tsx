@@ -31,6 +31,28 @@ async function fillForm() {
 }
 
 describe('criação de ordem', () => {
+  it('edita uma ordem criada e apresenta as alterações no detalhe e na lista', async () => {
+    showPage()
+    await fillForm()
+    fireEvent.click(screen.getByRole('button', { name: 'Criar ordem de serviço' }))
+    await screen.findByRole('heading', { name: 'OS-TESTE-123' })
+    fireEvent.click(screen.getByRole('button', { name: 'Editar ordem' }))
+    const type = await screen.findByRole('textbox', { name: 'Tipo de serviço' })
+    expect(type).toHaveValue('Manutenção')
+    fireEvent.change(type, { target: { value: 'Reparação' } })
+    fireEvent.change(screen.getByRole('textbox', { name: 'Descrição do serviço' }), { target: { value: 'Substituir equipamento.' } })
+    fireEvent.change(screen.getByRole('combobox', { name: 'Prioridade' }), { target: { value: 'ALTA' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Guardar alterações' }))
+    await screen.findByRole('heading', { name: 'OS-TESTE-123' })
+    expect(await screen.findByText('Substituir equipamento.')).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Resumo da ordem' })).toHaveTextContent('Alta')
+    fireEvent.click(screen.getByRole('link', { name: 'Voltar à lista de ordens' }))
+    const filter = await screen.findByRole('combobox', { name: 'Prioridade' })
+    await within(filter).findByRole('option', { name: 'Alta' })
+    fireEvent.change(filter, { target: { value: 'ALTA' } })
+    expect(await screen.findByText('OS-TESTE-123')).toBeInTheDocument()
+    expect(screen.getByText('Reparação')).toBeInTheDocument()
+  })
   it('cria uma ordem mock mesmo após limpar a lista e apresenta o detalhe', async () => {
     showPage()
     fireEvent.click(screen.getByRole('button', { name: 'Limpar mocks' }))

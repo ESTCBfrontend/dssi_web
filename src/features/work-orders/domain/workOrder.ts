@@ -36,3 +36,6 @@ export type CreateWorkOrder = {
   scheduledDate?: string | null
   instructions?: string | null
 }
+
+/** Campos editáveis provisórios, sujeitos a confirmação com o PO e Backend. */
+export type UpdateWorkOrder = Pick<WorkOrder, 'serviceType' | 'description' | 'priority' | 'scheduledDate' | 'instructions'>

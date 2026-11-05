@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router'
+import { Link, useNavigate, useParams } from 'react-router'
 import { Alert } from '../../../../../shared/ui/Alert'
 import { Button } from '../../../../../shared/ui/Button'
 import { Card } from '../../../../../shared/ui/Card'
@@ -24,13 +24,14 @@ function SummaryCard({ label, value, icon, dark = false }: { label: string; valu
 }
 
 export function WorkOrderDetailPage() {
+  const navigate = useNavigate()
   const { id = '' } = useParams()
   const { order, loading, error, reload, available } = useWorkOrder(id)
   const interventionQuery = useWorkOrderInterventions(id, !!order)
   const title = order?.code ?? 'Detalhe da ordem'
   const priority = order ? formatPriority(order.priority) : ''
   return <WorkOrdersShell search={<TextField type="search" aria-label="Pesquisa global indisponível" placeholder="Pesquisar ordens, clientes e equipamentos..." disabled />}>
-    <PageLayout className={styles.page} title={title} description={order ? `${order.serviceType} · ${order.client.name}` : undefined} breadcrumbs={<Link className={`${styles.backLink} ${motion.directional}`} data-motion-direction="back" to="/ordens-servico"><span className={motion.arrow} aria-hidden="true">←</span><span className={styles.backLabel}>Voltar à lista de ordens</span></Link>} actions={order ? <Button disabled title="Edição ainda não disponível">Editar ordem</Button> : undefined}>
+    <PageLayout className={styles.page} title={title} description={order ? `${order.serviceType} · ${order.client.name}` : undefined} breadcrumbs={<Link className={`${styles.backLink} ${motion.directional}`} data-motion-direction="back" to="/ordens-servico"><span className={motion.arrow} aria-hidden="true">←</span><span className={styles.backLabel}>Voltar à lista de ordens</span></Link>} actions={order ? <Button onClick={() => navigate(`/ordens-servico/${encodeURIComponent(order.id)}/editar`)}>Editar ordem</Button> : undefined}>
       {loading && <LoadingIndicator type="inline" label="A carregar ordem de serviço..." />}
       {error && <Alert tone="danger" layout="detailed" title="Não foi possível consultar a ordem" message={error} announcement="polite" action={available ? { label: 'Tentar novamente', onClick: reload } : undefined} />}
       {!loading && !error && order === null && <Alert tone="warning" layout="detailed" title="Ordem não encontrada" message="A ordem pedida não existe na origem de dados selecionada." />}
