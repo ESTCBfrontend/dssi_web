@@ -4,6 +4,8 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ## Por lançar
 
+## 0.2.0 — 2026-11-05
+
 ### Corrigido
 
 - A listagem de ordens alinha os cabeçalhos com os dados e apresenta os estados em etiquetas compactas e legíveis.
@@ -30,6 +32,12 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 - Notificações para os resultados relevantes dos controlos mock e correção do fecho em cascata de diálogos sobrepostos.
 - Orientações comuns para organizar e validar mocks e dados fictícios, com referências para colaboradores e agentes.
 - Registo de alterações e orientações para o manter durante as tarefas e a preparação de versões.
+
+### Limitações conhecidas
+
+- A listagem de ordens utiliza dados fictícios; a integração com a API real, a criação e os detalhes de ordens ainda não estão disponíveis.
+- Os modelos e estados de OS e intervenções são provisórios e devem ser revistos com o Backend e o PO.
+- A validação em navegador real, incluindo acessibilidade e diferentes tamanhos de ecrã, ainda não está completa.
 
 ## 0.1.0 — 2026-11-03
 
