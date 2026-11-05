@@ -1,17 +1,17 @@
 import { useEffect, useMemo } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useDataSource } from '../../../../app/data-source/dataSourceContext'
-import { useWorkOrderServices } from '../../../../app/work-orders/providers/workOrderServiceContext'
+import { useDataSource } from '../../../../../../app/data-source/dataSourceContext'
+import { useWorkOrderServices } from '../../../../../../app/work-orders/providers/workOrderServiceContext'
 
-export function useWorkOrders() {
+export function useWorkOrder(id: string) {
   const { source } = useDataSource()
   const { service, mockScenario, mockVersion, subscribeToWorkOrders } = useWorkOrderServices()
   const client = useQueryClient()
-  const queryKey = useMemo(() => ['work-orders', 'list', source, ...(source === 'mock' ? [mockScenario, mockVersion] : [])], [source, mockScenario, mockVersion])
+  const queryKey = useMemo(() => ['work-orders', 'detail', source, ...(source === 'mock' ? [mockScenario, mockVersion] : []), id], [source, mockScenario, mockVersion, id])
   const query = useQuery({
     queryKey,
-    queryFn: () => service!.list(),
-    enabled: service !== null,
+    queryFn: () => service!.getById(id),
+    enabled: service !== null && !!id,
     retry: false,
     networkMode: source === 'mock' ? 'always' : 'online',
   })
@@ -32,9 +32,9 @@ export function useWorkOrders() {
 
   const available = service !== null
   return {
-    orders: available && !query.isError && !query.isFetching ? query.data ?? [] : [],
+    order: available && !query.isError && !query.isFetching ? query.data : undefined,
     loading: available && query.isFetching,
-    error: !available ? 'A ligação à API de ordens de serviço ainda não está disponível.' : query.isError && !query.isFetching ? 'Não foi possível carregar as ordens de serviço.' : null,
+    error: !available ? 'A ligação à API de ordens de serviço ainda não está disponível.' : query.isError && !query.isFetching ? 'Não foi possível carregar a ordem de serviço.' : null,
     reload: () => { void query.refetch() },
     available,
   }

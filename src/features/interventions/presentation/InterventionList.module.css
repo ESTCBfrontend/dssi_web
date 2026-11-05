@@ -1,0 +1,8 @@
+.list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.item { padding: 14px; border: 1px solid #e6e9ee; border-radius: 10px; overflow-wrap: anywhere; }
+.heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; }
+.heading > strong { color: #1f2938; font-size: 13px; }
+.item p { margin: 8px 0 0; color: #485769; font-size: 13px; }
+.item .date { color: #677381; font-size: 12px; }
+.item .description { color: #1f2938; }
+.empty { margin: 0; color: #677381; font-size: 13px; }

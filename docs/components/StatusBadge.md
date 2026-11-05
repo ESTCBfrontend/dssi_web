@@ -19,6 +19,6 @@ import { StatusBadge } from '../../shared/ui/StatusBadge'
 
 ## Tema e validação
 
-As cores usam propriedades CSS semânticas `--mds-*` consultadas no Figma, com valores de reserva. O consumidor pode substituir os tokens num antepassado e deve verificar o contraste; os pontos são SVGs originais com cor fixa e podem ser substituídos por `dotSrc`. A fonte é Inter quando disponível, com alternativa do sistema. Textos longos podem quebrar linha e aumentar a altura da etiqueta.
+As cores usam propriedades CSS semânticas `--mds-*`, com valores de reserva. A variante `soft` tem um contorno subtil configurável por tom através dos tokens `--mds-color-border-status-neutral`, `--mds-color-border-status-info`, `--mds-color-border-status-success`, `--mds-color-border-status-warning` e `--mds-color-border-status-danger`. `--mds-status-badge-radius` configura os cantos. O consumidor pode substituir os tokens num antepassado e deve verificar o contraste; os pontos são SVGs originais com cor fixa e podem ser substituídos por `dotSrc`. A fonte é Inter quando disponível, com alternativa do sistema. Textos longos podem quebrar linha e aumentar a altura da etiqueta; em cores forçadas o contorno acompanha a cor do sistema.
 
 Validar texto, tons, indicador, contraste e conteúdo em ecrãs estreitos e com zoom. O componente não atribui significado de negócio ao tom escolhido.
