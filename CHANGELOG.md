@@ -6,10 +6,17 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ### Corrigido
 
+- A listagem de ordens alinha os cabeçalhos com os dados e apresenta os estados em etiquetas compactas e legíveis.
+- A listagem de ordens mantém as colunas legíveis em ecrãs estreitos, com deslocação horizontal acessível por teclado.
+- O botão do Debug Menu fica sobre a página sem ocupar espaço no seu layout.
 - O aviso de intervenção sem OS associada identifica o motivo e a OS fictícia necessária durante o desenvolvimento.
 - O exemplo de OS cancelada identifica o cancelamento da ordem, sem o confundir com o de uma intervenção.
 
 ### Adicionado
+
+- Gestão dos dados da listagem de ordens com TanStack Query, com cache separada por origem e cenário mock.
+- Listagem de ordens de serviço com pesquisa, filtros, ordenação e paginação, ligada aos dados mock e aos seus cenários.
+- Base de navegação Web com React Router e página para endereços desconhecidos.
 
 - Exemplos JSON provisórios de intervenções associadas a ordens de serviço, incluindo várias intervenções, cancelamento e pendência de material.
 - Carregamento e gestão de intervenções fictícias no Debug Menu, com validação da OS associada e prevenção de duplicados.

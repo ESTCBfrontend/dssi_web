@@ -8,8 +8,9 @@ import { createLazyMockWorkOrderService } from '../services/createLazyMockWorkOr
 
 export function WorkOrderServiceProvider({ children }: { children: ReactNode }) {
   const { source, canSelect } = useDataSource()
-  const [mock, setMock] = useState<{ scenario: WorkOrderMockScenario; instance: ReturnType<typeof createLazyMockWorkOrderService> }>(() => ({
+  const [mock, setMock] = useState<{ scenario: WorkOrderMockScenario; version: number; instance: ReturnType<typeof createLazyMockWorkOrderService> }>(() => ({
     scenario: 'normal',
+    version: 0,
     instance: createLazyMockWorkOrderService('normal'),
   }))
 
@@ -17,6 +18,7 @@ export function WorkOrderServiceProvider({ children }: { children: ReactNode }) 
   const service = source === 'mock' ? mock.instance.service : null
   const mockControls = source === 'mock' && canSelect ? mock.instance.controls : null
   const interventionControls = source === 'mock' && canSelect ? mock.instance.interventions : null
+  const subscribeToWorkOrders = source === 'mock' ? mock.instance.subscribe : null
   const status: WorkOrderServices['status'] = source === 'api' ? 'unavailable' : 'ready'
 
   const selectMockScenario = useCallback((scenario: WorkOrderMockScenario) => {
@@ -25,13 +27,14 @@ export function WorkOrderServiceProvider({ children }: { children: ReactNode }) 
     }
     setMock(current => current.scenario === scenario ? current : {
       scenario,
+      version: current.version + 1,
       instance: createLazyMockWorkOrderService(scenario),
     })
   }, [source, canSelect])
 
   const value = useMemo(
-    () => ({ service, status, mockScenario: mock.scenario, mockControls, interventionControls, selectMockScenario }),
-    [service, status, mock.scenario, mockControls, interventionControls, selectMockScenario],
+    () => ({ service, status, mockScenario: mock.scenario, mockVersion: mock.version, mockControls, interventionControls, subscribeToWorkOrders, selectMockScenario }),
+    [service, status, mock.scenario, mock.version, mockControls, interventionControls, subscribeToWorkOrders, selectMockScenario],
   )
 
   return <WorkOrderServiceContext.Provider value={value}>{children}</WorkOrderServiceContext.Provider>
