@@ -4,6 +4,8 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ## Por lançar
 
+## 0.3.0 — 2026-11-05
+
 ### Alterado
 
 - Apresentação mais compacta e consistente dos indicadores de estado na aplicação.
@@ -16,6 +18,13 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 - Consulta das intervenções fictícias associadas a cada ordem no ecrã de detalhe, atualizada ao alterar os mocks.
 - Padrões e tokens de animação Web para feedback de botões e ligações direcionais, com suporte a movimento reduzido.
 - Consulta do detalhe de ordens de serviço a partir da listagem, com estados de carregamento, erro e ordem inexistente, ligada aos mocks.
+
+### Limitações conhecidas
+
+- A criação, edição e consulta usam dados fictícios em memória, perdidos ao recarregar; não estão ligadas ao Backend nem partilhadas com o Mobile.
+- O fluxo integrado com persistência real, autenticação, permissões no Backend e histórico de alterações permanece por implementar.
+- Os campos editáveis e as condições de edição por estado, assim como os contratos e modelos de dados, precisam de confirmação com o PO e o Backend.
+- A validação completa de acessibilidade, comparação visual e diferentes tamanhos de ecrã em browsers reais permanece pendente.
 
 ## 0.2.0 — 2026-11-05
 
