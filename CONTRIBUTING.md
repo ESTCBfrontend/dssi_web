@@ -36,9 +36,19 @@ git switch -c feature/12-login
 
 Uma aprovação deve ser exigida quando houver outra pessoa com permissões para rever. Enquanto só houver uma pessoa, a exigência impede-a de aprovar os seus próprios PRs; um administrador terá de ativá-la quando a equipa estiver disponível.
 
+## Registo de alterações
+
+Em cada tarefa que introduza uma funcionalidade, melhoria ou correção relevante, acrescenta uma entrada concisa à secção «Por lançar» de [CHANGELOG.md](CHANGELOG.md), descrevendo o impacto para utilizadores ou colaboradores. Alterações sem impacto relevante não exigem entrada; o PR continua a explicar as alterações e a validação.
+
+Ao preparar uma entrega, move as entradas incluídas para uma secção com o número e a data da versão, preserva as versões anteriores e volta a deixar «Por lançar» disponível. Confirma que o conteúdo corresponde ao que será entregue e que a descrição da GitHub Release é coerente com o changelog. O processo de PR e merge para `main` continua a aplicar-se.
+
 ## Componentes da interface
 
 Ao criar, alterar ou reutilizar componentes, consulta o [guia React Web](docs/COMPONENTS_WEB_REACT.md) e a ficha `MDS/<Nome>` relevante. Confirma o código existente, o contexto da tarefa e as variantes do Figma a implementar. As props e soluções técnicas propostas no guia devem ser ajustadas às decisões aprovadas do projeto; documenta no PR as verificações e eventuais limitações de comparação visual.
+
+## Mocks e dados fictícios
+
+Ao criar ou alterar mocks, consulta a [arquitetura](docs/architecture.md#origem-de-dados-e-ferramentas-de-desenvolvimento) para a organização dos dados e dos serviços, os exemplos disponíveis e as limitações da implementação atual.
 
 ## Entregas
 

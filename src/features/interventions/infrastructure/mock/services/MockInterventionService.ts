@@ -1,0 +1,79 @@
+import type { Intervention } from '../../../domain/intervention'
+import { loadMockInterventions } from '../loaders/loadMockInterventions'
+import { logger } from '../../../../../shared/logging/logger'
+
+function copy(item: Intervention): Intervention {
+  return { ...item, technician: { ...item.technician }, materials: [...item.materials] }
+}
+
+/** Estado fictício local; a existência da OS é verificada pelo serviço associado. */
+export class MockInterventionService {
+  private readonly items = new Map<string, Intervention>()
+  private readonly hasWorkOrder: (id: string) => boolean
+  constructor(hasWorkOrder: (id: string) => boolean) { this.hasWorkOrder = hasWorkOrder }
+
+  list(): Intervention[] {
+    const items = Array.from(this.items.values(), copy)
+    logger.log('info', { area: 'intervencoes', operation: 'listar', result: 'sucesso', source: 'mock', count: items.length })
+    return items
+  }
+  listExamples(): Intervention[] {
+    try {
+      const examples = loadMockInterventions().map(copy)
+      logger.log('info', { area: 'intervencoes', operation: 'listar-exemplos', result: 'sucesso', source: 'mock' })
+      return examples
+    } catch (error) {
+      logger.log('error', { area: 'intervencoes', operation: 'listar-exemplos', result: 'erro', source: 'mock' })
+      throw error
+    }
+  }
+
+  private insert(item: Intervention): 'added' | 'existing' | 'missing-order' {
+    if (this.items.has(item.id)) return 'existing'
+    if (!this.hasWorkOrder(item.workOrderId)) return 'missing-order'
+    this.items.set(item.id, copy(item))
+    logger.mockExample('Intervenções', item)
+    return 'added'
+  }
+
+  addExample(id: string): 'added' | 'existing' | 'missing-order' {
+    try {
+      const item = this.listExamples().find(example => example.id === id)
+      if (!item) throw new Error('Exemplo de intervenção fictícia não encontrado.')
+      const result = this.insert(item)
+      logger.log(result === 'missing-order' ? 'warn' : 'info', { area: 'intervencoes', operation: 'adicionar-exemplo', result: result === 'added' ? 'sucesso' : result === 'existing' ? 'existente' : 'os-ausente', source: 'mock', ...(result === 'missing-order' ? { mockWorkOrderId: item.workOrderId } : {}) })
+      return result
+    } catch (error) {
+      logger.log('error', { area: 'intervencoes', operation: 'adicionar-exemplo', result: 'erro', source: 'mock' })
+      throw error
+    }
+  }
+
+  addAllExamples(): { added: number; existing: number; missingOrder: number; failed: number; total: number } {
+    let examples: Intervention[]
+    try { examples = this.listExamples() }
+    catch (error) {
+      logger.log('error', { area: 'intervencoes', operation: 'adicionar-todos', result: 'erro', source: 'mock' })
+      throw error
+    }
+    let added = 0, existing = 0, missingOrder = 0, failed = 0
+    for (const item of examples) {
+      try {
+        const result = this.insert(item)
+        if (result === 'added') added++
+        else if (result === 'existing') existing++
+        else missingOrder++
+      } catch { failed++ }
+    }
+    const total = examples.length
+    logger.log(failed || missingOrder ? 'warn' : 'info', { area: 'intervencoes', operation: 'adicionar-todos', result: failed || missingOrder ? 'parcial' : 'sucesso', source: 'mock', counts: { added, skipped: existing, missingOrder, failed, total } })
+    return { added, existing, missingOrder, failed, total }
+  }
+
+  clear(): number {
+    const count = this.items.size
+    this.items.clear()
+    logger.log('info', { area: 'intervencoes', operation: 'limpar', result: 'sucesso', source: 'mock', count })
+    return count
+  }
+}

@@ -4,12 +4,15 @@ Lê este ficheiro, [README.md](README.md), [CONTRIBUTING.md](CONTRIBUTING.md) e 
 
 Para criar, alterar ou reutilizar componentes da interface, consulta também [docs/COMPONENTS_WEB_REACT.md](docs/COMPONENTS_WEB_REACT.md), incluindo a ficha `MDS/<Nome>` e as dependências relevantes. O guia descreve comportamento, composição, utilização e validação; as propostas técnicas e os exemplos não substituem as decisões aprovadas do projeto nem alargam o âmbito da tarefa.
 
+Para criar, alterar ou reutilizar mocks e dados fictícios, consulta as orientações de [docs/architecture.md](docs/architecture.md#origem-de-dados-e-ferramentas-de-desenvolvimento).
+
 ## Projeto e colaboração
 
 - React, TypeScript, Vite e npm, com `package-lock.json`.
 - Tarefas partem de `develop` e seguem por PR para `develop`; entregas seguem por PR para `main`.
 - Repositório público: não adicionar credenciais, tokens, ficheiros `.env` ou dados sensíveis. Não introduzir serviços pagos sem pedido explícito.
 - Inspeciona o contexto e preserva alterações existentes. Mantém cada alteração focada na tarefa.
+- Ao implementar uma funcionalidade, melhoria ou correção relevante, atualiza a secção «Por lançar» de [CHANGELOG.md](CHANGELOG.md) na mesma tarefa, descrevendo o impacto de forma concisa. Alterações sem impacto relevante para utilizadores ou colaboradores não exigem entrada. Ao preparar uma versão, organiza as entradas aplicáveis sob a respetiva versão, conforme [CONTRIBUTING.md](CONTRIBUTING.md#registo-de-alterações).
 - Não faças push direto para `develop` ou `main`, não contornes a CI nem enfraqueças as proteções.
 - Antes de criar PRs, confirma branch, destino, diferenças e verificações. Não faças merge, publiques ou alteres configurações externas sem instrução apropriada.
 
@@ -28,6 +31,8 @@ Para criar, alterar ou reutilizar componentes da interface, consulta também [do
 
 - Adiciona ou atualiza testes significativos para os comportamentos alterados. Prioriza regras de negócio, interações essenciais, erros e limites relevantes.
 - Para correções, acrescenta um teste de regressão quando viável. A profundidade dos testes deve acompanhar o risco da alteração.
+- Quando uma tarefa introduzir ou alterar regras de negócio com impacto relevante, acrescenta testes versionados para os seus comportamentos, erros e limites importantes, de forma a serem executados pelo `test:ci`. Os testes específicos dos componentes existentes mantêm-se locais, conforme a preferência do utilizador.
+- Quando existir um fluxo essencial utilizável de ponta a ponta, avalia na respetiva tarefa se um teste de integração ou em browser real acrescenta proteção proporcional ao risco; identifica as limitações e a necessidade de ferramentas antes de propor alterações ao pipeline.
 - Evita testes que apenas repetem detalhes de implementação, snapshots extensos sem objetivo e combinações sem valor demonstrável. Não imponhas um número fixo de testes nem cobertura de 100%.
 - Usa as verificações do README: `npm run lint`, `npm run typecheck`, `npm run test:ci` e `npm run build`. No PowerShell pode ser necessário usar `npm.cmd`.
 - Para alterações apenas documentais, verifica diferenças, ligações e coerência; não acrescentes testes de código sem necessidade.

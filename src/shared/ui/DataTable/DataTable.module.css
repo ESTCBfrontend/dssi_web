@@ -4,6 +4,7 @@
 .title { margin: 0; font-size: 19px; font-weight: 600; overflow-wrap: anywhere; }
 .description { margin: 5px 0 0; color: var(--mds-color-text-secondary, #667385); font-size: 12px; }
 .overflow { min-width: 0; max-width: 100%; overflow-x: auto; }
+.overflow:focus-visible { outline: 2px solid var(--mds-color-border-focus, #2159b8); outline-offset: 2px; }
 .table { width: 100%; border-collapse: collapse; text-align: left; }
 .table thead { background: var(--mds-color-bg-subtle, #fafbfd); color: var(--mds-color-text-secondary, #667385); }
 .plainHeader { padding: 10px 16px; font-size: 12px; }

@@ -1,0 +1,39 @@
+.bar {
+  position: fixed;
+  top: var(--mds-spacing-4, 16px);
+  right: var(--mds-spacing-4, 16px);
+  z-index: 20;
+}
+
+.menu {
+  display: grid;
+  gap: var(--mds-spacing-2, 8px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menuOption {
+  justify-content: stretch;
+  text-align: left;
+}
+
+.menuOption > span {
+  width: 100%;
+}
+
+.optionContent {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--mds-spacing-2, 8px);
+  width: 100%;
+}
+
+.optionDetails {
+  padding: var(--mds-spacing-4, 16px) 0 0;
+}
+
+.submenu {
+  display: grid;
+  gap: var(--mds-spacing-2, 8px);
+}

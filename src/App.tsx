@@ -1,12 +1,7 @@
-import './App.css'
+import { AppRoutes } from './app/routing/AppRoutes'
 
 function App() {
-  return (
-    <main>
-      <h1>DSSI Web</h1>
-      <p>Base do projeto web. As funcionalidades serão desenvolvidas pela equipa.</p>
-    </main>
-  )
+  return <AppRoutes />
 }
 
 export default App

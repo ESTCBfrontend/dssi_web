@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="246" height="960" viewBox="0 0 246 960" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="GRAPHICS / Copper geometric accent &#194;&#183; vector">
+<path id="Vector" opacity="0.12" d="M0 803L120 665H173L0 878V803Z" fill="#8593A2"/>
+<path id="Vector_2" opacity="0.13" d="M0 854L136 704H175L0 902V854Z" fill="#C7D2DD"/>
+<path id="Vector_3" d="M0 890L154 714H189L0 935V890Z" fill="url(#paint0_linear_0_156)"/>
+<path id="Vector_4" opacity="0.18" d="M0 948L198 746H220L19 960H0V948Z" fill="#F97316"/>
+<path id="Vector_5" opacity="0.06" d="M0 960L210 751H245L39 960H0Z" fill="#A7B4C2"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_156" x1="0" y1="714" x2="218.324" y2="900.711" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFAD4D"/>
+<stop offset="0.6" stop-color="#F97316"/>
+<stop offset="1" stop-color="#CB5710"/>
+</linearGradient>
+</defs>
+</svg>
