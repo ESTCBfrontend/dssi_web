@@ -1,14 +1,15 @@
-.badge { box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border-radius: var(--mds-radius-full, 999px); font-family: Inter, system-ui, sans-serif; font-weight: 500; line-height: 1.25; max-width: 100%; overflow-wrap: anywhere; }
-.small { min-height: 24px; padding: 4px 9px; font-size: 11px; }
-.medium { min-height: 30px; padding: 6px 12px; font-size: 12px; }
+.badge { box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; gap: 6px; max-width: 100%; border: 1px solid transparent; border-radius: var(--mds-status-badge-radius, 6px); font-family: Inter, system-ui, sans-serif; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere; }
+.small { min-height: 24px; padding: 3px 8px; font-size: 11px; }
+.medium { min-height: 30px; padding: 5px 10px; font-size: 12px; }
 .dot, .icon { flex: none; }
 .small .dot { width: 6px; height: 6px; }
 .medium .dot { width: 7px; height: 7px; }
 .icon { display: inline-flex; }
-.neutral { --badge-soft: var(--mds-color-bg-status-neutral, #e9edf3); --badge-text: var(--mds-color-text-primary, #1f2938); --badge-solid: var(--mds-color-bg-status-neutral-solid, #475569); }
-.info { --badge-soft: var(--mds-color-bg-info, #eff8ff); --badge-text: var(--mds-color-text-info, #175cd3); --badge-solid: var(--mds-color-bg-status-info-solid, #175cd3); }
-.success { --badge-soft: var(--mds-color-bg-success, #def2e5); --badge-text: var(--mds-color-text-success, #166534); --badge-solid: var(--mds-color-bg-status-success-solid, #166534); }
-.warning { --badge-soft: var(--mds-color-bg-warning, #fff1d6); --badge-text: var(--mds-color-text-warning, #92400e); --badge-solid: var(--mds-color-bg-status-warning-solid, #92400e); }
-.danger { --badge-soft: var(--mds-color-bg-danger, #fee4e2); --badge-text: var(--mds-color-text-danger, #b42318); --badge-solid: var(--mds-color-bg-status-danger-solid, #b42318); }
-.soft { background: var(--badge-soft); color: var(--badge-text); }
+.neutral { --badge-soft: var(--mds-color-bg-status-neutral, #e9edf3); --badge-text: var(--mds-color-text-primary, #1f2938); --badge-solid: var(--mds-color-bg-status-neutral-solid, #475569); --badge-border: var(--mds-color-border-status-neutral, #cbd5e1); }
+.info { --badge-soft: var(--mds-color-bg-info, #eff8ff); --badge-text: var(--mds-color-text-info, #175cd3); --badge-solid: var(--mds-color-bg-status-info-solid, #175cd3); --badge-border: var(--mds-color-border-status-info, #b2d5f7); }
+.success { --badge-soft: var(--mds-color-bg-success, #def2e5); --badge-text: var(--mds-color-text-success, #166534); --badge-solid: var(--mds-color-bg-status-success-solid, #166534); --badge-border: var(--mds-color-border-status-success, #a7dab7); }
+.warning { --badge-soft: var(--mds-color-bg-warning, #fff1d6); --badge-text: var(--mds-color-text-warning, #92400e); --badge-solid: var(--mds-color-bg-status-warning-solid, #92400e); --badge-border: var(--mds-color-border-status-warning, #edcb8e); }
+.danger { --badge-soft: var(--mds-color-bg-danger, #fee4e2); --badge-text: var(--mds-color-text-danger, #b42318); --badge-solid: var(--mds-color-bg-status-danger-solid, #b42318); --badge-border: var(--mds-color-border-status-danger, #f3b4ae); }
+.soft { background: var(--badge-soft); border-color: var(--badge-border); color: var(--badge-text); }
 .solid { background: var(--badge-solid); color: var(--mds-color-text-on-brand, #fff); }
+@media (forced-colors: active) { .badge { border-color: CanvasText; } }

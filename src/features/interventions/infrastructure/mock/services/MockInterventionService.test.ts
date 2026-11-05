@@ -81,4 +81,30 @@ describe('mocks de intervenções', () => {
     expect(interventions.list()[0].technician.name).toBe(name)
     expect(interventions.list()[0].materials).not.toContain('Alterado')
   })
+
+  it('consulta apenas intervenções da OS e devolve cópias independentes', async () => {
+    const { interventions, interventionService } = createLazyMockWorkOrderService('normal')
+    interventions.addAllExamples()
+    const items = await interventionService.listByWorkOrder('mock-os-4')
+    expect(items).toHaveLength(2)
+    expect(items.every(item => item.workOrderId === 'mock-os-4')).toBe(true)
+    items[0].technician.name = 'Alterado'
+    expect((await interventionService.listByWorkOrder('mock-os-4'))[0].technician.name).not.toBe('Alterado')
+    expect(await interventionService.listByWorkOrder('não-existe')).toEqual([])
+  })
+
+  it('notifica apenas alterações efetivas e permite cancelar a subscrição', () => {
+    const { interventions, subscribeToInterventions } = createLazyMockWorkOrderService('normal')
+    const listener = vi.fn()
+    const unsubscribe = subscribeToInterventions(listener)
+    expect(interventions.addExample('mock-intervencao-1')).toBe('added')
+    expect(interventions.addExample('mock-intervencao-1')).toBe('existing')
+    expect(listener).toHaveBeenCalledTimes(1)
+    interventions.clear()
+    interventions.clear()
+    expect(listener).toHaveBeenCalledTimes(2)
+    unsubscribe()
+    interventions.addExample('mock-intervencao-1')
+    expect(listener).toHaveBeenCalledTimes(2)
+  })
 })

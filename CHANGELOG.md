@@ -4,6 +4,18 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ## Por lançar
 
+### Alterado
+
+- Apresentação mais compacta e consistente dos indicadores de estado na aplicação.
+
+### Adicionado
+
+- Escolha da prioridade ao criar ordens fictícias, com Normal como valor inicial.
+- Criação de ordens em memória com clientes e locais dos exemplos fictícios.
+- Consulta das intervenções fictícias associadas a cada ordem no ecrã de detalhe, atualizada ao alterar os mocks.
+- Padrões e tokens de animação Web para feedback de botões e ligações direcionais, com suporte a movimento reduzido.
+- Consulta do detalhe de ordens de serviço a partir da listagem, com estados de carregamento, erro e ordem inexistente, ligada aos mocks.
+
 ## 0.2.0 — 2026-11-05
 
 ### Corrigido

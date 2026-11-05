@@ -6,6 +6,7 @@ import type { WorkOrderMockScenario } from '../../../features/work-orders/infras
 import { logger } from '../../../shared/logging/logger'
 import type { LogEvent } from '../../../shared/logging/logger'
 import { MockInterventionService } from '../../../features/interventions/infrastructure/mock/services/MockInterventionService'
+import type { InterventionService } from '../../../features/interventions/application/interventionService'
 
 let operationSequence = 0
 
@@ -14,6 +15,8 @@ export function createLazyMockWorkOrderService(scenario: WorkOrderMockScenario):
   service: WorkOrderService
   controls: MockWorkOrderControls
   interventions: MockInterventionService
+  interventionService: InterventionService
+  subscribeToInterventions: (listener: () => void) => () => void
   subscribe: (listener: () => void) => () => void
 } {
   let instance: MockWorkOrderService | undefined
@@ -53,6 +56,8 @@ export function createLazyMockWorkOrderService(scenario: WorkOrderMockScenario):
 
   return {
     interventions,
+    interventionService: { listByWorkOrder: id => interventions.listByWorkOrder(id) },
+    subscribeToInterventions: listener => interventions.subscribe(listener),
     subscribe(listener) { return getInstance().subscribe(listener) },
     service: {
       async list() { return runAsync('listar', () => getInstance().list()) },

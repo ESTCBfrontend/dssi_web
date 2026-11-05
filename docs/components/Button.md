@@ -19,7 +19,7 @@ import { Button } from '../../shared/ui/Button'
 - `iconStart` e `iconEnd`: elementos decorativos opcionais. Usa `aria-label` quando necessário; não coloques controlos interativos nos ícones.
 - `fullWidth`: ocupa a largura disponível. `className`, `style`, `ref` e demais atributos nativos podem ser usados; `type` é `button` por omissão, pelo que a submissão exige `type="submit"`.
 
-O conteúdo pode quebrar linha e o botão cresce em altura. O foco de teclado é visível; o indicador respeita a preferência de movimento reduzido. A aplicação é responsável por comunicar o início e o resultado de operações assíncronas de forma apropriada.
+O conteúdo pode quebrar linha e o botão cresce em altura. Botões ativos apresentam feedback discreto no hover em dispositivos que o suportam. O foco de teclado é visível; as transições e o indicador respeitam a preferência de movimento reduzido. A aplicação é responsável por comunicar o início e o resultado de operações assíncronas de forma apropriada. Os tokens de movimento e a validação estão em [animations.md](../animations.md).
 
 ## Tema e validação
 

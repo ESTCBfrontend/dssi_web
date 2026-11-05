@@ -1,0 +1,10 @@
+.directional { transition: color var(--mds-motion-feedback-duration, 160ms) var(--mds-motion-feedback-easing, ease); }
+.arrow { display: inline-block; font-size: 18px; line-height: 1; transition: transform var(--mds-motion-feedback-duration, 160ms) var(--mds-motion-feedback-easing, ease); }
+@media (hover: hover) {
+  .directional[data-motion-direction='back']:hover .arrow { transform: translateX(calc(0px - var(--mds-motion-arrow-distance, 4px))); }
+  .directional[data-motion-direction='forward']:hover .arrow { transform: translateX(var(--mds-motion-arrow-distance, 4px)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .directional, .arrow { transition: none; }
+  .directional[data-motion-direction]:hover .arrow { transform: none; }
+}
