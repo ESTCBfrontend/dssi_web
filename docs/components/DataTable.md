@@ -21,7 +21,7 @@ const columns: DataColumn<Ordem>[] = [
 - `pagination` recebe as props de Pagination; `total` é opcional, não inferior aos registos recebidos e, se coexistir com paginação, deve coincidir com o total desta. A aplicação mantém página, tamanho e resultados coerentes. A tabela não fatia nem filtra a lista automaticamente.
 - `filters` é um slot para controlos como [FilterBar](FilterBar.md). `isLoading` mostra progresso, mantém registos existentes e bloqueia ordenação, paginação e repetição; o consumidor gere o estado de controlos fornecidos no slot.
 - `error` apresenta um alerta e `onRetry` opcional pede repetição. Um erro ou carregamento sem dados não é mostrado como estado vazio. `labels` personaliza `count`, `emptyTitle`, `emptyDescription`, `loading`, `errorTitle` e `retry`.
-- `layout="table"` usa `<table>`, legenda acessível e scroll horizontal quando necessário. `layout="cards"` exige `renderCard(row, index)` e apresenta uma lista; a aplicação escolhe quando mudar de layout e assegura acessibilidade dos cartões. Mudar de layout desmonta a apresentação anterior, pelo que o estado persistente deve ficar na aplicação.
+- `layout="table"` usa `<table>`, legenda acessível e uma região focável que permite scroll horizontal por teclado quando necessário. `layout="cards"` exige `renderCard(row, index)` e apresenta uma lista; a aplicação escolhe quando mudar de layout e assegura acessibilidade dos cartões. Mudar de layout desmonta a apresentação anterior, pelo que o estado persistente deve ficar na aplicação.
 - `title` é obrigatório, `description` opcional; `headingLevel` configura o título. `className`, `style`, `ref` e atributos nativos aplicam-se à secção. O componente não virtualiza os registos.
 
 ## Tema e validação

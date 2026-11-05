@@ -8,8 +8,10 @@ export type WorkOrderServices = {
   service: WorkOrderService | null
   status: 'ready' | 'unavailable'
   mockScenario: WorkOrderMockScenario
+  mockVersion: number
   mockControls: MockWorkOrderControls | null
   interventionControls: MockInterventionService | null
+  subscribeToWorkOrders: ((listener: () => void) => () => void) | null
   selectMockScenario: (scenario: WorkOrderMockScenario) => void
 }
 

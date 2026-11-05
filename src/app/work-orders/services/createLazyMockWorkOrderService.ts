@@ -14,6 +14,7 @@ export function createLazyMockWorkOrderService(scenario: WorkOrderMockScenario):
   service: WorkOrderService
   controls: MockWorkOrderControls
   interventions: MockInterventionService
+  subscribe: (listener: () => void) => () => void
 } {
   let instance: MockWorkOrderService | undefined
   const getInstance = () => instance ??= createWorkOrderMockScenario(scenario)
@@ -52,6 +53,7 @@ export function createLazyMockWorkOrderService(scenario: WorkOrderMockScenario):
 
   return {
     interventions,
+    subscribe(listener) { return getInstance().subscribe(listener) },
     service: {
       async list() { return runAsync('listar', () => getInstance().list()) },
       async getById(id) { return runAsync('consultar', () => getInstance().getById(id)) },

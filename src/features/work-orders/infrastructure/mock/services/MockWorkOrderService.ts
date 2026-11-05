@@ -29,6 +29,7 @@ export class MockWorkOrderService implements WorkOrderService, MockWorkOrderCont
   private readonly behavior: MockBehavior
   private nextId = 1
   private revision = 0
+  private readonly listeners = new Set<() => void>()
 
   constructor(initialOrders: readonly WorkOrder[] = loadMockWorkOrders(), behavior: MockBehavior = {}) {
     if (behavior.delayMs !== undefined && (!Number.isFinite(behavior.delayMs) || behavior.delayMs < 0)) {
@@ -57,6 +58,13 @@ export class MockWorkOrderService implements WorkOrderService, MockWorkOrderCont
 
   hasOrder(id: string): boolean { return this.orders.has(id) }
 
+  subscribe(listener: () => void): () => void {
+    this.listeners.add(listener)
+    return () => { this.listeners.delete(listener) }
+  }
+
+  private notify(): void { for (const listener of this.listeners) listener() }
+
   addExample(exampleId: string): WorkOrder | null {
     const example = this.listExamples().find(order => order.id === exampleId)
     if (!example) throw new Error('Exemplo de ordem fictícia não encontrado.')
@@ -65,6 +73,7 @@ export class MockWorkOrderService implements WorkOrderService, MockWorkOrderCont
     const order = copyOrder(example)
     this.orders.set(order.id, order)
     logger.mockExample('OS', order)
+    this.notify()
     return copyOrder(order)
   }
 
@@ -88,12 +97,15 @@ export class MockWorkOrderService implements WorkOrderService, MockWorkOrderCont
     const count = this.orders.size
     this.revision++
     this.orders.clear()
+    this.notify()
     return count
   }
 
   reset(): number {
-    this.clear()
+    this.revision++
+    this.orders.clear()
     for (const order of this.initialOrders) this.orders.set(order.id, copyOrder(order))
+    this.notify()
     return this.orders.size
   }
 
@@ -136,6 +148,7 @@ export class MockWorkOrderService implements WorkOrderService, MockWorkOrderCont
       instructions: input.instructions ?? null,
     }
     this.orders.set(id, order)
+    this.notify()
     return copyOrder(order)
   }
 }

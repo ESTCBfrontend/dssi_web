@@ -4,7 +4,7 @@ Este documento contém princípios aprovados para orientar o crescimento do proj
 
 ## Estado atual e evolução
 
-A aplicação é uma base React com Vite, com o ponto de entrada em `src/main.tsx` e o componente inicial em `src/App.tsx`. Em `src/features/work-orders` existe um primeiro serviço mock provisório de ordens de serviço, ligado à composição mas ainda sem ecrãs de negócio.
+A aplicação é uma base React com Vite, com o ponto de entrada em `src/main.tsx` e o componente inicial em `src/App.tsx`. Em `src/features/work-orders` existem uma listagem de ordens de serviço e um serviço mock provisório ligado à composição. A listagem acompanha alterações dos dados mock em memória; o adaptador da API ainda não está implementado.
 
 A direção acordada é organizar o código por funcionalidade e separar responsabilidades conforme a complexidade real. A estrutura abaixo é uma referência para as próximas funcionalidades; algumas pastas, como `shared/ui`, já existem. Não é necessário criar todas as camadas de uma vez.
 
@@ -138,4 +138,8 @@ Antes de transformar uma decisão nova numa regra transversal, segue o processo 
 
 Quando uma decisão precisar de justificar alternativas e consequências, cria um registo em `docs/decisions/` com contexto, decisão, alcance e consequências. Essa pasta não precisa de existir antes de haver uma decisão a registar.
 
-Não há nesta fase escolha aprovada de biblioteca de routing, gestão global de estado, cliente HTTP ou armazenamento de sessão. A escolha concreta deve partir de uma necessidade real e do respetivo impacto.
+A aplicação Web usa React Router em modo declarativo, com rotas organizadas na composição da aplicação e ecrãs junto das respetivas funcionalidades. Os layouts comuns serão partilhados entre rotas; as permissões são confirmadas pelo Backend. As rotas e destinos só serão acrescentados quando os respetivos fluxos estiverem disponíveis. A configuração em `src/app/routing` disponibiliza a listagem de ordens de serviço em `/` e `/ordens-servico` e uma página para endereços desconhecidos. A criação e os detalhes de ordens, tal como os restantes destinos da navegação, ainda não estão disponíveis. O servidor de produção terá de encaminhar rotas da aplicação para `index.html` para permitir acesso direto e recarregamento; essa configuração depende do alojamento, ainda não definido.
+
+Na Web, o estado local de interface usa React (`useState`/`useReducer`); o estado partilhado de aplicação usa Context e, quando necessário, `useReducer`. O estado de navegação partilhável usa os parâmetros do URL com React Router. Os dados assíncronos dos serviços mock e API são geridos com TanStack Query, mantendo o acesso aos dados nos serviços das funcionalidades; a cache distingue a origem e é invalidada quando os dados mudam. As dependências e migrações são introduzidas nas tarefas que as utilizam. A listagem de ordens já usa TanStack Query: a chave inclui a origem e, para mock, a instância do cenário. As alterações mock invalidam a listagem ativa; a API permanece indisponível até existir um adaptador.
+
+Não há nesta fase escolha aprovada de cliente HTTP ou armazenamento de sessão. A escolha concreta deve partir de uma necessidade real e do respetivo impacto.
