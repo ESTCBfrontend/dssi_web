@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 import { Alert } from '../../../../../shared/ui/Alert'
 import { Button } from '../../../../../shared/ui/Button'
@@ -10,6 +11,7 @@ import { TextField } from '../../../../../shared/ui/TextField'
 import { InterventionList } from '../../../../interventions/presentation/InterventionList'
 import motion from '../../../../../shared/ui/motion/DirectionalLink.module.css'
 import { WorkOrdersShell } from '../../components/WorkOrdersShell'
+import { AssignTechnician } from './AssignTechnician'
 import { useWorkOrder } from './hooks/useWorkOrder'
 import { useWorkOrderInterventions } from './hooks/useWorkOrderInterventions'
 import { formatDate, formatPriority, statusLabels, statusTones } from '../../formatters/workOrderDisplay'
@@ -25,6 +27,7 @@ function SummaryCard({ label, value, icon, dark = false }: { label: string; valu
 
 export function WorkOrderDetailPage() {
   const navigate = useNavigate()
+  const [assignmentSuccess, setAssignmentSuccess] = useState(false)
   const { id = '' } = useParams()
   const { order, loading, error, reload, available } = useWorkOrder(id)
   const interventionQuery = useWorkOrderInterventions(id, !!order)
@@ -35,6 +38,7 @@ export function WorkOrderDetailPage() {
       {loading && <LoadingIndicator type="inline" label="A carregar ordem de serviço..." />}
       {error && <Alert tone="danger" layout="detailed" title="Não foi possível consultar a ordem" message={error} announcement="polite" action={available ? { label: 'Tentar novamente', onClick: reload } : undefined} />}
       {!loading && !error && order === null && <Alert tone="warning" layout="detailed" title="Ordem não encontrada" message="A ordem pedida não existe na origem de dados selecionada." />}
+      {assignmentSuccess && <Alert tone="success" title="Técnico atribuído com sucesso." announcement="polite" onDismiss={() => setAssignmentSuccess(false)} />}
       {order && <div className={styles.content}>
         <section className={styles.summary} aria-label="Resumo da ordem">
           <SummaryCard label="Estado" value={statusLabels[order.status]} icon={statusIcon} dark />
@@ -62,7 +66,7 @@ export function WorkOrderDetailPage() {
           <div className={styles.column}>
             <ContentPanel className={styles.panel} title="Planeamento e equipa" description="Atribuição e data da intervenção">
               <dl className={styles.planning}><div><dt>Data prevista</dt><dd>{formatDate(order.scheduledDate)}</dd></div><div><dt>Técnico responsável</dt><dd>{order.assignedTechnician?.name ?? 'Por atribuir'}</dd></div></dl>
-              <div className={styles.actions}><Button size="small" variant="outline" disabled>Reagendar</Button><Button size="small" disabled>Gerir atribuição</Button></div>
+              <div className={styles.actions}><Button size="small" variant="outline" disabled>Reagendar</Button><AssignTechnician order={order} onAssigned={() => setAssignmentSuccess(true)} /></div>
             </ContentPanel>
             <ContentPanel className={styles.panel} title="Documentos" description="Ficheiros associados à ordem"><p className={styles.unavailable}>Documentos ainda não disponíveis.</p></ContentPanel>
           </div>

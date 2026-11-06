@@ -1,5 +1,5 @@
 import type { WorkOrderService } from '../../../application/workOrderService'
-import type { CreateWorkOrder, UpdateWorkOrder, WorkOrder } from '../../../domain/workOrder'
+import type { CreateWorkOrder, UpdateWorkOrder, WorkOrder, WorkOrderTechnician } from '../../../domain/workOrder'
 import { loadMockWorkOrders } from '../loaders/loadMockWorkOrders'
 import type { MockWorkOrderControls } from './MockWorkOrderControls'
 import { logger } from '../../../../../shared/logging/logger'
@@ -147,6 +147,38 @@ export class MockWorkOrderService implements WorkOrderService, MockWorkOrderCont
       assignedTechnician: null,
       instructions: input.instructions ?? null,
     }
+    this.orders.set(id, order)
+    this.notify()
+    return copyOrder(order)
+  }
+
+  /** Catálogo provisório, derivado dos exemplos fictícios; não representa disponibilidade real. */
+  private mockTechnicians(): WorkOrderTechnician[] {
+    const technicians = new Map<string, WorkOrderTechnician>()
+    for (const order of this.listExamples()) {
+      const technician = order.assignedTechnician
+      if (technician) technicians.set(technician.id, { ...technician })
+    }
+    return Array.from(technicians.values())
+  }
+
+  async listTechnicians(): Promise<WorkOrderTechnician[]> {
+    await this.simulateResponse()
+    return this.mockTechnicians()
+  }
+
+  async assignTechnician(id: string, technicianId: string): Promise<WorkOrder | null> {
+    const revision = this.revision
+    await this.simulateResponse()
+    if (revision !== this.revision) throw new Error('A atribuição foi cancelada porque os dados fictícios foram alterados.')
+    const existing = this.orders.get(id)
+    if (!existing) return null
+    if (existing.status !== 'NOVA' || existing.assignedTechnician) {
+      throw new Error('Apenas uma ordem nova e sem técnico pode ser atribuída neste cenário provisório.')
+    }
+    const technician = this.mockTechnicians().find(item => item.id === technicianId)
+    if (!technician) throw new Error('Técnico fictício não encontrado.')
+    const order: WorkOrder = { ...existing, assignedTechnician: { ...technician }, status: 'ATRIBUIDA' }
     this.orders.set(id, order)
     this.notify()
     return copyOrder(order)
