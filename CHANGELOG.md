@@ -4,6 +4,11 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ## Por lançar
 
+### Adicionado
+
+- Interface para atribuir um técnico fictício a uma ordem nova no detalhe.
+- Serviço mock provisório para consultar técnicos fictícios e atribuir um técnico a uma ordem nova.
+
 ## 0.3.0 — 2026-11-05
 
 ### Alterado

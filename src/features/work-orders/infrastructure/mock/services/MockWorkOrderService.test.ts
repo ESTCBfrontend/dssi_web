@@ -14,6 +14,51 @@ function exampleInput(): CreateWorkOrder {
 }
 
 describe('serviço mock de ordens de serviço', () => {
+  it('atribui técnico fictício a uma OS nova e disponibiliza a alteração aos consumidores', async () => {
+    const service = new MockWorkOrderService([])
+    const created = await service.create(exampleInput())
+    const technicians = await service.listTechnicians()
+    expect(technicians.length).toBeGreaterThan(0)
+    const listener = vi.fn()
+    service.subscribe(listener)
+    const assigned = await service.assignTechnician(created.id, technicians[0].id)
+    expect(assigned).toMatchObject({ id: created.id, status: 'ATRIBUIDA', assignedTechnician: technicians[0] })
+    expect(await service.getById(created.id)).toEqual(assigned)
+    expect(await service.list()).toContainEqual(assigned)
+    expect(listener).toHaveBeenCalledOnce()
+    technicians[0].name = 'alterado'
+    expect((await service.getById(created.id))?.assignedTechnician?.name).not.toBe('alterado')
+  })
+
+  it('rejeita técnico desconhecido e reatribuição sem alterar a ordem', async () => {
+    const service = new MockWorkOrderService([])
+    const created = await service.create(exampleInput())
+    await expect(service.assignTechnician('inexistente', 'inexistente')).resolves.toBeNull()
+    await expect(service.assignTechnician(created.id, 'inexistente')).rejects.toThrow('não encontrado')
+    expect(await service.getById(created.id)).toEqual(created)
+    const [technician] = await service.listTechnicians()
+    const assigned = await service.assignTechnician(created.id, technician.id)
+    await expect(service.assignTechnician(created.id, technician.id)).rejects.toThrow()
+    expect(await service.getById(created.id)).toEqual(assigned)
+  })
+
+  it('rejeita atribuição pendente após reposição dos dados', async () => {
+    vi.useFakeTimers()
+    try {
+      const service = new MockWorkOrderService(undefined, { delayMs: 1000 })
+      const pending = service.assignTechnician('mock-os-1', 'mock-tech-1').then(() => null, error => error)
+      service.reset()
+      await vi.advanceTimersByTimeAsync(1000)
+      expect(await pending).toBeInstanceOf(Error)
+    } finally { vi.useRealTimers() }
+  })
+
+  it('propaga falhas simuladas na consulta de técnicos e na atribuição', async () => {
+    const service = new MockWorkOrderService([], { failure: true })
+    await expect(service.listTechnicians()).rejects.toThrow()
+    await expect(service.assignTechnician('os', 'tecnico')).rejects.toThrow()
+  })
+
   it('edita os campos permitidos, preserva os restantes e informa os subscritores', async () => {
     const service = new MockWorkOrderService()
     const original = (await service.list())[0]

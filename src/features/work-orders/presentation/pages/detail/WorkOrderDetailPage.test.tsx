@@ -30,6 +30,32 @@ function showApp(path = '/') {
 }
 
 describe('detalhe da ordem de serviço', () => {
+  it('atribui técnico fictício e apresenta a alteração no detalhe e na lista', async () => {
+    showApp('/ordens-servico/mock-os-1')
+    expect(await screen.findByRole('heading', { name: 'OS-EXEMPLO-001' })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Gerir atribuição' }))
+    const section = screen.getByRole('region', { name: 'Atribuir técnico' })
+    const select = await within(section).findByRole('combobox', { name: 'Técnico' })
+    await waitFor(() => expect(within(select).getByRole('option', { name: 'João Almeida' })).toBeInTheDocument())
+    fireEvent.change(select, { target: { value: 'mock-tech-1' } })
+    fireEvent.click(within(section).getByRole('button', { name: 'Confirmar atribuição' }))
+    expect(await screen.findByText('Técnico atribuído com sucesso.')).toBeInTheDocument()
+    await waitFor(() => expect(screen.getByRole('region', { name: 'Resumo da ordem' })).toHaveTextContent('João Almeida'))
+    expect(screen.getByRole('region', { name: 'Resumo da ordem' })).toHaveTextContent('Atribuída')
+    fireEvent.click(screen.getByRole('link', { name: 'Voltar à lista de ordens' }))
+    expect(await screen.findByRole('heading', { name: 'Ordens de serviço' })).toBeInTheDocument()
+    expect(await screen.findByRole('row', { name: /OS-EXEMPLO-001/ })).toHaveTextContent('João Almeida')
+  })
+
+  it('permite cancelar sem atribuir e não permite reatribuição', async () => {
+    showApp('/ordens-servico/mock-os-1')
+    await screen.findByRole('heading', { name: 'OS-EXEMPLO-001' })
+    fireEvent.click(screen.getByRole('button', { name: 'Gerir atribuição' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Cancelar' }))
+    expect(screen.queryByRole('region', { name: 'Atribuir técnico' })).not.toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Resumo da ordem' })).toHaveTextContent('Por atribuir')
+  })
+
   it('abre a ordem da listagem e permite regressar', async () => {
     showApp()
     fireEvent.click(await screen.findByRole('link', { name: 'Abrir OS-EXEMPLO-001' }))
