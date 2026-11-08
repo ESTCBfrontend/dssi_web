@@ -30,6 +30,23 @@ function showApp(path = '/') {
 }
 
 describe('detalhe da ordem de serviço', () => {
+  it('pede correção fundamentada sem mudar o estado da ordem', async () => {
+    showApp('/ordens-servico/mock-os-4')
+    await screen.findByRole('heading', { name: 'OS-EXEMPLO-004' })
+    const summary = screen.getByRole('region', { name: 'Resumo da ordem' })
+    const originalSummary = summary.textContent
+    fireEvent.click(screen.getByRole('button', { name: 'Adicionar intervenções de teste' }))
+    fireEvent.click(await screen.findByRole('button', { name: /Analisar intervenção de Mariana/ }))
+    fireEvent.click(screen.getByRole('button', { name: 'Pedir correção' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar pedido de correção' }))
+    expect(screen.getByRole('textbox', { name: /Motivo da correção/ })).toHaveAttribute('aria-invalid', 'true')
+    fireEvent.change(screen.getByRole('textbox', { name: /Motivo da correção/ }), { target: { value: 'Completar materiais' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar pedido de correção' }))
+    expect(await screen.findByText('Correção solicitada na sessão de testes.')).toBeInTheDocument()
+    expect(await screen.findByText(/Correção solicitada — Completar materiais/)).toBeInTheDocument()
+    expect(summary.textContent).toBe(originalSummary)
+    expect(screen.getByText('Testados os sensores de abertura das portas do piso térreo.')).toBeInTheDocument()
+  })
   it('atribui técnico fictício e apresenta a alteração no detalhe e na lista', async () => {
     showApp('/ordens-servico/mock-os-1')
     expect(await screen.findByRole('heading', { name: 'OS-EXEMPLO-001' })).toBeInTheDocument()

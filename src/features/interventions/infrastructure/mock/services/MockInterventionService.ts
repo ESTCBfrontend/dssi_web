@@ -3,7 +3,7 @@ import { loadMockInterventions } from '../loaders/loadMockInterventions'
 import { logger } from '../../../../../shared/logging/logger'
 
 function copy(item: Intervention): Intervention {
-  return { ...item, technician: { ...item.technician }, materials: [...item.materials] }
+  return { ...item, technician: { ...item.technician }, materials: [...item.materials], ...(item.review ? { review: { ...item.review } } : {}) }
 }
 
 /** Estado fictício local; a existência da OS é verificada pelo serviço associado. */
@@ -21,6 +21,18 @@ export class MockInterventionService {
 
   async listByWorkOrder(workOrderId: string): Promise<Intervention[]> {
     return this.list().filter(item => item.workOrderId === workOrderId)
+  }
+
+  async review(workOrderId: string, interventionId: string, decision: 'validar' | 'solicitar-correcao', reason = ''): Promise<Intervention> {
+    const item = this.items.get(interventionId)
+    if (!item || item.workOrderId !== workOrderId || !this.hasWorkOrder(workOrderId)) throw new Error('Intervenção indisponível.')
+    if (!['CONCLUIDA', 'PENDENTE'].includes(item.status) || item.review) throw new Error('Esta intervenção não pode ser analisada.')
+    if (decision !== 'validar' && decision !== 'solicitar-correcao') throw new Error('Decisão inválida.')
+    if (decision === 'solicitar-correcao' && !reason.trim()) throw new Error('Indique o motivo da correção.')
+    const updated: Intervention = { ...item, review: { status: decision === 'validar' ? 'VALIDADA' : 'CORRECAO_SOLICITADA', reason: decision === 'validar' ? null : reason.trim() } }
+    this.items.set(item.id, updated)
+    this.notify()
+    return copy(updated)
   }
 
   subscribe(listener: () => void): () => void {

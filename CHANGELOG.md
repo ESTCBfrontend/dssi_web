@@ -6,6 +6,7 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ### Adicionado
 
+- Análise fictícia de intervenções no detalhe da ordem, com validação ou pedido de correção fundamentado, apenas em memória.
 - Interface para atribuir um técnico fictício a uma ordem nova no detalhe.
 - Serviço mock provisório para consultar técnicos fictícios e atribuir um técnico a uma ordem nova.
 
