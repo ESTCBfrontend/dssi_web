@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useWorkOrderServices } from '../../../../../app/work-orders/providers/workOrderServiceContext'
 import { Link, useNavigate, useParams } from 'react-router'
 import { Alert } from '../../../../../shared/ui/Alert'
 import { Button } from '../../../../../shared/ui/Button'
@@ -31,6 +32,7 @@ export function WorkOrderDetailPage() {
   const { id = '' } = useParams()
   const { order, loading, error, reload, available } = useWorkOrder(id)
   const interventionQuery = useWorkOrderInterventions(id, !!order)
+  const { interventionService } = useWorkOrderServices()
   const title = order?.code ?? 'Detalhe da ordem'
   const priority = order ? formatPriority(order.priority) : ''
   return <WorkOrdersShell search={<TextField type="search" aria-label="Pesquisa global indisponível" placeholder="Pesquisar ordens, clientes e equipamentos..." disabled />}>
@@ -59,7 +61,7 @@ export function WorkOrderDetailPage() {
               {order.instructions && <div className={styles.description}><strong>Instruções</strong><p>{order.instructions}</p></div>}
             </ContentPanel>
             <ContentPanel className={styles.panel} title="Intervenções" description="Registos associados a esta ordem">
-              <InterventionList items={interventionQuery.interventions} loading={interventionQuery.loading} error={interventionQuery.error} onRetry={interventionQuery.reload} />
+              <InterventionList items={interventionQuery.interventions} loading={interventionQuery.loading} error={interventionQuery.error} onRetry={interventionQuery.reload} service={interventionService} />
             </ContentPanel>
             <ContentPanel className={styles.panel} title="Histórico de atividade" description="Alterações e movimentos desta ordem"><p className={styles.unavailable}>Histórico ainda não disponível.</p></ContentPanel>
           </div>

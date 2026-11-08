@@ -6,3 +6,6 @@
 .item .date { color: #677381; font-size: 12px; }
 .item .description { color: #1f2938; }
 .empty { margin: 0; color: #677381; font-size: 13px; }
+.review { display: grid; gap: 12px; margin-top: 12px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.success { color: #17643a; margin: 0 0 12px; }

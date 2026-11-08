@@ -56,7 +56,7 @@ export function createLazyMockWorkOrderService(scenario: WorkOrderMockScenario):
 
   return {
     interventions,
-    interventionService: { listByWorkOrder: id => interventions.listByWorkOrder(id) },
+    interventionService: { listByWorkOrder: id => interventions.listByWorkOrder(id), review: (workOrderId, interventionId, decision, reason) => interventions.review(workOrderId, interventionId, decision, reason) },
     subscribeToInterventions: listener => interventions.subscribe(listener),
     subscribe(listener) { return getInstance().subscribe(listener) },
     service: {

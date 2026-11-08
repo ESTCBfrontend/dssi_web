@@ -11,4 +11,5 @@ export type Intervention = {
   observations: string | null
   pendingReason: string | null
   nextStep: string | null
+  review?: { status: 'VALIDADA' | 'CORRECAO_SOLICITADA'; reason: string | null }
 }
