@@ -22,6 +22,8 @@ export function WorkOrderServiceProvider({ children }: { children: ReactNode }) 
   const interventionService = source === 'mock' ? mock.instance.interventionService : null
   const subscribeToInterventions = source === 'mock' ? mock.instance.subscribeToInterventions : null
   const subscribeToWorkOrders = source === 'mock' ? mock.instance.subscribe : null
+  const activityService = source === 'mock' ? mock.instance.activityService : null
+  const subscribeToActivity = source === 'mock' ? mock.instance.subscribeToActivity : null
   const status: WorkOrderServices['status'] = source === 'api' ? 'unavailable' : 'ready'
 
   const selectMockScenario = useCallback((scenario: WorkOrderMockScenario) => {
@@ -36,8 +38,8 @@ export function WorkOrderServiceProvider({ children }: { children: ReactNode }) 
   }, [source, canSelect])
 
   const value = useMemo(
-    () => ({ service, mockExamples, status, mockScenario: mock.scenario, mockVersion: mock.version, mockControls, interventionControls, interventionService, subscribeToInterventions, subscribeToWorkOrders, selectMockScenario }),
-    [service, mockExamples, status, mock.scenario, mock.version, mockControls, interventionControls, interventionService, subscribeToInterventions, subscribeToWorkOrders, selectMockScenario],
+    () => ({ service, mockExamples, status, mockScenario: mock.scenario, mockVersion: mock.version, mockControls, interventionControls, interventionService, subscribeToInterventions, subscribeToWorkOrders, activityService, subscribeToActivity, selectMockScenario }),
+    [service, mockExamples, status, mock.scenario, mock.version, mockControls, interventionControls, interventionService, subscribeToInterventions, subscribeToWorkOrders, activityService, subscribeToActivity, selectMockScenario],
   )
 
   return <WorkOrderServiceContext.Provider value={value}>{children}</WorkOrderServiceContext.Provider>
