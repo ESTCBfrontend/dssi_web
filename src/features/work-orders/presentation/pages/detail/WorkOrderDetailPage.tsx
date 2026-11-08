@@ -15,6 +15,8 @@ import { WorkOrdersShell } from '../../components/WorkOrdersShell'
 import { AssignTechnician } from './AssignTechnician'
 import { useWorkOrder } from './hooks/useWorkOrder'
 import { useWorkOrderInterventions } from './hooks/useWorkOrderInterventions'
+import { useWorkOrderActivity } from './hooks/useWorkOrderActivity'
+import { WorkOrderActivity } from './WorkOrderActivity'
 import { formatDate, formatPriority, statusLabels, statusTones } from '../../formatters/workOrderDisplay'
 import statusIcon from './assets/detail-status.svg'
 import priorityIcon from './assets/detail-priority.svg'
@@ -32,6 +34,7 @@ export function WorkOrderDetailPage() {
   const { id = '' } = useParams()
   const { order, loading, error, reload, available } = useWorkOrder(id)
   const interventionQuery = useWorkOrderInterventions(id, !!order)
+  const activityQuery = useWorkOrderActivity(id, !!order)
   const { interventionService } = useWorkOrderServices()
   const title = order?.code ?? 'Detalhe da ordem'
   const priority = order ? formatPriority(order.priority) : ''
@@ -63,7 +66,7 @@ export function WorkOrderDetailPage() {
             <ContentPanel className={styles.panel} title="Intervenções" description="Registos associados a esta ordem">
               <InterventionList items={interventionQuery.interventions} loading={interventionQuery.loading} error={interventionQuery.error} onRetry={interventionQuery.reload} service={interventionService} />
             </ContentPanel>
-            <ContentPanel className={styles.panel} title="Histórico de atividade" description="Alterações e movimentos desta ordem"><p className={styles.unavailable}>Histórico ainda não disponível.</p></ContentPanel>
+            <ContentPanel className={styles.panel} title="Histórico de atividade" description="Atividade fictícia desta sessão" aria-busy={activityQuery.loading}><WorkOrderActivity {...activityQuery} onRetry={activityQuery.reload} /></ContentPanel>
           </div>
           <div className={styles.column}>
             <ContentPanel className={styles.panel} title="Planeamento e equipa" description="Atribuição e data da intervenção">

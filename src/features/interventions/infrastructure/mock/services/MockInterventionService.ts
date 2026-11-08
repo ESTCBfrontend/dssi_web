@@ -11,7 +11,8 @@ export class MockInterventionService {
   private readonly items = new Map<string, Intervention>()
   private readonly listeners = new Set<() => void>()
   private readonly hasWorkOrder: (id: string) => boolean
-  constructor(hasWorkOrder: (id: string) => boolean) { this.hasWorkOrder = hasWorkOrder }
+  private readonly onClear?: () => void
+  constructor(hasWorkOrder: (id: string) => boolean, onClear?: () => void) { this.hasWorkOrder = hasWorkOrder; this.onClear = onClear }
 
   list(): Intervention[] {
     const items = Array.from(this.items.values(), copy)
@@ -98,6 +99,7 @@ export class MockInterventionService {
   clear(): number {
     const count = this.items.size
     this.items.clear()
+    this.onClear?.()
     if (count) this.notify()
     logger.log('info', { area: 'intervencoes', operation: 'limpar', result: 'sucesso', source: 'mock', count })
     return count
