@@ -2,22 +2,14 @@ import { writeHttpLog } from '../logging/logger'
 
 let sequence = 0
 const maximumBodySize = 16_384
-const safeNumericFields = ['total', 'count', 'page', 'pageSize'] as const
-
-/** Só campos numéricos conhecidos são incluídos; texto, dados aninhados e arrays são omitidos. */
-function filteredBody(value: unknown): string {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) return '[omitido]'
-  const source = value as Record<string, unknown>
-  const safe: Record<string, number> = {}
-  for (const key of safeNumericFields) {
-    if (typeof source[key] === 'number' && Number.isFinite(source[key])) safe[key] = source[key]
-  }
-  return Object.keys(safe).length ? JSON.stringify(safe, null, 2) : '[omitido]'
+/** As palavras-passe não são necessárias para diagnosticar os contratos HTTP. */
+function formatBody(value: unknown): string {
+  return JSON.stringify(value, (key, item: unknown) => /^(password|palavra.?passe)$/i.test(key) ? '[omitido]' : item, 2) ?? '[omitido]'
 }
 
 function requestBody(body: BodyInit | null | undefined): string {
   if (typeof body !== 'string' || body.length > maximumBodySize) return '[omitido]'
-  try { return filteredBody(JSON.parse(body)) } catch { return '[omitido]' }
+  try { return formatBody(JSON.parse(body)) } catch { return '[omitido: corpo não JSON]' }
 }
 
 async function logResponseBody(response: Response, label: string): Promise<void> {
@@ -35,7 +27,7 @@ async function logResponseBody(response: Response, label: string): Promise<void>
       content += decoder.decode(part.value, { stream: true })
     }
     content += decoder.decode()
-    writeHttpLog('info', `${label} | corpo recebido:\n${filteredBody(JSON.parse(content))}`)
+    writeHttpLog('info', `${label} | corpo recebido:\n${formatBody(JSON.parse(content))}`)
   } catch (error) {
     writeHttpLog('warn', `${label} | ${error instanceof SyntaxError ? 'resposta JSON inválida' : 'não foi possível inspecionar a resposta'}`)
   }
@@ -51,6 +43,13 @@ export async function loggedFetch(route: string, input: RequestInfo | URL, init?
   const label = `pedido ${++sequence} | ${safeMethod} ${route}`
   const start = performance.now()
   writeHttpLog('info', `${label} | iniciado`)
+  if (import.meta.env.DEV) {
+    const url = typeof input === 'string' ? input : input instanceof URL ? input.href : input.url
+    writeHttpLog('info', `${label} | endereço: ${url}`)
+    const headers = new Headers(init?.headers ?? (typeof Request !== 'undefined' && input instanceof Request ? input.headers : undefined))
+    const authorization = headers.get('authorization')
+    if (authorization) writeHttpLog('info', `${label} | autorização: ${authorization}`)
+  }
   if (import.meta.env.DEV && init?.body != null) writeHttpLog('info', `${label} | corpo enviado:\n${requestBody(init.body)}`)
   let response: Response
   try {
@@ -64,9 +63,8 @@ export async function loggedFetch(route: string, input: RequestInfo | URL, init?
   }
   const category = response.ok ? '' : response.status >= 500 ? ' | erro do servidor' : response.status >= 400 ? ' | erro do pedido' : ' | resposta não concluída'
   writeHttpLog(response.ok ? 'info' : 'error', `${label} | HTTP ${response.status}${category} | ${Math.round(performance.now() - start)} ms`)
-  const sizeHeader = response.headers.get('content-length')
-  const size = sizeHeader === null ? NaN : Number(sizeHeader)
-  if (import.meta.env.DEV && response.headers.get('content-type')?.includes('application/json') && Number.isFinite(size) && size >= 0 && size <= maximumBodySize) {
+  const contentType = response.headers.get('content-type') ?? ''
+  if (import.meta.env.DEV && /\bapplication\/(?:[\w.-]+\+)?json\b/i.test(contentType)) {
     void logResponseBody(response, label)
   }
   return response
