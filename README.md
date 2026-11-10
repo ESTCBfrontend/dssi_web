@@ -15,6 +15,8 @@ Abre no navegador o endereço indicado pelo Vite. No PowerShell, se a política 
 
 As rotas Web permitem consultar, criar e acompanhar ordens de serviço. Com a origem API, a criação e a atribuição são enviadas ao backend; a edição, o histórico e as intervenções ainda não estão disponíveis nessa origem. Com Mock, a criação, edição, atribuição, intervenções e histórico funcionam em memória e perdem-se ao recarregar. Para publicação, o servidor terá de encaminhar os endereços da aplicação para `index.html`; o alojamento ainda não foi configurado.
 
+Em «Clientes e locais», pesquisa os clientes e seleciona «Consultar locais» para ver os locais associados. Na origem API, os dados vêm do backend; na origem Mock, derivam dos exemplos de ordens e não constituem um catálogo completo. A criação, edição e histórico de clientes ainda não estão disponíveis.
+
 ## Origem de dados
 
 A configuração `VITE_DATA_SOURCE` aceita `api` ou `mock` e usa `api` por defeito. Valores inválidos são rejeitados ao iniciar a aplicação. A origem configurada é independente das ferramentas de desenvolvimento.

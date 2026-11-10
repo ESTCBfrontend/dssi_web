@@ -6,6 +6,7 @@ import { EditWorkOrderPage } from '../../features/work-orders/presentation/pages
 import { useDataSource } from '../data-source/dataSourceContext'
 import { useWorkOrderServices } from '../work-orders/providers/workOrderServiceContext'
 import { ApiLogin } from '../work-orders/ApiLogin'
+import { ClientsPage } from '../../features/clients/presentation/ClientsPage'
 
 export function AppRoutes() {
   const { source } = useDataSource()
@@ -17,6 +18,7 @@ export function AppRoutes() {
     <Route path="/ordens-servico/nova" element={<CreateWorkOrderPage />} />
     <Route path="/ordens-servico/:id/editar" element={<EditWorkOrderPage />} />
     <Route path="/ordens-servico/:id" element={<WorkOrderDetailPage />} />
+    <Route path="/clientes" element={<ClientsPage />} />
     <Route path="*" element={<main><h1>Página não encontrada</h1><p>O endereço indicado não corresponde a uma página disponível.</p><Link to="/">Voltar ao início</Link></main>} />
   </Routes>
 }
