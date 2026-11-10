@@ -27,6 +27,21 @@ O botão no topo abre o menu; «Origem de dados» permite alterar a origem tempo
 
 Em «Mocks», escolhe «Ordens de serviço» ou «Intervenções» para aceder às ações de cada tipo. Nas intervenções, é possível adicionar exemplos individualmente ou todos de uma vez e removê-los. Cada exemplo exige que a OS associada exista e não é adicionado novamente se já estiver presente. O detalhe de uma OS apresenta apenas as intervenções associadas que foram adicionadas. Limpar ou repor as OS, ou mudar o cenário, limpa as intervenções locais.
 
+### Contas de teste no Debug Menu
+
+Em desenvolvimento, com a origem API selecionada, «Contas de teste» permite iniciar sessão com um clique; o menu também permite terminar a sessão ativa. Para configurar as contas nesta máquina, cria `src/app/debug/accounts/backend.local.json` com este formato e preenche os valores localmente:
+
+```json
+{
+  "apiUrl": "https://endereco-do-ambiente-de-testes/api/v1",
+  "accounts": [
+    { "label": "Gestão", "email": "EMAIL_DE_TESTE", "password": "PALAVRA_PASSE_DE_TESTE" }
+  ]
+}
+```
+
+O endereço tem de coincidir com a API configurada; reinicia o servidor de desenvolvimento depois de criar ou alterar o ficheiro. Podes acrescentar várias contas ao array. O ficheiro é ignorado pelo Git e a funcionalidade é excluída da build de produção. As credenciais ficam em texto simples na máquina e são disponibilizadas ao browser pelo servidor de desenvolvimento: usa apenas contas de teste e não exponhas esse servidor a redes não confiáveis. As contas documentadas pelo Backend estão na [página da API de testes](https://est2026.atlassian.net/wiki/spaces/SD/pages/4587521/AlarmeON+API+do+Backend+Sprint+1); os perfis têm permissões distintas.
+
 Para experimentar a análise de intervenções, adiciona os exemplos de ordens e depois os de intervenções no menu de mocks. Abre a OS-EXEMPLO-004 e seleciona «Analisar intervenção». Podes validar ou pedir uma correção, indicando o motivo. A decisão é local e perde-se ao recarregar. Para esta simulação provisória, intervenções concluídas ou pendentes podem ser analisadas uma vez; as canceladas não podem. Estas regras e o modelo de análise ainda carecem de alinhamento com o PO e o Backend. A análise não modifica os dados originais nem o estado da ordem; não existe integração ou histórico real.
 
 O detalhe apresenta um histórico fictício das ações bem-sucedidas nesta sessão: criação e edição da ordem, atribuição e análise de intervenções. Para experimentar, cria ou edita uma ordem ou analisa uma intervenção e consulta «Histórico de atividade» no detalhe. Os exemplos existentes começam sem acontecimentos e não se inventam autores. Limpar ou repor as ordens elimina o histórico; limpar intervenções elimina os respetivos eventos. Mudar de cenário ou recarregar também descarta estes dados. É uma simulação em memória, não uma auditoria, e o contrato real carece de alinhamento com a equipa.

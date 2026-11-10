@@ -50,6 +50,22 @@ async function viWaitForCount(counter: HTMLElement, expected?: number) {
 }
 
 describe('ferramentas de desenvolvimento', () => {
+  it('permite terminar uma sessão API pelo menu', async () => {
+    const fetcher = vi.fn().mockResolvedValue(new Response(JSON.stringify({ accessToken: 'token' }), { status: 200 }))
+    vi.stubGlobal('fetch', fetcher)
+    function LoginProbe() {
+      const { login, apiService } = useWorkOrderServices()
+      return <><button onClick={() => { void login('test@example.test', 'example') }}>Iniciar teste</button><output>{apiService ? 'Sessão ativa' : 'Sem sessão'}</output></>
+    }
+    const selection = new DataSourceSelection({ configuredSource: 'api', allowRuntimeSelection: true })
+    render(<DataSourceProvider selection={selection}><WorkOrderServiceProvider><DebugLayer /><LoginProbe /></WorkOrderServiceProvider></DataSourceProvider>)
+    fireEvent.click(screen.getByRole('button', { name: 'Iniciar teste' }))
+    expect(await screen.findByText('Sessão ativa')).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Abrir ferramentas de desenvolvimento' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Terminar sessão' }))
+    expect(screen.getByText('Sem sessão')).toBeInTheDocument()
+    vi.unstubAllGlobals()
+  })
   it('gere intervenções no submenu e informa quando falta a OS associada', () => {
     const selection = new DataSourceSelection({ configuredSource: 'mock', allowRuntimeSelection: true })
     render(<DataSourceProvider selection={selection}><WorkOrderServiceProvider><DebugLayer /></WorkOrderServiceProvider></DataSourceProvider>)
