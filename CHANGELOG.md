@@ -4,10 +4,13 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ## Por lançar
 
-- Adiciona ao Debug Menu acesso com um clique a contas de teste configuradas localmente para a API e a opção de terminar sessão.
+### Alterado
+
+- Os logs HTTP de desenvolvimento apresentam endereços, corpos JSON e tokens para facilitar o diagnóstico das integrações.
 
 ### Adicionado
 
+- Adiciona ao Debug Menu acesso com um clique a contas de teste configuradas localmente para a API e a opção de terminar sessão.
 - Integração com a API do backend para autenticação, consulta e criação de ordens e atribuição de técnicos.
 - Histórico fictício das ações da sessão no detalhe de cada ordem de serviço.
 

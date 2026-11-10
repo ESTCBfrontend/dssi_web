@@ -4,12 +4,12 @@ import { loggedFetch } from './loggedFetch'
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); vi.unstubAllEnvs() })
 
 describe('pedidos HTTP instrumentados', () => {
-  it('correlaciona pedido e resposta sem registar dados sensíveis', async () => {
+  it('correlaciona pedidos, respostas e tokens em desenvolvimento, ocultando palavras-passe', async () => {
     const info = vi.spyOn(console, 'info').mockImplementation(() => {})
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{"total":2,"email":"privado"}', {
-      status: 200, headers: { 'content-type': 'application/json', 'content-length': '30' },
+      status: 200, headers: { 'content-type': 'application/json' },
     })))
-    const response = await loggedFetch('/ordens/{id}', '/ordens/123?token=privado', { method: 'POST', body: JSON.stringify({ total: 2, password: 'segredo' }) })
+    const response = await loggedFetch('/ordens/{id}', '/ordens/123?pagina=1', { method: 'POST', headers: { Authorization: 'Bearer token-teste' }, body: JSON.stringify({ total: 2, password: 'segredo' }) })
     expect(await response.json()).toEqual({ total: 2, email: 'privado' })
     await vi.waitFor(() => expect(info.mock.calls.some(call => String(call[0]).includes('corpo recebido'))).toBe(true))
     const lines = info.mock.calls.map(call => String(call[0]))
@@ -17,7 +17,21 @@ describe('pedidos HTTP instrumentados', () => {
     expect(id).toBeDefined()
     expect(lines.every(line => line.includes(id!))).toBe(true)
     expect(lines.join(' ')).toContain('"total": 2')
-    expect(lines.join(' ')).not.toMatch(/privado|segredo|password|email|123/)
+    expect(lines.join(' ')).toContain('/ordens/123?pagina=1')
+    expect(lines.join(' ')).toContain('Bearer token-teste')
+    expect(lines.join(' ')).toContain('"email": "privado"')
+    expect(lines.join(' ')).not.toContain('segredo')
+  })
+
+  it('regista tokens em respostas JSON e protege palavras-passe aninhadas', async () => {
+    const info = vi.spyOn(console, 'info').mockImplementation(() => {})
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{"accessToken":"token-exemplo","user":{"password":"segredo"}}', {
+      headers: { 'content-type': 'application/problem+json' },
+    })))
+    const response = await loggedFetch('/auth/login', '/auth/login')
+    expect((await response.json()).accessToken).toBe('token-exemplo')
+    await vi.waitFor(() => expect(info.mock.calls.some(call => String(call[0]).includes('token-exemplo'))).toBe(true))
+    expect(JSON.stringify(info.mock.calls)).not.toContain('segredo')
   })
 
   it('regista falhas HTTP sem consumir a resposta', async () => {

@@ -48,7 +48,7 @@ O detalhe apresenta um histórico fictício das ações bem-sucedidas nesta sess
 
 ## Verificações
 
-Os eventos técnicos da seleção de origem e dos mocks de OS e intervenções aparecem na consola das ferramentas de desenvolvimento do navegador. Ao adicionar exemplos JSON fictícios, o seu conteúdo formatado aparece em desenvolvimento; dados introduzidos pelo utilizador não são registados. Em desenvolvimento são apresentados eventos informativos, avisos e erros; em produção apenas avisos e erros, sem corpos JSON. Os logs são independentes do Debug Menu e não são enviados para um serviço externo. A instrumentação HTTP acompanha os pedidos à API sem registar credenciais ou tokens; a [arquitetura](docs/architecture.md#origem-de-dados-e-ferramentas-de-desenvolvimento) descreve os dados filtrados e as limitações.
+Os eventos técnicos aparecem na consola das ferramentas de desenvolvimento do navegador. Os pedidos HTTP instrumentados apresentam, em desenvolvimento, método, rota, endereço, estado, duração e identificador comum, bem como corpos JSON até 16 KiB e o cabeçalho de autorização, quando disponíveis. Os tokens podem aparecer nos cabeçalhos e respostas; palavras-passe em campos JSON são ocultadas. Usa apenas contas e dados de teste e não partilhes estes logs. Os corpos não JSON são omitidos e a leitura de respostas é limitada. Em produção, os eventos informativos e os corpos não são apresentados. Os logs são independentes do Debug Menu e não são enviados para um serviço externo. Esta instrumentação de desenvolvimento é uma exceção à orientação de logging atualmente registada na [arquitetura](docs/architecture.md#origem-de-dados-e-ferramentas-de-desenvolvimento).
 
 ```bash
 npm run lint
