@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useDataSource } from '../../../../../app/data-source/dataSourceContext'
 import { useWorkOrderServices } from '../../../../../app/work-orders/providers/workOrderServiceContext'
 import { Alert } from '../../../../../shared/ui/Alert'
@@ -11,9 +11,10 @@ import styles from './WorkOrderDetailPage.module.css'
 export function AssignTechnician({ order, onAssigned }: { order: WorkOrder; onAssigned: () => void }) {
   const { source } = useDataSource()
   const { service, mockScenario, mockVersion } = useWorkOrderServices()
+  const client = useQueryClient()
   const [open, setOpen] = useState(false)
   const [selected, setSelected] = useState<string | null>(null)
-  const eligible = source === 'mock' && !!service && order.status === 'NOVA' && !order.assignedTechnician
+  const eligible = !!service && order.status === 'NOVA' && !order.assignedTechnician
   const technicians = useQuery({
     queryKey: ['work-orders', 'technicians', source, mockScenario, mockVersion],
     queryFn: () => service!.listTechnicians(),
@@ -23,12 +24,12 @@ export function AssignTechnician({ order, onAssigned }: { order: WorkOrder; onAs
   })
   const assignment = useMutation({
     mutationFn: async (technicianId: string) => {
-      if (!service || source !== 'mock') throw new Error('Serviço indisponível.')
+      if (!service) throw new Error('Serviço indisponível.')
       const result = await service.assignTechnician(order.id, technicianId)
       if (!result) throw new Error('Ordem inexistente.')
       return result
     },
-    onSuccess: () => { setOpen(false); onAssigned() },
+    onSuccess: async () => { if (source === 'api') await client.invalidateQueries({ queryKey: ['work-orders'] }); setOpen(false); onAssigned() },
   })
 
   return <div className={styles.assignment}>

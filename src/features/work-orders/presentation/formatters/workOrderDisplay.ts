@@ -11,7 +11,12 @@ export const priorityOptions = [
   { value: 'BAIXA', label: 'Baixa' },
   { value: 'NORMAL', label: 'Normal' },
   { value: 'ALTA', label: 'Alta' },
+  { value: 'URGENTE', label: 'Urgente' },
 ] as const
+
+export function formatServiceType(value: string): string {
+  return ({ INSTALACAO: 'Instalação', ASSISTENCIA_TECNICA: 'Assistência técnica', MANUTENCAO: 'Manutenção', OUTRO: 'Outro' } as Record<string, string>)[value] ?? value
+}
 
 export function formatPriority(value: string): string {
   return priorityOptions.find(option => option.value === value)?.label ?? value
