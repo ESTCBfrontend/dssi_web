@@ -4,6 +4,8 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ## Por lançar
 
+- Adiciona ao Debug Menu acesso com um clique a contas de teste configuradas localmente para a API e a opção de terminar sessão.
+
 ### Adicionado
 
 - Integração com a API do backend para autenticação, consulta e criação de ordens e atribuição de técnicos.

@@ -3,7 +3,7 @@ import type { CreateWorkOrder, WorkOrder, WorkOrderClient, WorkOrderSite, WorkOr
 import { loggedFetch } from '../../../../shared/http/loggedFetch'
 
 const defaultUrl = 'https://alarmeon-backend-962ded164ecf.herokuapp.com/api/v1'
-const baseUrl = (import.meta.env.VITE_API_URL || defaultUrl).replace(/\/$/, '')
+export const apiBaseUrl = (import.meta.env.VITE_API_URL || defaultUrl).replace(/\/$/, '')
 
 export class ApiError extends Error {
   readonly status: number
@@ -11,7 +11,7 @@ export class ApiError extends Error {
 }
 
 export async function apiLogin(email: string, password: string): Promise<string> {
-  const response = await loggedFetch('/auth/login', `${baseUrl}/auth/login`, {
+  const response = await loggedFetch('/auth/login', `${apiBaseUrl}/auth/login`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }),
   })
   if (!response.ok) throw new ApiError(response.status)
@@ -29,7 +29,7 @@ export class ApiWorkOrderService implements WorkOrderService {
     const headers = new Headers(init.headers)
     headers.set('Authorization', `Bearer ${this.token}`)
     if (init.body) headers.set('Content-Type', 'application/json')
-    const response = await loggedFetch(route, `${baseUrl}${path}`, { ...init, headers })
+    const response = await loggedFetch(route, `${apiBaseUrl}${path}`, { ...init, headers })
     if (response.status === 401) this.onUnauthorized()
     if (!response.ok) throw new ApiError(response.status)
     return response.json() as Promise<T>
