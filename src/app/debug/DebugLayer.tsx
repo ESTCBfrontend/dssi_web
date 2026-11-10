@@ -6,6 +6,7 @@ import { Select } from '../../shared/ui/Select'
 import { useDataSource } from '../data-source/dataSourceContext'
 import { useWorkOrderServices } from '../work-orders/providers/workOrderServiceContext'
 import { MockMenu } from './components/MockMenu'
+import { DebugAccounts } from './components/DebugAccounts'
 import styles from './DebugLayer.module.css'
 
 const sourceOptions = [
@@ -15,16 +16,19 @@ const sourceOptions = [
 
 export default function DebugLayer() {
   const { source, canSelect, select } = useDataSource()
-  const { mockControls, interventionControls } = useWorkOrderServices()
+  const { mockControls, interventionControls, apiService, logout } = useWorkOrderServices()
   const [open, setOpen] = useState(false)
   const [sourceOpen, setSourceOpen] = useState(false)
   const [mocksOpen, setMocksOpen] = useState(false)
+  const [accountsOpen, setAccountsOpen] = useState(false)
   const triggerRef = useRef<HTMLButtonElement>(null)
   const sourceTriggerRef = useRef<HTMLButtonElement>(null)
   const mocksTriggerRef = useRef<HTMLButtonElement>(null)
+  const accountsTriggerRef = useRef<HTMLButtonElement>(null)
   const panelId = useId()
   const sourcePanelId = useId()
   const mocksPanelId = useId()
+  const accountsPanelId = useId()
 
   if (!canSelect) return null
 
@@ -47,7 +51,7 @@ export default function DebugLayer() {
         title="Ferramentas de desenvolvimento"
         dismissOnBackdrop
         returnFocusRef={triggerRef}
-        onCloseRequest={() => { setOpen(false); setSourceOpen(false); setMocksOpen(false) }}
+        onCloseRequest={() => { setOpen(false); setSourceOpen(false); setMocksOpen(false); setAccountsOpen(false) }}
       >
         <ul className={styles.menu}>
           <li>
@@ -85,11 +89,28 @@ export default function DebugLayer() {
                   if (value === 'api' || value === 'mock') {
                     select(value)
                     setMocksOpen(false)
+                    setAccountsOpen(false)
                   }
                 }}
               />
             </Dialog>
           </li>
+          {source === 'api' && (
+            <li>
+              <Button ref={accountsTriggerRef} className={styles.menuOption} variant="secondary" fullWidth
+                aria-haspopup="dialog" aria-expanded={accountsOpen} aria-controls={accountsPanelId}
+                onClick={() => setAccountsOpen(true)}>Contas de teste</Button>
+              <Dialog id={accountsPanelId} open={accountsOpen} title="Contas de teste" dismissOnBackdrop
+                closeLabel="Fechar contas de teste" returnFocusRef={accountsTriggerRef} onCloseRequest={() => setAccountsOpen(false)}>
+                {accountsOpen && <DebugAccounts onSuccess={() => { setAccountsOpen(false); setOpen(false) }} />}
+              </Dialog>
+            </li>
+          )}
+          {source === 'api' && apiService && <li>
+            <Button className={styles.menuOption} variant="secondary" fullWidth onClick={() => { logout(); setOpen(false) }}>
+              Terminar sessão
+            </Button>
+          </li>}
           {source === 'mock' && mockControls && interventionControls && (
             <li>
               <Button

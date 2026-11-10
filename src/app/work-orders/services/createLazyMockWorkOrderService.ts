@@ -7,6 +7,8 @@ import { logger } from '../../../shared/logging/logger'
 import type { LogEvent } from '../../../shared/logging/logger'
 import { MockInterventionService } from '../../../features/interventions/infrastructure/mock/services/MockInterventionService'
 import type { InterventionService } from '../../../features/interventions/application/interventionService'
+import { MockWorkOrderActivityService } from '../../../features/work-orders/infrastructure/mock/services/MockWorkOrderActivityService'
+import type { WorkOrderActivityService } from '../../../features/work-orders/application/workOrderActivityService'
 
 let operationSequence = 0
 
@@ -17,11 +19,16 @@ export function createLazyMockWorkOrderService(scenario: WorkOrderMockScenario):
   interventions: MockInterventionService
   interventionService: InterventionService
   subscribeToInterventions: (listener: () => void) => () => void
+  activityService: WorkOrderActivityService
+  subscribeToActivity: (listener: () => void) => () => void
   subscribe: (listener: () => void) => () => void
 } {
   let instance: MockWorkOrderService | undefined
   const getInstance = () => instance ??= createWorkOrderMockScenario(scenario)
-  const interventions = new MockInterventionService(id => getInstance().hasOrder(id))
+  const activity = new MockWorkOrderActivityService()
+  let activityRevision = 0
+  let interventionRevision = 0
+  const interventions = new MockInterventionService(id => getInstance().hasOrder(id), () => { interventionRevision++; activity.clearInterventions() })
 
   function record(operation: LogEvent['operation'], result: LogEvent['result'] = 'sucesso'): void {
     logger.log(result === 'erro' ? 'error' : 'info', { area: 'ordens-servico', operation, result, source: 'mock' })
@@ -44,8 +51,8 @@ export function createLazyMockWorkOrderService(scenario: WorkOrderMockScenario):
     if (correlation !== undefined) logger.log('info', { area: 'ordens-servico', operation, result: 'iniciada', source: 'mock', correlation })
     try {
       const result = await action()
-      if (correlation === undefined) record(operation, (operation === 'consultar' || operation === 'editar') && result === null ? 'inexistente' : 'sucesso')
-      else logger.log('info', { area: 'ordens-servico', operation, result: (operation === 'consultar' || operation === 'editar') && result === null ? 'inexistente' : 'sucesso', source: 'mock', correlation, durationMs: Math.round(performance.now() - started!) })
+      if (correlation === undefined) record(operation, (operation === 'consultar' || operation === 'editar' || operation === 'atribuir') && result === null ? 'inexistente' : 'sucesso')
+      else logger.log('info', { area: 'ordens-servico', operation, result: (operation === 'consultar' || operation === 'editar' || operation === 'atribuir') && result === null ? 'inexistente' : 'sucesso', source: 'mock', correlation, durationMs: Math.round(performance.now() - started!) })
       return result
     } catch (error) {
       if (correlation === undefined) record(operation, 'erro')
@@ -56,14 +63,26 @@ export function createLazyMockWorkOrderService(scenario: WorkOrderMockScenario):
 
   return {
     interventions,
-    interventionService: { listByWorkOrder: id => interventions.listByWorkOrder(id) },
+    interventionService: {
+      listByWorkOrder: id => interventions.listByWorkOrder(id),
+      async review(workOrderId, interventionId, decision, reason) {
+        const revision = interventionRevision
+        const result = await interventions.review(workOrderId, interventionId, decision, reason)
+        if (revision === interventionRevision && getInstance().hasOrder(workOrderId)) activity.record(workOrderId, decision === 'validar' ? 'intervencao-validada' : 'correcao-solicitada', interventionId)
+        return result
+      },
+    },
+    activityService: { listByWorkOrder: id => activity.listByWorkOrder(id) },
+    subscribeToActivity: listener => activity.subscribe(listener),
     subscribeToInterventions: listener => interventions.subscribe(listener),
     subscribe(listener) { return getInstance().subscribe(listener) },
     service: {
       async list() { return runAsync('listar', () => getInstance().list()) },
       async getById(id) { return runAsync('consultar', () => getInstance().getById(id)) },
-      async create(input) { return runAsync('criar', () => getInstance().create(input)) },
-      async update(id, input) { return runAsync('editar', () => getInstance().update(id, input)) },
+      async create(input) { const revision = activityRevision; const result = await runAsync('criar', () => getInstance().create(input)); if (revision === activityRevision) activity.record(result.id, 'criada'); return result },
+      async update(id, input) { const revision = activityRevision; const result = await runAsync('editar', () => getInstance().update(id, input)); if (result && revision === activityRevision) activity.record(id, 'editada'); return result },
+      async listTechnicians() { return runAsync('listar-tecnicos', () => getInstance().listTechnicians()) },
+      async assignTechnician(id, technicianId) { const revision = activityRevision; const result = await runAsync('atribuir', () => getInstance().assignTechnician(id, technicianId)); if (result && revision === activityRevision) activity.record(id, 'atribuida'); return result },
     },
     controls: {
       listExamples() { return run('listar-exemplos', () => getInstance().listExamples()) },
@@ -78,8 +97,8 @@ export function createLazyMockWorkOrderService(scenario: WorkOrderMockScenario):
           throw error
         }
       },
-      clear() { return run('limpar', () => { const count = getInstance().clear(); interventions.clear(); return count }) },
-      reset() { return run('repor', () => { const count = getInstance().reset(); interventions.clear(); return count }) },
+      clear() { return run('limpar', () => { activityRevision++; const count = getInstance().clear(); interventions.clear(); activity.clear(); return count }) },
+      reset() { return run('repor', () => { activityRevision++; const count = getInstance().reset(); interventions.clear(); activity.clear(); return count }) },
     },
   }
 }

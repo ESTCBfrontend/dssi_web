@@ -4,6 +4,34 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ## Por lançar
 
+## 0.3.1 — 2026-11-10
+
+### Corrigido
+
+- Atualiza o React Router para uma versão que corrige vulnerabilidades identificadas na dependência.
+
+### Alterado
+
+- Os logs HTTP de desenvolvimento apresentam endereços, corpos JSON e tokens para facilitar o diagnóstico das integrações.
+
+### Adicionado
+
+- Página de clientes e locais, com pesquisa de clientes e consulta dos locais associados.
+- Adiciona ao Debug Menu acesso com um clique a contas de teste configuradas localmente para a API e a opção de terminar sessão.
+- Integração com a API do backend para autenticação, consulta e criação de ordens e atribuição de técnicos.
+- Histórico fictício das ações da sessão no detalhe de cada ordem de serviço.
+- Análise fictícia de intervenções no detalhe da ordem, com validação ou pedido de correção fundamentado, apenas em memória.
+- Interface para atribuir um técnico fictício a uma ordem nova no detalhe.
+- Serviço mock provisório para consultar técnicos fictícios e atribuir um técnico a uma ordem nova.
+
+### Limitações conhecidas
+
+- O ambiente API predefinido é de testes e contém dados fictícios partilhados; a edição de ordens, as intervenções e o histórico ainda não estão ligados ao Backend.
+- A sessão API é mantida em memória e termina ao recarregar; o botão para terminar sessão está limitado ao Debug Menu, indisponível na build de produção.
+- O histórico, a análise de intervenções e os dados mock são simulações locais, descartadas ao recarregar; não constituem auditoria nem substituem permissões reais.
+- A publicação requer configurar as rotas do servidor e autorizar a origem da aplicação no CORS do Backend.
+- A validação completa de acessibilidade, comparação visual e diferentes tamanhos de ecrã em browsers reais permanece pendente.
+
 ## 0.3.0 — 2026-11-05
 
 ### Alterado

@@ -5,24 +5,30 @@ import { useDataSource } from '../../data-source/dataSourceContext'
 import { WorkOrderServiceContext } from './workOrderServiceContext'
 import type { WorkOrderServices } from './workOrderServiceContext'
 import { createLazyMockWorkOrderService } from '../services/createLazyMockWorkOrderService'
+import { apiLogin, ApiWorkOrderService } from '../../../features/work-orders/infrastructure/api/ApiWorkOrderService'
 
 export function WorkOrderServiceProvider({ children }: { children: ReactNode }) {
   const { source, canSelect } = useDataSource()
+  const [token, setToken] = useState<string | null>(null)
+  const logout = useCallback(() => setToken(null), [])
+  const login = useCallback(async (email: string, password: string) => { setToken(await apiLogin(email, password)) }, [])
+  const apiService = useMemo(() => token ? new ApiWorkOrderService(token, () => setToken(current => current === token ? null : current)) : null, [token])
   const [mock, setMock] = useState<{ scenario: WorkOrderMockScenario; version: number; instance: ReturnType<typeof createLazyMockWorkOrderService> }>(() => ({
     scenario: 'normal',
     version: 0,
     instance: createLazyMockWorkOrderService('normal'),
   }))
 
-  // A API ainda não tem adaptador acordado; null indica explicitamente que está indisponível.
-  const service = source === 'mock' ? mock.instance.service : null
+  const service = source === 'mock' ? mock.instance.service : apiService
   const mockExamples = source === 'mock' ? mock.instance.controls.listExamples : null
   const mockControls = source === 'mock' && canSelect ? mock.instance.controls : null
   const interventionControls = source === 'mock' && canSelect ? mock.instance.interventions : null
   const interventionService = source === 'mock' ? mock.instance.interventionService : null
   const subscribeToInterventions = source === 'mock' ? mock.instance.subscribeToInterventions : null
   const subscribeToWorkOrders = source === 'mock' ? mock.instance.subscribe : null
-  const status: WorkOrderServices['status'] = source === 'api' ? 'unavailable' : 'ready'
+  const activityService = source === 'mock' ? mock.instance.activityService : null
+  const subscribeToActivity = source === 'mock' ? mock.instance.subscribeToActivity : null
+  const status: WorkOrderServices['status'] = service ? 'ready' : 'unavailable'
 
   const selectMockScenario = useCallback((scenario: WorkOrderMockScenario) => {
     if (source !== 'mock' || !canSelect) {
@@ -36,8 +42,8 @@ export function WorkOrderServiceProvider({ children }: { children: ReactNode }) 
   }, [source, canSelect])
 
   const value = useMemo(
-    () => ({ service, mockExamples, status, mockScenario: mock.scenario, mockVersion: mock.version, mockControls, interventionControls, interventionService, subscribeToInterventions, subscribeToWorkOrders, selectMockScenario }),
-    [service, mockExamples, status, mock.scenario, mock.version, mockControls, interventionControls, interventionService, subscribeToInterventions, subscribeToWorkOrders, selectMockScenario],
+    () => ({ service, apiService: source === 'api' ? apiService : null, login, logout, mockExamples, status, mockScenario: mock.scenario, mockVersion: mock.version, mockControls, interventionControls, interventionService, subscribeToInterventions, subscribeToWorkOrders, activityService, subscribeToActivity, selectMockScenario }),
+    [source, apiService, login, logout, service, mockExamples, status, mock.scenario, mock.version, mockControls, interventionControls, interventionService, subscribeToInterventions, subscribeToWorkOrders, activityService, subscribeToActivity, selectMockScenario],
   )
 
   return <WorkOrderServiceContext.Provider value={value}>{children}</WorkOrderServiceContext.Provider>

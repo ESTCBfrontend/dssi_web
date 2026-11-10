@@ -87,7 +87,7 @@ describe('criação de ordem', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent('Não foi possível criar a ordem')
     expect(screen.getByRole('textbox', { name: 'Referência' })).toHaveValue('OS-TESTE-123')
     fireEvent.click(screen.getByRole('button', { name: 'Selecionar API' }))
-    expect(screen.getByText('Criação indisponível')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Iniciar sessão' })).toBeInTheDocument()
     expect(screen.queryByRole('combobox', { name: 'Cliente' })).not.toBeInTheDocument()
   })
 })

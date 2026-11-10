@@ -3,7 +3,7 @@ import { loadMockInterventions } from '../loaders/loadMockInterventions'
 import { logger } from '../../../../../shared/logging/logger'
 
 function copy(item: Intervention): Intervention {
-  return { ...item, technician: { ...item.technician }, materials: [...item.materials] }
+  return { ...item, technician: { ...item.technician }, materials: [...item.materials], ...(item.review ? { review: { ...item.review } } : {}) }
 }
 
 /** Estado fictício local; a existência da OS é verificada pelo serviço associado. */
@@ -11,7 +11,8 @@ export class MockInterventionService {
   private readonly items = new Map<string, Intervention>()
   private readonly listeners = new Set<() => void>()
   private readonly hasWorkOrder: (id: string) => boolean
-  constructor(hasWorkOrder: (id: string) => boolean) { this.hasWorkOrder = hasWorkOrder }
+  private readonly onClear?: () => void
+  constructor(hasWorkOrder: (id: string) => boolean, onClear?: () => void) { this.hasWorkOrder = hasWorkOrder; this.onClear = onClear }
 
   list(): Intervention[] {
     const items = Array.from(this.items.values(), copy)
@@ -21,6 +22,18 @@ export class MockInterventionService {
 
   async listByWorkOrder(workOrderId: string): Promise<Intervention[]> {
     return this.list().filter(item => item.workOrderId === workOrderId)
+  }
+
+  async review(workOrderId: string, interventionId: string, decision: 'validar' | 'solicitar-correcao', reason = ''): Promise<Intervention> {
+    const item = this.items.get(interventionId)
+    if (!item || item.workOrderId !== workOrderId || !this.hasWorkOrder(workOrderId)) throw new Error('Intervenção indisponível.')
+    if (!['CONCLUIDA', 'PENDENTE'].includes(item.status) || item.review) throw new Error('Esta intervenção não pode ser analisada.')
+    if (decision !== 'validar' && decision !== 'solicitar-correcao') throw new Error('Decisão inválida.')
+    if (decision === 'solicitar-correcao' && !reason.trim()) throw new Error('Indique o motivo da correção.')
+    const updated: Intervention = { ...item, review: { status: decision === 'validar' ? 'VALIDADA' : 'CORRECAO_SOLICITADA', reason: decision === 'validar' ? null : reason.trim() } }
+    this.items.set(item.id, updated)
+    this.notify()
+    return copy(updated)
   }
 
   subscribe(listener: () => void): () => void {
@@ -86,6 +99,7 @@ export class MockInterventionService {
   clear(): number {
     const count = this.items.size
     this.items.clear()
+    this.onClear?.()
     if (count) this.notify()
     logger.log('info', { area: 'intervencoes', operation: 'limpar', result: 'sucesso', source: 'mock', count })
     return count

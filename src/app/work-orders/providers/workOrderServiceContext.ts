@@ -5,9 +5,14 @@ import type { WorkOrderMockScenario } from '../../../features/work-orders/infras
 import type { MockWorkOrderControls } from '../../../features/work-orders/infrastructure/mock/services/MockWorkOrderControls'
 import type { MockInterventionService } from '../../../features/interventions/infrastructure/mock/services/MockInterventionService'
 import type { InterventionService } from '../../../features/interventions/application/interventionService'
+import type { WorkOrderActivityService } from '../../../features/work-orders/application/workOrderActivityService'
+import type { ApiWorkOrderService } from '../../../features/work-orders/infrastructure/api/ApiWorkOrderService'
 
 export type WorkOrderServices = {
   service: WorkOrderService | null
+  apiService: ApiWorkOrderService | null
+  login: (email: string, password: string) => Promise<void>
+  logout: () => void
   mockExamples: (() => WorkOrder[]) | null
   status: 'ready' | 'unavailable'
   mockScenario: WorkOrderMockScenario
@@ -17,6 +22,8 @@ export type WorkOrderServices = {
   interventionService: InterventionService | null
   subscribeToInterventions: ((listener: () => void) => () => void) | null
   subscribeToWorkOrders: ((listener: () => void) => () => void) | null
+  activityService: WorkOrderActivityService | null
+  subscribeToActivity: ((listener: () => void) => () => void) | null
   selectMockScenario: (scenario: WorkOrderMockScenario) => void
 }
 

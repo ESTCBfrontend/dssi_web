@@ -7,6 +7,34 @@ import { parseMockInterventions } from '../parsers/parseMockInterventions'
 afterEach(() => vi.restoreAllMocks())
 
 describe('mocks de intervenções', () => {
+  it('analisa sem alterar os dados originais nem o estado da ordem e isola as cópias', async () => {
+    const { interventions, interventionService, service } = createLazyMockWorkOrderService('normal')
+    interventions.addAllExamples()
+    const before = (await interventionService.listByWorkOrder('mock-os-4')).find(item => item.id === 'mock-intervencao-1')!
+    const order = await service.getById('mock-os-4')
+    const listener = vi.fn()
+    interventions.subscribe(listener)
+    const updated = await interventionService.review('mock-os-4', before.id, 'solicitar-correcao', '  Rever materiais  ')
+    expect(updated).toEqual({ ...before, review: { status: 'CORRECAO_SOLICITADA', reason: 'Rever materiais' } })
+    expect(await service.getById('mock-os-4')).toEqual(order)
+    expect(listener).toHaveBeenCalledOnce()
+    updated.review!.reason = 'Alterado'
+    expect((await interventionService.listByWorkOrder('mock-os-4')).find(item => item.id === before.id)?.review?.reason).toBe('Rever materiais')
+    await expect(interventionService.review('mock-os-4', before.id, 'validar')).rejects.toThrow()
+    expect(listener).toHaveBeenCalledOnce()
+  })
+
+  it('valida intervenções elegíveis e recusa motivo vazio, ordem errada e intervenção cancelada', async () => {
+    const { interventions, interventionService } = createLazyMockWorkOrderService('normal')
+    interventions.addAllExamples()
+    await expect(interventionService.review('mock-os-4', 'mock-intervencao-1', 'solicitar-correcao', '  ')).rejects.toThrow('motivo')
+    await expect(interventionService.review('mock-os-3', 'mock-intervencao-1', 'validar')).rejects.toThrow()
+    await expect(interventionService.review('mock-os-4', 'mock-intervencao-2', 'validar')).rejects.toThrow()
+    expect((await interventionService.review('mock-os-4', 'mock-intervencao-1', 'validar')).review).toEqual({ status: 'VALIDADA', reason: null })
+    interventions.clear()
+    interventions.addAllExamples()
+    expect((await interventionService.listByWorkOrder('mock-os-4'))[0].review).toBeUndefined()
+  })
   it('regista resultados e falhas sem expor dados dos exemplos', () => {
     const log = vi.spyOn(logger, 'log').mockImplementation(() => {})
     const { interventions } = createLazyMockWorkOrderService('empty')

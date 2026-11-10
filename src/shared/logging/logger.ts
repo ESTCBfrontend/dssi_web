@@ -1,7 +1,7 @@
 export type LogLevel = 'info' | 'warn' | 'error'
 export type LogEvent = {
   area: 'origem-dados' | 'ordens-servico' | 'intervencoes'
-  operation: 'selecionar' | 'listar' | 'consultar' | 'criar' | 'editar' | 'listar-exemplos' | 'adicionar-exemplo' | 'adicionar-todos' | 'limpar' | 'repor'
+  operation: 'selecionar' | 'listar' | 'consultar' | 'criar' | 'editar' | 'listar-tecnicos' | 'atribuir' | 'listar-exemplos' | 'adicionar-exemplo' | 'adicionar-todos' | 'limpar' | 'repor'
   result: 'iniciada' | 'sucesso' | 'erro' | 'parcial' | 'existente' | 'inexistente' | 'os-ausente'
   source: 'api' | 'mock'
   counts?: { added: number; skipped: number; failed: number; total: number; missingOrder?: number }
@@ -14,6 +14,7 @@ export type LogEvent = {
 
 const operations: Record<LogEvent['operation'], string> = {
   selecionar: 'Alterar origem', listar: 'Listar', consultar: 'Consultar', criar: 'Criar', editar: 'Editar',
+  'listar-tecnicos': 'Listar técnicos', atribuir: 'Atribuir técnico',
   'listar-exemplos': 'Listar exemplos', 'adicionar-exemplo': 'Adicionar exemplo',
   'adicionar-todos': 'Adicionar todas', limpar: 'Limpar', repor: 'Repor',
 }

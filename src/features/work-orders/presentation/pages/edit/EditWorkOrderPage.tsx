@@ -29,7 +29,7 @@ export function EditWorkOrderPage() {
       {loading && <LoadingIndicator type="inline" label="A carregar ordem de serviço..." />}
       {error && <Alert tone="danger" layout="detailed" title="Não foi possível consultar a ordem" message={error} announcement="polite" action={available ? { label: 'Tentar novamente', onClick: reload } : undefined} />}
       {!loading && !error && order === null && <Alert tone="warning" layout="detailed" title="Ordem não encontrada" message="A ordem pedida não existe na origem de dados selecionada." />}
-      {order && <EditForm key={`${source}-${mockVersion}-${order.id}`} order={order} />}
+      {order && (source === 'mock' ? <EditForm key={`${source}-${mockVersion}-${order.id}`} order={order} /> : <Alert tone="warning" layout="detailed" title="Edição indisponível" message="A edição de ordens ainda não está disponível no backend." />)}
     </PageLayout>
   </WorkOrdersShell>
 }
