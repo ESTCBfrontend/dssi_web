@@ -6,6 +6,7 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ### Adicionado
 
+- Integração com a API do backend para autenticação, consulta e criação de ordens e atribuição de técnicos.
 - Histórico fictício das ações da sessão no detalhe de cada ordem de serviço.
 
 - Análise fictícia de intervenções no detalhe da ordem, com validação ou pedido de correção fundamentado, apenas em memória.

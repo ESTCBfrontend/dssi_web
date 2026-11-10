@@ -93,7 +93,7 @@ describe('detalhe da ordem de serviço', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Adicionar dados' }))
     expect(await screen.findByRole('heading', { name: 'OS-EXEMPLO-001' })).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: 'Escolher API' }))
-    expect(screen.getByText('A ligação à API de ordens de serviço ainda não está disponível.')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Iniciar sessão' })).toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: 'OS-EXEMPLO-001' })).not.toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: 'Escolher mock' }))
     expect(await screen.findByRole('heading', { name: 'OS-EXEMPLO-001' })).toBeInTheDocument()

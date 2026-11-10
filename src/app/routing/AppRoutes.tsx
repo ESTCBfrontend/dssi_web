@@ -3,8 +3,14 @@ import { CreateWorkOrderPage } from '../../features/work-orders/presentation/pag
 import { WorkOrdersPage } from '../../features/work-orders/presentation/pages/list/WorkOrdersPage'
 import { WorkOrderDetailPage } from '../../features/work-orders/presentation/pages/detail/WorkOrderDetailPage'
 import { EditWorkOrderPage } from '../../features/work-orders/presentation/pages/edit/EditWorkOrderPage'
+import { useDataSource } from '../data-source/dataSourceContext'
+import { useWorkOrderServices } from '../work-orders/providers/workOrderServiceContext'
+import { ApiLogin } from '../work-orders/ApiLogin'
 
 export function AppRoutes() {
+  const { source } = useDataSource()
+  const { apiService } = useWorkOrderServices()
+  if (source === 'api' && !apiService) return <ApiLogin />
   return <Routes>
     <Route path="/" element={<WorkOrdersPage />} />
     <Route path="/ordens-servico" element={<WorkOrdersPage />} />

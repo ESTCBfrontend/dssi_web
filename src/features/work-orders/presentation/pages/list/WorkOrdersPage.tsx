@@ -12,7 +12,7 @@ import motion from '../../../../../shared/ui/motion/DirectionalLink.module.css'
 import type { WorkOrder } from '../../../domain/workOrder'
 import { useWorkOrders } from './hooks/useWorkOrders'
 import { WorkOrdersShell } from '../../components/WorkOrdersShell'
-import { formatDate, formatPriority, statusLabels, statusTones } from '../../formatters/workOrderDisplay'
+import { formatDate, formatPriority, formatServiceType, statusLabels, statusTones } from '../../formatters/workOrderDisplay'
 import add from './assets/add.svg'
 import ordersIcon from './assets/orders.svg'
 import unassignedIcon from './assets/unassigned.svg'
@@ -22,7 +22,7 @@ import styles from './WorkOrdersPage.module.css'
 const columns: DataColumn<WorkOrder>[] = [
   { id: 'code', label: 'Referência', rowHeader: true, sortable: true, render: order => order.code },
   { id: 'client', label: 'Cliente / local', render: order => <><strong>{order.client.name}</strong><span className={styles.location}>{order.site.name}</span></> },
-  { id: 'serviceType', label: 'Tipo de serviço', render: order => order.serviceType },
+  { id: 'serviceType', label: 'Tipo de serviço', render: order => formatServiceType(order.serviceType) },
   { id: 'scheduledDate', label: 'Agendamento', sortable: true, render: order => formatDate(order.scheduledDate) },
   { id: 'technician', label: 'Responsável', render: order => order.assignedTechnician?.name ?? 'Por atribuir' },
   { id: 'status', label: 'Estado', sortable: true, render: order => <StatusBadge className={styles.statusBadge} label={statusLabels[order.status]} tone={statusTones[order.status]} size="small" showDot /> },
