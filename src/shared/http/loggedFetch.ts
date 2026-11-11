@@ -2,6 +2,9 @@ import { writeHttpLog } from '../logging/logger'
 
 let sequence = 0
 const maximumBodySize = 16_384
+// A preview privada pode usar NODE_ENV=development para o menu, mas não deve
+// apresentar tokens nem corpos HTTP na consola do browser.
+const detailedLogging = import.meta.env.DEV && import.meta.env.MODE !== 'production' && import.meta.env.VITE_VERCEL_ENV !== 'preview'
 /** As palavras-passe não são necessárias para diagnosticar os contratos HTTP. */
 function formatBody(value: unknown): string {
   return JSON.stringify(value, (key, item: unknown) => /^(password|palavra.?passe)$/i.test(key) ? '[omitido]' : item, 2) ?? '[omitido]'
@@ -43,14 +46,14 @@ export async function loggedFetch(route: string, input: RequestInfo | URL, init?
   const label = `pedido ${++sequence} | ${safeMethod} ${route}`
   const start = performance.now()
   writeHttpLog('info', `${label} | iniciado`)
-  if (import.meta.env.DEV) {
+  if (detailedLogging) {
     const url = typeof input === 'string' ? input : input instanceof URL ? input.href : input.url
     writeHttpLog('info', `${label} | endereço: ${url}`)
     const headers = new Headers(init?.headers ?? (typeof Request !== 'undefined' && input instanceof Request ? input.headers : undefined))
     const authorization = headers.get('authorization')
     if (authorization) writeHttpLog('info', `${label} | autorização: ${authorization}`)
   }
-  if (import.meta.env.DEV && init?.body != null) writeHttpLog('info', `${label} | corpo enviado:\n${requestBody(init.body)}`)
+  if (detailedLogging && init?.body != null) writeHttpLog('info', `${label} | corpo enviado:\n${requestBody(init.body)}`)
   let response: Response
   try {
     response = await fetch(input, init)
@@ -64,7 +67,7 @@ export async function loggedFetch(route: string, input: RequestInfo | URL, init?
   const category = response.ok ? '' : response.status >= 500 ? ' | erro do servidor' : response.status >= 400 ? ' | erro do pedido' : ' | resposta não concluída'
   writeHttpLog(response.ok ? 'info' : 'error', `${label} | HTTP ${response.status}${category} | ${Math.round(performance.now() - start)} ms`)
   const contentType = response.headers.get('content-type') ?? ''
-  if (import.meta.env.DEV && /\bapplication\/(?:[\w.-]+\+)?json\b/i.test(contentType)) {
+  if (detailedLogging && /\bapplication\/(?:[\w.-]+\+)?json\b/i.test(contentType)) {
     void logResponseBody(response, label)
   }
   return response
