@@ -12,6 +12,7 @@ export type WorkOrderServices = {
   service: WorkOrderService | null
   apiService: ApiWorkOrderService | null
   login: (email: string, password: string) => Promise<void>
+  loginWithPreviewAccount: (id: string) => Promise<void>
   logout: () => void
   mockExamples: (() => WorkOrder[]) | null
   status: 'ready' | 'unavailable'

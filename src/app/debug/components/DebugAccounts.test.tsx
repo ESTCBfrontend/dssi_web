@@ -42,6 +42,24 @@ describe('contas locais de teste', () => {
   it('não disponibiliza contas para outra API', () => {
     showAccounts('https://outra.example.test/api/v1')
     expect(screen.queryByRole('button', { name: 'Entrar como Teste' })).not.toBeInTheDocument()
-    expect(screen.getByText(/Não existem contas locais/)).toBeInTheDocument()
+    expect(screen.getByText(/Não existem contas de teste/)).toBeInTheDocument()
+  })
+})
+
+describe('contas de teste na preview', () => {
+  it('carrega etiquetas e inicia sessão sem expor credenciais no browser', async () => {
+    const fetcher = vi.fn(async (_url: string, init?: RequestInit) => init?.method === 'POST'
+      ? Response.json({ accessToken: 'preview-token' })
+      : Response.json({ accounts: [{ id: '0', label: 'Gestão' }] }))
+    vi.stubGlobal('fetch', fetcher)
+    const onSuccess = vi.fn()
+    render(<QueryClientProvider client={new QueryClient()}><DataSourceProvider selection={new DataSourceSelection({ configuredSource: 'api', allowRuntimeSelection: true })}><WorkOrderServiceProvider>
+      <DebugAccounts onSuccess={onSuccess} accountFiles={[]} preview />
+    </WorkOrderServiceProvider></DataSourceProvider></QueryClientProvider>)
+    fireEvent.click(await screen.findByRole('button', { name: 'Entrar como Gestão' }))
+    await vi.waitFor(() => expect(onSuccess).toHaveBeenCalledOnce())
+    const loginRequest = fetcher.mock.calls.find(([, init]) => init?.method === 'POST')
+    expect(loginRequest?.[0]).toBe('/api/debug-test-accounts')
+    expect(JSON.parse(String(loginRequest?.[1]?.body))).toEqual({ id: '0' })
   })
 })

@@ -4,6 +4,14 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ## Por lançar
 
+### Adicionado
+
+- Acesso com contas de teste configuradas no servidor a partir de uma preview protegida de develop na Vercel.
+
+### Alterado
+
+- Os logs HTTP da preview deixam de incluir endereços, corpos e cabeçalhos de autorização.
+
 ## 0.3.1 — 2026-11-10
 
 ### Corrigido

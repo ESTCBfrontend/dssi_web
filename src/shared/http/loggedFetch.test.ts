@@ -4,6 +4,24 @@ import { loggedFetch } from './loggedFetch'
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); vi.unstubAllEnvs() })
 
 describe('pedidos HTTP instrumentados', () => {
+  it('omite credenciais e corpos na preview mesmo com o modo de desenvolvimento ativo', async () => {
+    vi.stubEnv('VITE_VERCEL_ENV', 'preview')
+    vi.resetModules()
+    const { loggedFetch: previewFetch } = await import('./loggedFetch')
+    const info = vi.spyOn(console, 'info').mockImplementation(() => {})
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{"accessToken":"token-resposta"}', {
+      headers: { 'content-type': 'application/json' },
+    })))
+    await previewFetch('/auth/login', '/auth/login?segredo=exemplo', {
+      method: 'POST', headers: { Authorization: 'Bearer token-pedido' }, body: '{"email":"privado"}',
+    })
+    const output = JSON.stringify(info.mock.calls)
+    expect(output).not.toContain('token-pedido')
+    expect(output).not.toContain('token-resposta')
+    expect(output).not.toContain('privado')
+    expect(output).not.toContain('segredo=exemplo')
+  })
+
   it('correlaciona pedidos, respostas e tokens em desenvolvimento, ocultando palavras-passe', async () => {
     const info = vi.spyOn(console, 'info').mockImplementation(() => {})
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{"total":2,"email":"privado"}', {
